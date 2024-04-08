@@ -1,0 +1,30 @@
+.btn {
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  border-radius: 8px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.black {
+  background-color: var(--mainBlack);
+  color: #ffffff;
+}
+
+.green {
+  background-color: var(--mainBlack);
+  color: #ffffff;
+}
+
+.brown {
+  background-color: #bea087;
+  color: #ffffff;
+}
