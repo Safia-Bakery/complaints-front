@@ -60,6 +60,14 @@ const App = () => {
             </Suspend>
           }
         />
+        <Route
+          path={"*"}
+          element={
+            <Suspend>
+              <Dashboard />
+            </Suspend>
+          }
+        />
       </Route>
     </Routes>
   );

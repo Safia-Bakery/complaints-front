@@ -4,6 +4,8 @@ import { ChangeEvent, FC } from "react";
 import { logoutHandler } from "reducers/auth";
 import { changeLanguage, langSelector, sidebarHandler } from "reducers/selects";
 import useToken from "@/hooks/useToken";
+import profileIcon from "/icons/profleIcon.svg";
+import redDot from "/icons/redDot.svg";
 
 import { useTranslation } from "react-i18next";
 import { Language } from "@/utils/types";
@@ -15,7 +17,11 @@ interface Breadcrumb {
 }
 
 const routeNameMappings: { [key: string]: string } = {
-  home: "main",
+  dashboard: "dashboard_complaints",
+  "hr-retail": "hr-retail",
+  "inside-complaints": "inside-complaints",
+  okk: "OKK",
+  "hr-fabric": "hr-fabric",
 };
 
 const Breadcrumbs: FC = () => {
@@ -23,7 +29,7 @@ const Breadcrumbs: FC = () => {
   const location = useLocation();
   const pathname = location.pathname;
   const dispatch = useAppDispatch();
-  const handleLogout = () => dispatch(logoutHandler());
+
   const lang = useAppSelector(langSelector);
 
   const { data: me } = useToken({ enabled: false });
@@ -52,29 +58,15 @@ const Breadcrumbs: FC = () => {
     <div className={styles.block}>
       <div className={styles.container}>
         <ul className={styles.breadcrump}>
-          <button
-            onClick={() => dispatch(sidebarHandler(true))}
-            className="btn btn-primary p-2   btn-round btn-icon mr-3"
-          >
-            <img
-              width={22}
-              className="flex"
-              height={22}
-              src="/assets/icons/burger.svg"
-              alt="burger"
-            />
-          </button>
-          {window.location.pathname !== "/home" && (
-            <li>
-              <Link to="/home">{t("main")}</Link>
-            </li>
-          )}
           {breadcrumbs.map((breadcrumb, index) => (
             <li key={breadcrumb.path}>
               {index === breadcrumbs.length - 1 ? (
-                <span>{t(breadcrumb.name)}</span>
+                <span className="text-xl font-bold">{t(breadcrumb.name)}</span>
               ) : (
-                <Link to={breadcrumb.path + location.search}>
+                <Link
+                  to={breadcrumb.path + location.search}
+                  className="text-xl"
+                >
                   {t(breadcrumb.name)}
                 </Link>
               )}
@@ -82,23 +74,30 @@ const Breadcrumbs: FC = () => {
           ))}
         </ul>
 
-        <div className="flex md:gap-4 gap-2">
-          <select
-            onChange={handleLang}
-            value={lang}
-            className="!bg-transparent"
-          >
-            {Object.keys(Language).map((item) => (
-              <option key={item}>{item}</option>
-            ))}
-          </select>
-          <span
-            onClick={handleLogout}
-            id="logout_btn"
-            className={styles.logout}
-          >
-            {t("leave")} ({me?.name})
-          </span>
+        <div className="flex md:gap-4 gap-2 h-full">
+          <div className="border-r border-r-[#C4C4C4] flex pr-8 py-3 h-full">
+            <select
+              onChange={handleLang}
+              value={lang}
+              className="!bg-transparent border-none"
+            >
+              {Object.keys(Language).map((item) => (
+                <option key={item}>{item}</option>
+              ))}
+            </select>
+          </div>
+          <div className="ml-3 flex items-center gap-2">
+            <div className="relative">
+              <img
+                src={profileIcon}
+                alt="profile-img"
+                className="rounded-full h-11 w-11"
+              />
+              <img src={redDot} alt="" className="absolute top-0 left-0" />
+            </div>
+
+            <span className="font-medium text-sm">{me?.name}</span>
+          </div>
         </div>
       </div>
     </div>

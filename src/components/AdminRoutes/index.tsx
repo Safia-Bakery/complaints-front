@@ -8,7 +8,7 @@ const AdminRoutes = () => {
       <Playground />
       <BreadCrump />
 
-      <div className="flex flex-col flex-1">
+      <div className="">
         <Outlet />
       </div>
     </>
