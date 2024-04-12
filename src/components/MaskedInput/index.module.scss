@@ -1,0 +1,19 @@
+.inputBox {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  height: 40px;
+
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  background-image: none;
+  background-clip: padding-box;
+
+  outline: none;
+}

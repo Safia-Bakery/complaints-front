@@ -21,3 +21,25 @@ export const queryClient = new QueryClient({
     },
   },
 });
+
+export const CountrySelect = {
+  1: "UZB",
+  2: "KZ",
+};
+
+export const OrderTypeSelect = {
+  1: "quality",
+  2: "service",
+};
+
+export const GenderTypeSelect = {
+  1: "man",
+  2: "woman",
+};
+
+export const numberWithCommas = (val: number) => {
+  return val
+    ?.toFixed(2)
+    ?.toString()
+    ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};

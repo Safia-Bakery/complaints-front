@@ -34,6 +34,14 @@ export enum OrderStatus {
   processed,
 }
 
+export const StatusSelect = {
+  [OrderStatus.new]: "new",
+  [OrderStatus.received]: "received",
+  [OrderStatus.done]: "done",
+  [OrderStatus.denied]: "denied",
+  [OrderStatus.processed]: "processed",
+};
+
 export enum BtnTypes {
   green = "green",
   black = "black",

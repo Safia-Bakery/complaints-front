@@ -12,6 +12,7 @@ module.exports = {
 
         mainBlack: "#151C28",
         mainGreen: "#0DA06A",
+        borderGray: "#E7E7E7",
       },
       boxShadow: {
         selected: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",

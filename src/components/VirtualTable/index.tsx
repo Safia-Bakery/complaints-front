@@ -57,9 +57,9 @@ function VirtualTable<T>({
   });
 
   return (
-    <div ref={parentRef} className={`${className} w-full`}>
+    <div ref={parentRef} className={`${className} w-full bg-white`}>
       <div
-        style={{ height: `${virtualizer.getTotalSize() + 120}px` }}
+        style={{ height: `${virtualizer.getTotalSize() + 200}px` }}
         className="overflow-x-auto"
       >
         <table className="table table-bordered">
@@ -72,7 +72,7 @@ function VirtualTable<T>({
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
-                        className="bg-primary text-white"
+                        className="bg-mainBlack text-white p-2"
                         style={{ width: header.getSize() }}
                       >
                         {header.isPlaceholder ? null : (
@@ -106,7 +106,9 @@ function VirtualTable<T>({
               const row = rows[virtualRow.index] as Row<T>;
               return (
                 <tr
-                  className={`${handleRowStyles(row)}`}
+                  className={`${handleRowStyles(
+                    row
+                  )} border-b border-b-borderGray p-2`}
                   key={row.id}
                   style={{
                     height: `${virtualRow.size}px`,
@@ -117,7 +119,7 @@ function VirtualTable<T>({
                 >
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <td key={cell.id}>
+                      <td key={cell.id} className="p-2">
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

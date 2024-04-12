@@ -1,18 +1,15 @@
-import { ChangeEvent, FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import cl from "classnames";
 import styles from "./index.module.scss";
 import { UseFormRegisterReturn } from "react-hook-form";
-import { SelectValues } from "@/utils/types";
-import { useAppSelector } from "@/store/rootConfig";
-import { langSelector } from "@/store/reducers/selects";
 
 interface Props {
-  onChange?: (val: ChangeEvent<HTMLSelectElement>) => void;
+  onChange?: (val: string) => void;
   className?: string;
   value?: string | number;
   disabled?: boolean;
   register?: UseFormRegisterReturn;
-  values?: SelectValues[];
+  values?: { [key: string]: string };
   children?: ReactNode;
   onFocus?: () => void;
 }
@@ -23,22 +20,23 @@ const MainSelect: FC<Props> = ({
   values,
   children,
   onFocus,
+  onChange,
   ...others
 }) => {
-  const lang = useAppSelector(langSelector);
   return (
     <select
       className={cl(className, styles.select, styles.inputBox)}
       onFocus={onFocus}
+      onChange={(e) => onChange?.(e.target.value)}
       {...others}
       {...register}
     >
-      {!children ? (
+      {!children && values ? (
         <>
           <option value={undefined}></option>
-          {values?.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item[`name_${lang}`]}
+          {Object.entries(values)?.map((item) => (
+            <option key={item[0]} value={item[1]}>
+              {item[1]}
             </option>
           ))}
         </>
