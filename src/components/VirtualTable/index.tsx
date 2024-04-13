@@ -62,7 +62,7 @@ function VirtualTable<T>({
         style={{ height: `${virtualizer.getTotalSize() + 200}px` }}
         className="overflow-x-auto"
       >
-        <table className="table table-bordered">
+        <table className="table table-bordered w-full">
           <thead>
             {data &&
               table.getHeaderGroups().map((headerGroup) => (

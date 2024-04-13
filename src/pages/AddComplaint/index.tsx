@@ -15,15 +15,20 @@ import {
   OrderTypeSelect,
 } from "@/utils/helper";
 import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 const AddComplaint = () => {
+  const inputFileRef = useRef();
+  const { t } = useTranslation();
   const { register, getValues, handleSubmit } = useForm();
 
   const onSubmit = () => {
     console.log(getValues());
+    console.log(inputFileRef, "inputFileRef");
   };
   return (
-    <Container>
+    <Container className="!pb-14 rounded-xl">
       <form onSubmit={handleSubmit(onSubmit)}>
         <BaseInput label="type">
           <MainRadioBtns
@@ -88,11 +93,13 @@ const AddComplaint = () => {
           </BaseInput>
 
           <BaseInput label="files" className="flex-1 flex flex-col">
-            <MainDropZone />
+            <MainDropZone forwardedRef={inputFileRef} />
           </BaseInput>
         </div>
 
-        <Button type="submit">submit</Button>
+        <Button className="float-end mt-2 w-52" type="submit">
+          {t("create")}
+        </Button>
       </form>
     </Container>
   );

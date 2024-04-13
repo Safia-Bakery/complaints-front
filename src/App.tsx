@@ -16,6 +16,12 @@ const Complaints = lazy(() => import("@/pages/Complaints"));
 const AddComplaint = lazy(() => import("@/pages/AddComplaint"));
 const ShowComplaint = lazy(() => import("@/pages/ShowComplaint"));
 const AdminRoutes = lazy(() => import("@/components/AdminRoutes"));
+const HRRequestBlock = lazy(() => import("@/components/HRRequestBlock"));
+
+const HRDashboard = lazy(() => import("@/pages/HRDashboard"));
+const HRRequests = lazy(() => import("@/pages/HRRequests"));
+const EditAddHRRequest = lazy(() => import("@/pages/EditAddHRRequest"));
+const ShowHRRequest = lazy(() => import("@/pages/ShowHRRequest"));
 
 const App = () => {
   const lang = useAppSelector(langSelector);
@@ -98,6 +104,56 @@ const App = () => {
             </Suspend>
           }
         />
+
+        <Route
+          path={"hr-dashboard/:sphere"}
+          element={
+            <Suspend>
+              <HRDashboard />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"hr-dashboard/:sphere"}
+          element={
+            <Suspend>
+              <HRRequestBlock />
+            </Suspend>
+          }
+        >
+          <Route
+            path={":hrdep"}
+            element={
+              <Suspend>
+                <HRRequests />
+              </Suspend>
+            }
+          />
+          <Route
+            path={":hrdep/:id"}
+            element={
+              <Suspend>
+                <ShowHRRequest />
+              </Suspend>
+            }
+          />
+          <Route
+            path={":hrdep/edit/:id"}
+            element={
+              <Suspend>
+                <EditAddHRRequest />
+              </Suspend>
+            }
+          />
+          <Route
+            path={":hrdep/add"}
+            element={
+              <Suspend>
+                <EditAddHRRequest />
+              </Suspend>
+            }
+          />
+        </Route>
       </Route>
     </Routes>
   );

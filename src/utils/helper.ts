@@ -1,3 +1,4 @@
+import useQueryString from "@/hooks/custom/useQueryString";
 import { QueryClient } from "@tanstack/react-query";
 
 export enum EPresetTimes {
@@ -35,6 +36,7 @@ export const OrderTypeSelect = {
 export const GenderTypeSelect = {
   1: "man",
   2: "woman",
+  3: "other",
 };
 
 export const numberWithCommas = (val: number) => {
@@ -42,4 +44,11 @@ export const numberWithCommas = (val: number) => {
     ?.toFixed(2)
     ?.toString()
     ?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const handleIdx = (index: number) => {
+  const currentPage = Number(useQueryString("page")) || 1;
+  return currentPage === 1
+    ? index + 1
+    : index + 1 + itemsPerPage * (currentPage - 1);
 };

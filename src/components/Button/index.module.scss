@@ -12,19 +12,25 @@
   border-radius: 8px;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  color: #ffffff;
+  min-width: 140px;
 }
 
 .black {
   background-color: var(--mainBlack);
-  color: #ffffff;
 }
 
 .green {
   background-color: var(--mainGreen);
-  color: #ffffff;
 }
 
 .brown {
   background-color: #bea087;
-  color: #ffffff;
+}
+
+.red {
+  background: #f34a7c;
+}
+.darkBlue {
+  background: #315594;
 }

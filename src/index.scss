@@ -55,3 +55,26 @@ h1 {
 .css-13cymwt-control {
   border-radius: 12px !important;
 }
+
+table {
+  font-size: 14px;
+  tbody {
+    tr {
+      td,
+      th {
+        padding: 7px 5px;
+      }
+    }
+  }
+
+  &.gray {
+    background: #151c2814;
+  }
+
+  &.bordered.gray {
+    & td,
+    th {
+      border: 1px solid white;
+    }
+  }
+}

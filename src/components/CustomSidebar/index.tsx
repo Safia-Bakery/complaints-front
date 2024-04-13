@@ -7,6 +7,7 @@ import styles from "./index.module.scss";
 import "./index.scss";
 import safiaLogo from "/images/safia-logo.png";
 import arrow from "/icons/whiteArrow.svg";
+import { HRSpheres } from "@/utils/types";
 
 const routes = [
   {
@@ -41,13 +42,13 @@ const routes = [
   },
   {
     name: "hr-fabric",
-    url: "/hr-fabric",
+    url: `/hr-dashboard/${HRSpheres[HRSpheres.fabric]}`,
     icon: "/icons/hr.svg",
     activeIcon: "/icons/hr-active.svg",
   },
   {
     name: "hr-retail",
-    url: "/hr-retail",
+    url: `/hr-dashboard/${HRSpheres[HRSpheres.retail]}`,
     icon: "/icons/hr.svg",
     activeIcon: "/icons/hr-active.svg",
   },

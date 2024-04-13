@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import cl from "classnames";
 import styles from "./index.module.scss";
 import { UseFormRegisterReturn } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   onChange?: (val: string) => void;
@@ -23,6 +24,7 @@ const MainSelect: FC<Props> = ({
   onChange,
   ...others
 }) => {
+  const { t } = useTranslation();
   return (
     <select
       className={cl(className, styles.select, styles.inputBox)}
@@ -36,7 +38,7 @@ const MainSelect: FC<Props> = ({
           <option value={undefined}></option>
           {Object.entries(values)?.map((item) => (
             <option key={item[0]} value={item[1]}>
-              {item[1]}
+              {t(item[1])}
             </option>
           ))}
         </>

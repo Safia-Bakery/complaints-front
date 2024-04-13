@@ -34,6 +34,13 @@ export enum OrderStatus {
   processed,
 }
 
+export interface BasePaginatedRes {
+  total: number;
+  page: number;
+  size: number;
+  pages: number;
+}
+
 export const StatusSelect = {
   [OrderStatus.new]: "new",
   [OrderStatus.received]: "received",
@@ -46,10 +53,34 @@ export enum BtnTypes {
   green = "green",
   black = "black",
   brown = "brown",
+  red = "red",
+  darkBlue = "darkBlue",
 }
 export interface SelectValues {
   id: number;
   name_uz: string;
   name_ru: string;
   status?: number;
+}
+export enum HRSpheres {
+  retail,
+  fabric,
+}
+
+export enum HRDeps {
+  qa,
+  questions,
+  complaints,
+  suggestions,
+  categories,
+}
+
+export interface HRRequestTypes {
+  id?: number;
+  question?: string;
+  answer?: string;
+  status?: number;
+}
+export interface MainHRTypes extends BasePaginatedRes {
+  items: HRRequestTypes[];
 }

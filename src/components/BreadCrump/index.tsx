@@ -1,8 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import styles from "./index.module.scss";
 import { ChangeEvent, FC } from "react";
-import { logoutHandler } from "reducers/auth";
-import { changeLanguage, langSelector, sidebarHandler } from "reducers/selects";
+import { changeLanguage, langSelector } from "reducers/selects";
 import useToken from "@/hooks/useToken";
 import profileIcon from "/icons/profleIcon.svg";
 import redDot from "/icons/redDot.svg";
@@ -16,18 +15,9 @@ interface Breadcrumb {
   name: string;
 }
 
-const routeNameMappings: { [key: string]: string } = {
-  dashboard: "dashboard_complaints",
-  "hr-retail": "hr-retail",
-  "inside-complaints": "inside-complaints",
-  okk: "OKK",
-  "hr-fabric": "hr-fabric",
-};
-
 const Breadcrumbs: FC = () => {
   const { t } = useTranslation();
-  const location = useLocation();
-  const pathname = location.pathname;
+  const { pathname, search } = useLocation();
   const dispatch = useAppDispatch();
 
   const lang = useAppSelector(langSelector);
@@ -45,9 +35,7 @@ const Breadcrumbs: FC = () => {
 
   pathSegments.reduce((prevPath: string, currentPath: string) => {
     const path = `${prevPath}/${currentPath}`;
-    const name = location?.state?.name
-      ? location.state?.name
-      : routeNameMappings[currentPath] || currentPath.replace(/-/g, " ");
+    const name = currentPath || currentPath.replace(/-/g, " ");
 
     breadcrumbs.push({ path, name });
 
@@ -63,10 +51,7 @@ const Breadcrumbs: FC = () => {
               {index === breadcrumbs.length - 1 ? (
                 <span className="text-xl font-bold">{t(breadcrumb.name)}</span>
               ) : (
-                <Link
-                  to={breadcrumb.path + location.search}
-                  className="text-xl"
-                >
+                <Link to={breadcrumb.path + search} className="text-xl">
                   {t(breadcrumb.name)}
                 </Link>
               )}
