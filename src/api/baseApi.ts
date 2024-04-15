@@ -8,6 +8,11 @@ const baseApi: AxiosInstance = axios.create({
   baseURL,
 });
 
+const logoutObj: { [key: number]: boolean } = {
+  401: true,
+  403: true,
+};
+
 baseApi.interceptors.request.use(
   (config) => {
     const token = store.getState()?.auth.token;
@@ -27,7 +32,7 @@ baseApi.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.response?.status === 401) {
+    if (logoutObj[error?.response?.status]) {
       logoutUser();
     }
     return Promise.reject(error);
