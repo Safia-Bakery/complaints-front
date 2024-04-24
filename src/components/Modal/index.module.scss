@@ -21,17 +21,21 @@
   width: 100%;
   min-height: 500px;
   min-width: 300px;
-  max-height: 80vh;
+  max-height: 70vh;
+  height: 100%;
   animation-duration: 0.3s;
   animation-timing-function: ease-out;
   background: white;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
 }
 .content {
-  @media (max-width: 920px) {
-    height: 100%;
-  }
+  // max-height: max-content;
+  // @media (max-width: 920px) {
+  height: 100%;
+
+  // }
 }
 
 .centered {

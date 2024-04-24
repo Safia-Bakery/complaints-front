@@ -22,6 +22,7 @@ export const useCommunications = ({ enabled = true, ...params }: Body) => {
         .get("/hr/communictation", { params })
         .then(({ data: response }) => response as CommunicationsType),
     enabled: !!token && enabled,
+    refetchInterval: 10000,
   });
 };
 

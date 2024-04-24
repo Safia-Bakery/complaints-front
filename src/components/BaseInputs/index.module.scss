@@ -32,6 +32,22 @@
   outline: none;
 }
 
+.textArea {
+  outline: none;
+  resize: none;
+  text-overflow: ellipsis;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: transparent;
+  min-height: 40px;
+  max-height: 80px;
+}
+
 .close {
   position: absolute;
   right: 15px;
