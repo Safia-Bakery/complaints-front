@@ -1,112 +1,57 @@
 import Container from "@/components/Container";
+import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
 import VirtualTable from "@/components/VirtualTable";
-import { handleIdx } from "@/utils/helper";
-import { HRDeps, HRRequestTypes, OrderStatus } from "@/utils/types";
+import useQueryString from "@/hooks/custom/useQueryString";
+import useHRRequests from "@/hooks/useHRRequests";
+import { HRStatusOBJ, handleIdx } from "@/utils/helper";
+import { HRDeps, HRRequest, HRSpheres } from "@/utils/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
-
-const mockData = {
-  items: [
-    {
-      id: 10,
-      question: "Safia коинлари ва улар нима учун керак? ",
-      answer:
-        "Safia коинлари бу – Safia қандолат уйининг ички валютаси бўлиб, Safia Game дўконида улар эвазига қимматли совғалар олиш имконини беради. \nSafia коинларини нима учун берилади:\n✅ Компанияда ишлаган ҳар бир йил учун (3 SC);  ✅ Ходимнинг туғилган куни учун (2 SC);  ✅ Ишлаб чиқариш жараёнин такомиллаштириш ва самарадорликни ошириш йўлидаги ғоялар учун (15 SC);\n✅ Мослашув давридан мувафаккиятли ўтган стажёр учун (5 SC);\n✅ Энг яхши устозлик учун (10 SC);\n✅ Грейд ошиш муносабати билан аттестациядан \n ижобий натижа билан ўтганда (5 SC);\n✅Бригадирнинг тавсияси билан ойнинг энг яхши ходимига (5 SC);\n✅Лимит вақтида энг фаол қатнашган ходимларга (5 SC);\n✅Ишга кеч қолишлари 0 миқдорда (2 SC).\nSafia коинлари ва улар эвазига совғалар қачон ва қаерда берилади?\n 1. Ҳар ойда юқоридаги мезонлар асосида маълумотлар йиғилади ва ички ишчи телеграмм гуруҳларига юборилади. \n 2. Safia коинлари HR бўлимида 5 кун ичида тарқатилади. \n 3. Safia Game дўкони ҳар ойда 5 кун ишлайди. ",
-      status: 1,
-    },
-    {
-      id: 2,
-      question: "Тиббий кўрик",
-      answer:
-        "Тиббий кўрик DARMON SERVIS клиникасида ўтказилади.\n\nТиббий кўрикдан ўтиш учун сиз ҳамширанинг йўлланмаси билан боришингиз керак, йўлланмани тиббий муассасада олишингиз мумкин.\n\nАёллар учун тиббий кўрик нархи - 227.000 сум, эркаклар учун - 193.000 сум",
-      status: 1,
-    },
-    {
-      id: 1,
-      question: "Ишда расмийлаштириш учун қандай ҳужжатлар керак?",
-      answer:
-        "1.Паспорт асл нусхаси (ID бўлса қайд вароги бўлиши шарт);\n2.ИНПС (пенсионный, ягона дарчадан ёки my.gov.uzсайтидан топиб чиқартирсангиз бўлади);\n3.Диплом ёки аттестат (йўқ бўлса, ўқишдан маълумотнома)\n4.Харбий билет ёки приписной\n5.Расм 3*4 - 6 дона",
-      status: 1,
-    },
-    {
-      id: 3,
-      question: "Иш ҳаққи қайси кунларда берилади?",
-      answer:
-        "Иш ҳаққи ҳар ойнинг 15 санасидан 20 саначигача берилади, иш ҳаққи берилиш жадвали икки кун олдин эълон қилинади.",
-      status: 1,
-    },
-    {
-      id: 4,
-      question: "Аванс",
-      answer:
-        "Аванс - ойлик иш ҳақингиздан олдиндан олишингиз мумкин бўлган иш ҳақингизнинг 30% ни ташкил қилади, аванс хар ойнинг 25 санасидан 30 санасигача.",
-      status: 1,
-    },
-    {
-      id: 5,
-      question: "Иш ҳаққини ошириш шартлари",
-      answer:
-        "Расмий рўйхатдан ўтиш ва тиббий кўрикдан ўтиш шарти билан грейд бўйича ойлик иш ҳақи оширилади, олдинроқ этиб ўтилган шартлар бўлмаса - иш ҳақи оширилмайди ва аванс берилмайди.",
-      status: 1,
-    },
-    {
-      id: 6,
-      question: "Автобус йўналишлари",
-      answer:
-        "06:45\n- Чилонзор - Фабрика\n\n07:10\n- Атп – Медгородок - Фабрика\n- Медгородок - Фабрика\n\n16:10\n- Медгородок - Фабрика\n\n17:30\n- Фабрика – Медгородок\n- Фабрика – Чилонзор\n\n02:30\n- Фабрика – Максим Горький\n- Фабрика - Медгородок\n\n",
-      status: 1,
-    },
-    {
-      id: 8,
-      question: "Махсус иш формаси",
-      answer:
-        "Янги ходимга 1 ой муддатга стажерлар формаси берилади;\nАгар янги ходим бир ой ичида ишдан бўшаб кетса, ойлик маошидан 50 000 сўм ушлаб қолинади;\nЯнги ходим ишлаб қолса, иккинчи ойдан махсус форма берилади;\nМахсус форма учун тўлов ходим ойлигидан учга бўлиб олиб қолинади",
-      status: 1,
-    },
-    {
-      id: 7,
-      question: "Жарималар борми комапаниямизда?",
-      answer:
-        "Safia компаниясида жарима йўқ, лекин бирор махсулот (хом-ашё, начинка , таййор махсулот) ерга тушиб кетса, шу нарсани тан нархини ходим ўз ойлигидан қоплаши шарт.\n\nШуни таъкидлаш керакки, кечикиб келиш таъқиқланади, хатто 1 дақиқага хам мумкин эмас!",
-      status: 1,
-    },
-    {
-      id: 9,
-      question: "Safia Game (Геймификация) бу нима?",
-      answer:
-        " Safia Game (Гемификация) бу - ўйин элементларидан фойдаланган ҳолда ходимларни иш фаолиятларида мақсадларга эришиш учун жалб қилиш ва рағбатлантириш мақсадида йўлга қўйилган лойиҳа.  \nЛойиҳани асосий мақсадлари – ходимларни компания ичидаги жараёнларга жалб қилиш, мотивация тизимини такомиллаштириш, корпоратив маданиятни ривожлантириш, энг яхши ходимлар рейтингини аниқлаб боришдир. \nБу ўзи нима ва у қандай ишлайди?\nSafia Game (Гемификация) лойиҳаси доирасида ишлаб чиқариш ходимлари ўз самарадорликларини кўрсатиш йўли орқали, эвазига қимматбаҳо совғаларни ютиб олиш учун яратилган имконият!\nҲар бир муносиб қилинган ишингиз учун, туғилган кунингиз ва байрамлар учун сизга Safia коинлари тақдим этиб борилади. \n",
-      status: 1,
-    },
-  ],
-  total: 10,
-  page: 1,
-  size: 50,
-  pages: 1,
-};
-
-const StatusOBJ: { [key: number]: string } = {
-  [OrderStatus.new]: "new",
-  [OrderStatus.received]: "answered",
-  [OrderStatus.denied]: "denied",
-};
+import chatIcon from "/icons/chat.svg";
+import arrow from "/icons/arrow-black.svg";
+import userIcon from "/icons/user.svg";
+import Modal from "@/components/Modal";
+import {
+  useNavigateParams,
+  useRemoveParams,
+} from "@/hooks/custom/useCustomNavigate";
+import useClients from "@/hooks/useClients";
 
 const HRRequests = () => {
-  const { hrdep } = useParams();
+  const { hrdep, sphere } = useParams();
   const { t } = useTranslation();
+  const page = Number(useQueryString("page")) || 1;
+  const chat_modal = Number(useQueryString("chat_modal"));
+  const chat = Number(useQueryString("chat"));
+  const removeParam = useRemoveParams();
+  const navigateParam = useNavigateParams();
 
-  const columns = useMemo<ColumnDef<HRRequestTypes>[]>(
+  const closeModal = () => removeParam(["chat_modal", "chat"]);
+  const { data, isLoading } = useHRRequests({
+    hrtype: HRDeps[hrdep! as unknown as HRDeps],
+    sphere_id: HRSpheres[sphere! as unknown as HRSpheres],
+    page,
+  });
+
+  const { data: clients, isLoading: clientsloading } = useClients({
+    enabled: !!chat_modal,
+  });
+
+  const columns = useMemo<ColumnDef<HRRequest>[]>(
     () => [
       {
-        cell: ({ row }) => <div className="w-4">{handleIdx(row.index)}</div>,
+        cell: ({ row }) => (
+          <div className="w-4 text-center">{handleIdx(row.index)}</div>
+        ),
         header: "№",
         size: 5,
       },
 
       {
-        accessorKey: "question",
+        accessorKey: "complaint",
         header: t("question"),
       },
       {
@@ -115,8 +60,19 @@ const HRRequests = () => {
 
         cell: ({ row }) => (
           <p className="text-center w-full">
-            {row.original.status && t(StatusOBJ[row.original.status])}
+            {!!row.original?.status?.toString() &&
+              t(HRStatusOBJ[row.original.status])}
           </p>
+        ),
+      },
+      {
+        accessorKey: "chat",
+        header: t("chat"),
+        size: 10,
+        cell: ({ row }) => (
+          <Link to={`?chat_modal=${row.original?.id}`} className="w-full">
+            <img src={chatIcon} alt="chat" className="mx-auto" />
+          </Link>
         ),
       },
       {
@@ -132,16 +88,57 @@ const HRRequests = () => {
                 : `${row.original.id}`
             }
           >
-            <TableViewBtn onClick={() => null} />
+            <TableViewBtn />
           </Link>
         ),
       },
     ],
     []
   );
+
+  if (isLoading) return <Loading />;
+
   return (
     <Container>
-      <VirtualTable columns={columns} data={mockData.items} />
+      <VirtualTable
+        columns={columns}
+        data={data?.items}
+        rowClassName={"text-center"}
+      />
+
+      <Modal isOpen={!!chat_modal} onClose={closeModal}>
+        {clientsloading && <Loading />}
+        <div className="">
+          <div className="w-full p-3 bg-green-700 rounded-t-xl">
+            <h3 className="text-white text-center">{t("chat")}</h3>
+          </div>
+
+          <ul className="h-full overflow-y-auto">
+            {clients?.items.map((client) => (
+              <li
+                className="px-3 cursor-pointer"
+                key={client.id}
+                onClick={() => navigateParam({ chat: client.id })}
+              >
+                <div className="flex justify-between items-center py-3 border-b border-b-borderColor">
+                  <div className="flex items-center gap-4">
+                    <div className="rounded-full bg-green-700 h-10 w-10">
+                      <img
+                        src={userIcon}
+                        alt="avatar-img"
+                        className="w-full h-full"
+                      />
+                    </div>
+
+                    <p>{client.name}</p>
+                  </div>
+                  <img src={arrow} alt="go-to-chat" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Modal>
     </Container>
   );
 };

@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface Props {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const TableViewBtn: FC<Props> = ({ onClick }) => {

@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { ReactNode, useRef, useState } from "react";
+import EmptyList from "../EmptyList";
 
 type ReturnFunction<Tval> = (smt: Tval) => string;
 type RowClassName<T> = string | ReturnFunction<T>;
@@ -52,14 +53,17 @@ function VirtualTable<T>({
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 34,
+    estimateSize: () => 55,
     overscan: 20,
   });
 
   return (
-    <div ref={parentRef} className={`${className} w-full bg-white`}>
+    <div
+      ref={parentRef}
+      className={`${className} w-full bg-white h-[600px] overflow-auto`}
+    >
       <div
-        style={{ height: `${virtualizer.getTotalSize() + 200}px` }}
+        style={{ height: `${virtualizer.getTotalSize() + 120}px` }}
         className="overflow-x-auto"
       >
         <table className="table table-bordered w-full">
@@ -132,6 +136,8 @@ function VirtualTable<T>({
             })}
           </tbody>
         </table>
+
+        {!data?.length && <EmptyList />}
       </div>
     </div>
   );

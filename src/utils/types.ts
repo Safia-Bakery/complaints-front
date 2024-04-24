@@ -63,24 +63,88 @@ export interface SelectValues {
   status?: number;
 }
 export enum HRSpheres {
+  all,
   retail,
   fabric,
 }
 
 export enum HRDeps {
-  qa,
+  all,
   questions,
   complaints,
   suggestions,
+  qa,
   categories,
 }
 
-export interface HRRequestTypes {
-  id?: number;
-  question?: string;
-  answer?: string;
-  status?: number;
+export interface CommunicationType {
+  id: number;
+  hrcomplaint_id: number;
+  text: string;
+  status: number;
+  url: string;
+  user_id: number;
+  user: UserType;
+  created_at: string;
+  updated_at: string;
 }
-export interface MainHRTypes extends BasePaginatedRes {
-  items: HRRequestTypes[];
+
+export interface CommunicationsType extends BasePaginatedRes {
+  items: CommunicationType[];
+}
+export interface HRRequest {
+  id: number;
+  complaint: string;
+  sphere_id: number;
+  hrclient_id: number;
+  hrclient: {
+    id: number;
+    name: string;
+    status: number;
+    sphere: number;
+    lang: number;
+    created_at: string;
+    updated_at: string;
+  };
+  hrtype: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HRRequestsType extends BasePaginatedRes {
+  items: HRRequest[];
+}
+export interface HRQaType {
+  id: number;
+  question_uz: string;
+  question_ru: string;
+  answer_uz: string;
+  answer_ru: string;
+  status: number;
+  created_at: string;
+  updated_at: null | string;
+  sphere_id: number;
+  hrsphere: {
+    id: number;
+    name: string;
+    status: number;
+    created_at: string;
+    updated_at: null | string;
+  };
+}
+export interface HRQasType extends BasePaginatedRes {
+  items: HRQaType[];
+}
+export interface ClientType {
+  id: number;
+  name: string;
+  status: number;
+  sphere: number;
+  lang: number;
+  created_at: string;
+  updated_at: string;
+}
+export interface ClientsType extends BasePaginatedRes {
+  items: ClientType[];
 }

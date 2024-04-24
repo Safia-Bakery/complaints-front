@@ -1,12 +1,26 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
-import { BtnTypes } from "@/utils/types";
+import Loading from "@/components/Loader";
+import useHRRequests from "@/hooks/useHRRequests";
+import { HRStatusOBJ, dateTimeFormat } from "@/utils/helper";
+import { BtnTypes, HRDeps, HRSpheres } from "@/utils/types";
+import dayjs from "dayjs";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ShowHRRequest = () => {
   const { t } = useTranslation();
+  const { hrdep, id } = useParams();
   const navigate = useNavigate();
+
+  const { data, isLoading } = useHRRequests({
+    hrtype: HRDeps[hrdep! as unknown as HRDeps],
+    id,
+  });
+
+  const request = data?.items?.[0];
+
+  if (isLoading) return <Loading />;
 
   return (
     <Container>
@@ -19,27 +33,31 @@ const ShowHRRequest = () => {
         <tbody>
           <tr>
             <th>{t("question")}</th>
-            <td>
-              Chetdan kelgan ishchilar un domlar qurilib unda unda ishchilar
-              Safiyada belgilangan pul miqdorini to'lab yashash
-            </td>
+            <td>{request?.complaint}</td>
           </tr>
           <tr>
             <th>{t("received_at")}</th>
-            <td>
-              Chetdan kelgan ishchilar un domlar qurilib unda unda ishchilar
-              Safiyada belgilangan pul miqdorini to'lab yashash
-            </td>
+            <td>{dayjs(request?.created_at).format(dateTimeFormat)}</td>
           </tr>
           <tr>
             <th>{t("answer")}</th>
-            <td>
-              Chetdan kelgan ishchilar un domlar qurilib unda unda ishchilar
-              Safiyada belgilangan pul miqdorini to'lab yashash
-            </td>
+            <td>{request?.complaint}</td>
+          </tr>
+          <tr>
+            <th>{t("status")}</th>
+            <td>{t(HRStatusOBJ?.[request?.status!])}</td>
+          </tr>
+          <tr>
+            <th>{t("sphere")}</th>
+            <td>{t(HRSpheres[request?.sphere_id!])}</td>
           </tr>
         </tbody>
       </table>
+
+      <div className="flex justify-end w-full mt-4 gap-3">
+        <Button btnType={BtnTypes.green}>{t("answered")}</Button>
+        <Button btnType={BtnTypes.red}>{t("deny")}</Button>
+      </div>
     </Container>
   );
 };

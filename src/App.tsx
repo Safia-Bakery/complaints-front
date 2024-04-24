@@ -20,7 +20,8 @@ const HRRequestBlock = lazy(() => import("@/components/HRRequestBlock"));
 
 const HRDashboard = lazy(() => import("@/pages/HRDashboard"));
 const HRRequests = lazy(() => import("@/pages/HRRequests"));
-const EditAddHRRequest = lazy(() => import("@/pages/EditAddHRRequest"));
+const EditAddHRQa = lazy(() => import("@/pages/EditAddHRQa"));
+const HRQa = lazy(() => import("@/pages/HRQa"));
 const ShowHRRequest = lazy(() => import("@/pages/ShowHRRequest"));
 
 const App = () => {
@@ -130,6 +131,14 @@ const App = () => {
             }
           />
           <Route
+            path={"qa"}
+            element={
+              <Suspend>
+                <HRQa />
+              </Suspend>
+            }
+          />
+          <Route
             path={":hrdep/:id"}
             element={
               <Suspend>
@@ -141,7 +150,7 @@ const App = () => {
             path={":hrdep/edit/:id"}
             element={
               <Suspend>
-                <EditAddHRRequest />
+                <EditAddHRQa />
               </Suspend>
             }
           />
@@ -149,7 +158,7 @@ const App = () => {
             path={":hrdep/add"}
             element={
               <Suspend>
-                <EditAddHRRequest />
+                <EditAddHRQa />
               </Suspend>
             }
           />

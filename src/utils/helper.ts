@@ -1,5 +1,6 @@
 import useQueryString from "@/hooks/custom/useQueryString";
 import { QueryClient } from "@tanstack/react-query";
+import { OrderStatus } from "./types";
 
 export enum EPresetTimes {
   SECOND = 1000,
@@ -51,4 +52,14 @@ export const handleIdx = (index: number) => {
   return currentPage === 1
     ? index + 1
     : index + 1 + itemsPerPage * (currentPage - 1);
+};
+
+export const dateTimeFormat = "DD.MM.YYYY HH:mm";
+export const dateMonthYear = "DD.MM.YYYY";
+export const yearMonthDate = "YYYY-MM-DD";
+
+export const HRStatusOBJ: { [key: number]: string } = {
+  [OrderStatus.new]: "new",
+  [OrderStatus.received]: "answered",
+  [OrderStatus.denied]: "denied",
 };

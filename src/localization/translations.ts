@@ -60,7 +60,11 @@ const localization = {
       retail: "Розница",
       answered: "Отвечен",
       question: "Вопрос",
+      question_ru: "Вопрос на Русском",
+      question_uz: "Вопрос на Узбецком",
       answer: "Ответ",
+      answer_uz: "Ответ на Узбецком",
+      answer_ru: "Ответ на Русском",
       edit: "Изменить",
       hr: "HR",
       active: "Активный",
@@ -74,6 +78,8 @@ const localization = {
       entrance: "Вход",
       problem_descr:
         "Если у вас нет доступа к этой системе, пожалуйста обратитесь к системному администратору  вашей компании",
+      sphere: "Сфера",
+      chat: "Чат",
     },
   },
   uz: {
