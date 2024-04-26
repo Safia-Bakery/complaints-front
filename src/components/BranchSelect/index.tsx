@@ -24,6 +24,7 @@ const BranchSelect: FC<Props> = ({
 
   const { data, isFetching, isLoading } = useBranches({
     enabled,
+    status: 1,
   });
   const [items, $items] = useState<SelectValue[]>([]);
 

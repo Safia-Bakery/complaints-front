@@ -4,7 +4,7 @@ import MainInput from "@/components/BaseInputs/MainInput";
 import { useNavigateParams } from "custom/useCustomNavigate";
 import { useForm } from "react-hook-form";
 import useQueryString from "@/hooks/custom/useQueryString";
-import MainSelect from "@/components/BaseInputs/MainSelect";
+import MainSelectKey from "@/components/BaseInputs/MainSelectKey";
 import { CountrySelect } from "@/utils/helper";
 import BranchSelect from "@/components/BranchSelect";
 import MainDatePicker from "@/components/BaseInputs/MainDatePicker";
@@ -36,7 +36,7 @@ const ComplaintsFilter: FC = () => {
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelect
+          <MainSelectKey
             values={CountrySelect}
             value={country?.toString()}
             onChange={(country) => navigate({ country })}
@@ -46,12 +46,12 @@ const ComplaintsFilter: FC = () => {
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelect values={{}} />
+          <MainSelectKey values={{}} />
         </BaseInput>
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelect values={{}} />
+          <MainSelectKey values={{}} />
         </BaseInput>
       </td>
       <td>
@@ -99,7 +99,7 @@ const ComplaintsFilter: FC = () => {
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelect
+          <MainSelectKey
             values={StatusSelect}
             value={status?.toString()}
             onChange={(status) => navigate({ status })}

@@ -1,30 +1,29 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenSelector } from "reducers/auth";
-import { BaseItem, ComplaintType } from "@/utils/types";
+import { BaseItem, SubCategoryType } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
 
 type Params = {
   id?: number;
-  subcategory_id?: string;
-  branch_id?: string;
-  status?: number;
-  otk_status?: number;
+  category_id?: string;
+  country_id?: string;
   size?: number;
   page?: number;
   enabled?: boolean;
+  status?: number;
 };
 
-export const useComplaints = ({ enabled = true, ...params }: Params) => {
+export const useSubCategories = ({ enabled = true, ...params }: Params) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["complaints", params],
+    queryKey: ["sub_category", params],
     queryFn: () =>
       baseApi
-        .get("/complaints", { params })
-        .then(({ data: response }) => response as BaseItem<ComplaintType>),
+        .get("/sub-category", { params })
+        .then(({ data: response }) => response as BaseItem<SubCategoryType>),
     enabled: !!token && enabled,
   });
 };
 
-export default useComplaints;
+export default useSubCategories;

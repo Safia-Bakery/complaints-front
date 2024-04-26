@@ -41,6 +41,10 @@ export interface BasePaginatedRes {
   pages: number;
 }
 
+export interface BaseItem<T> extends BasePaginatedRes {
+  items: T[];
+}
+
 export const StatusSelect = {
   [OrderStatus.new]: "new",
   [OrderStatus.received]: "received",
@@ -88,10 +92,6 @@ export interface CommunicationType {
   created_at: string;
   updated_at: string;
 }
-
-export interface CommunicationsType extends BasePaginatedRes {
-  items: CommunicationType[];
-}
 export interface HRRequest {
   id: number;
   complaint: string;
@@ -112,9 +112,6 @@ export interface HRRequest {
   updated_at: string;
 }
 
-export interface HRRequestsType extends BasePaginatedRes {
-  items: HRRequest[];
-}
 export interface HRQaType {
   id: number;
   question_uz: string;
@@ -133,9 +130,6 @@ export interface HRQaType {
     updated_at: null | string;
   };
 }
-export interface HRQasType extends BasePaginatedRes {
-  items: HRQaType[];
-}
 export interface ClientType {
   id: number;
   name: string;
@@ -145,6 +139,88 @@ export interface ClientType {
   created_at: string;
   updated_at: string;
 }
-export interface ClientsType extends BasePaginatedRes {
-  items: ClientType[];
+export interface SubCategoryType {
+  id: number;
+  name: string;
+  category_id: number;
+  country_id: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ComplaintType {
+  id: number;
+  product_name: string;
+  client_name: string;
+  client_number: string;
+  client_gender: string;
+  date_purchase: string;
+  date_return: string;
+  comment: string;
+  otk_status: number;
+  status: number;
+  is_client: boolean;
+  corrections: string;
+  autonumber: string;
+  subcategory_id: number;
+  branch_id: number;
+  subcategory: SubCategoryType;
+  branch: {
+    id: number;
+    name: string;
+    country_id: number;
+    status: number;
+    password: string;
+    created_at: string;
+    updated_at: string;
+  };
+  file: {
+    id: number;
+    url: string;
+    status: number;
+    created_at: string;
+    updated_at: string;
+  };
+  changes: {};
+  client_id: number;
+  client: {
+    id: number;
+    name: string;
+    status: number;
+    created_at: string;
+    updated_at: string;
+  };
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CountryType {
+  id: number;
+  name: string;
+  code: string;
+  status: number;
+  service_id: string;
+  quality_id: string;
+  callcenter_id: string;
+  created_at: string;
+  updated_at: null | string;
+}
+
+export interface CategoriesType {
+  id: number;
+  name: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface BranchType {
+  id: number;
+  name: string;
+  country_id: number;
+  status: number;
+  password: string;
+  created_at: string;
+  updated_at: string;
 }

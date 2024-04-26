@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenSelector } from "reducers/auth";
-import { CommunicationsType } from "@/utils/types";
+import { BaseItem, CommunicationType } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
 
@@ -20,7 +20,7 @@ export const useCommunications = ({ enabled = true, ...params }: Body) => {
     queryFn: () =>
       baseApi
         .get("/hr/communictation", { params })
-        .then(({ data: response }) => response as CommunicationsType),
+        .then(({ data: response }) => response as BaseItem<CommunicationType>),
     enabled: !!token && enabled,
     refetchInterval: 10000,
   });

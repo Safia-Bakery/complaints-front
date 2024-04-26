@@ -3,7 +3,11 @@ import MainInput from "@/components/BaseInputs/MainInput";
 import Button from "@/components/Button";
 import Loading from "@/components/Loader";
 import loginMutation from "@/hooks/mutations/login";
-import { loginHandler, tokenSelector } from "@/store/reducers/auth";
+import {
+  linkSelector,
+  loginHandler,
+  tokenSelector,
+} from "@/store/reducers/auth";
 import { useAppDispatch, useAppSelector } from "@/store/rootConfig";
 import { successToast } from "@/utils/toast";
 
@@ -18,6 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
   const token = useAppSelector(tokenSelector);
   const [error, $error] = useState(false);
+  const mainLink = useAppSelector(linkSelector);
 
   const {
     register,
@@ -45,7 +50,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (token) navigate("/dashboard");
+    if (token) navigate(mainLink);
   }, [token]);
 
   //   if (isPending) return <Loading absolute />;

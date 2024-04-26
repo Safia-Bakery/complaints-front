@@ -8,7 +8,7 @@ interface State {
 
 const initialState: State = {
   token: null,
-  link: "/home",
+  link: "/dashboard",
 };
 
 export const authReducer = createSlice({
@@ -20,7 +20,7 @@ export const authReducer = createSlice({
       window.location.reload();
 
       const { pathname, search } = window.location;
-      if (pathname.includes("login")) state.link = "/home";
+      if (pathname.includes("login")) state.link = "/dashboard";
       else state.link = pathname + search;
     },
     loginHandler: (state, { payload }) => {

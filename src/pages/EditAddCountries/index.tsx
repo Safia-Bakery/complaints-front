@@ -5,22 +5,21 @@ import MainTextArea from "@/components/BaseInputs/MainTextArea";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
-import faqsMutation from "@/hooks/mutations/faqs";
-import useHRQa from "@/hooks/useHRQa";
+import countriesMutation from "@/hooks/mutations/countries";
+import useCountries from "@/hooks/useCountries";
 import { errorToast, successToast } from "@/utils/toast";
-import { BtnTypes, HRSpheres } from "@/utils/types";
+import { BtnTypes } from "@/utils/types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditAddHRQa = () => {
+const EditAddCountries = () => {
   const { t } = useTranslation();
-  const { id, sphere } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-  const { mutate: postFaq, isPending } = faqsMutation();
-  const sphere_id = HRSpheres[sphere! as unknown as HRSpheres];
+  const { mutate: postCountry, isPending } = countriesMutation();
 
   const {
     register,
@@ -30,19 +29,17 @@ const EditAddHRQa = () => {
     reset,
   } = useForm();
 
-  const { data, isLoading } = useHRQa({
-    sphere_id,
+  const { data, isLoading } = useCountries({
     id: Number(id),
     enabled: !!id,
   });
 
-  const qa = data?.items?.[0];
+  const country = data?.items?.[0];
 
   const onSubmit = () => {
-    postFaq(
+    postCountry(
       {
         id: Number(id),
-        sphere_id,
         status: +getValues("status"),
         ...getValues(),
       },
@@ -57,18 +54,18 @@ const EditAddHRQa = () => {
   };
 
   useEffect(() => {
-    if (qa)
+    if (country)
       reset({
-        question_ru: qa.question_ru,
-        question_uz: qa.question_uz,
-        answer_ru: qa.answer_ru,
-        answer_uz: qa.answer_uz,
-        status: qa.status,
+        status: country.status,
+        name: country.name,
+        code: country.code,
+        service_id: country.service_id,
+        quality_id: country.quality_id,
+        callcenter_id: country.callcenter_id,
       });
-  }, [qa]);
+  }, [country]);
 
   if ((isLoading && !!id) || isPending) return <Loading />;
-
   return (
     <Container>
       <div className="flex justify-end">
@@ -77,32 +74,39 @@ const EditAddHRQa = () => {
         </Button>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
-        <BaseInputs label="question_ru" error={errors.question_ru}>
+        <BaseInputs label="name" error={errors.name}>
           <MainInput
-            register={register("question_ru", {
+            register={register("name", {
               required: t("required_field"),
             })}
           />
         </BaseInputs>
-        <BaseInputs label="question_uz" error={errors.question_uz}>
+        <BaseInputs label="code" error={errors.code}>
           <MainInput
-            register={register("question_uz", {
+            register={register("code", {
               required: t("required_field"),
             })}
           />
         </BaseInputs>
-        <BaseInputs label="answer_ru" error={errors.answer_ru}>
+        <BaseInputs label="service_id">
           <MainTextArea
             className="!h-24"
-            placeholder={t("answer_ru")}
-            register={register("answer_ru", { required: t("required_field") })}
+            placeholder={t("service_id")}
+            register={register("service_id")}
           />
         </BaseInputs>
-        <BaseInputs label="answer_uz" error={errors.answer_uz}>
+        <BaseInputs label="quality_id">
           <MainTextArea
             className="!h-24"
-            placeholder={t("answer_uz")}
-            register={register("answer_uz", { required: t("required_field") })}
+            placeholder={t("quality_id")}
+            register={register("quality_id")}
+          />
+        </BaseInputs>
+        <BaseInputs label="callcenter_id">
+          <MainTextArea
+            className="!h-24"
+            placeholder={t("callcenter_id")}
+            register={register("callcenter_id")}
           />
         </BaseInputs>
 
@@ -118,4 +122,4 @@ const EditAddHRQa = () => {
   );
 };
 
-export default EditAddHRQa;
+export default EditAddCountries;

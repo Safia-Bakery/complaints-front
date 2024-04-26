@@ -4,27 +4,25 @@ import TableViewBtn from "@/components/TableViewBtn";
 import VirtualTable from "@/components/VirtualTable";
 import useQueryString from "@/hooks/custom/useQueryString";
 import { handleIdx } from "@/utils/helper";
-import { BtnTypes, HRQaType, HRSpheres } from "@/utils/types";
+import { BranchType, BtnTypes } from "@/utils/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import useHRQa from "@/hooks/useHRQa";
-import ItemsCount from "@/components/ItemsCount";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
+import Pagination from "@/components/Pagination";
+import useBranches from "@/hooks/useBranches";
 
-const HRQa = () => {
-  const { sphere } = useParams();
+const Categories = () => {
   const { t } = useTranslation();
   const page = Number(useQueryString("page")) || 1;
   const navigate = useNavigate();
 
-  const { data, isLoading } = useHRQa({
-    sphere_id: HRSpheres[sphere! as unknown as HRSpheres],
+  const { data, isLoading } = useBranches({
     page,
   });
 
-  const columns = useMemo<ColumnDef<HRQaType>[]>(
+  const columns = useMemo<ColumnDef<BranchType>[]>(
     () => [
       {
         cell: ({ row }) => handleIdx(row.index),
@@ -33,30 +31,21 @@ const HRQa = () => {
       },
 
       {
-        accessorKey: "answer_ru",
-        header: t("answer"),
-      },
-
-      {
-        accessorKey: "question_ru",
-        header: t("question"),
+        accessorKey: "name",
+        header: t("name_table"),
       },
       {
         accessorKey: "status",
         header: t("status"),
-
-        cell: ({ row }) => (
-          <p className="text-center w-full">
-            {!!row.original?.status ? t("active") : t("inactive")}
-          </p>
-        ),
+        cell: ({ row }) =>
+          !!row.original?.status ? t("active") : t("inactive"),
       },
       {
         accessorKey: "action",
-        header: t(""),
+        header: "",
         size: 1,
         cell: ({ row }) => (
-          <Link className="w-18" to={`edit/${row.original.id}`}>
+          <Link className="w-18" to={`${row.original.id}`}>
             <TableViewBtn />
           </Link>
         ),
@@ -70,7 +59,8 @@ const HRQa = () => {
   return (
     <Container>
       <div className="flex justify-between items-end">
-        <ItemsCount data={data} />
+        {/* <ItemsCount data={data} /> */}
+        <div className="" />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
@@ -82,8 +72,10 @@ const HRQa = () => {
         data={data?.items}
         rowClassName={"text-center"}
       />
+
+      <Pagination totalPages={data?.pages} />
     </Container>
   );
 };
 
-export default HRQa;
+export default Categories;

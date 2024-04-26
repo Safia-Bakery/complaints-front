@@ -83,6 +83,8 @@ const localization = {
       chat: "Чат",
       open_chat: "Открыть Чат",
       deny: "Отклонить",
+      code: "Код",
+      password: "Пароль",
     },
   },
   uz: {

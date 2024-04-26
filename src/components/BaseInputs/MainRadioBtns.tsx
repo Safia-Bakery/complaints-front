@@ -9,7 +9,7 @@ interface Props {
   className?: string;
   value?: boolean;
   disabled?: boolean;
-  values: { [key: string]: string };
+  values?: { id: number | string; name: string; status?: number }[];
   register?: UseFormRegisterReturn;
   checked?: number;
 }
@@ -18,10 +18,10 @@ const MainRadioBtns: FC<Props> = ({ values, register }) => {
   const { t } = useTranslation();
   return (
     <div className={cl(styles.inputBox, "bg-white !flex flex-wrap gap-4")}>
-      {Object.entries(values).map((item) => (
-        <label key={item[0]} className={styles.radioBtn}>
-          <input type="radio" value={item[0]} {...register} />
-          {t(item[1])}
+      {values?.map((item) => (
+        <label key={item.id} className={styles.radioBtn}>
+          <input type="radio" value={item.id} {...register} />
+          {t(item.name)}
         </label>
       ))}
     </div>

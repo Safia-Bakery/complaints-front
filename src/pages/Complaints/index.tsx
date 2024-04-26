@@ -5,66 +5,21 @@ import { useTranslation } from "react-i18next";
 import ComplaintsFilter from "./filter";
 import Container from "@/components/Container";
 import StatusBlock from "@/components/StatusBlock";
-import { numberWithCommas } from "@/utils/helper";
 import ItemsCount from "@/components/ItemsCount";
 import Button from "@/components/Button";
-import { BtnTypes } from "@/utils/types";
+import { BtnTypes, ComplaintType } from "@/utils/types";
 import { Link, useNavigate } from "react-router-dom";
-
-type MockDataType = {
-  id: number;
-  country: string;
-  type: string;
-  category: string;
-  branch: string;
-  name: string;
-  phone: string;
-  created_at: string;
-  expence: number;
-  author: string;
-  status: number;
-};
-
-const mockData = {
-  items: [
-    {
-      id: 1,
-      country: "KZ",
-      type: "service",
-      category: "Касса",
-      branch: "Паркентский",
-      name: "Толиб",
-      phone: "+998933696969",
-      created_at: "28.03.2024 12:44",
-      expence: 230000,
-      author: "Хужаазиз",
-      status: 0,
-    },
-    {
-      id: 2,
-      country: "UZB",
-      type: "Качество",
-      category: "Цех",
-      branch: "ЦУМ",
-      name: "Толиб",
-      phone: "+998933696969",
-      created_at: "28.03.2024 12:44",
-      expence: 230000,
-      author: "Хужаазиз",
-      status: 1,
-    },
-  ],
-  page: 1,
-  pages: 1,
-  size: 50,
-  total: 24,
-};
+import useComplaints from "@/hooks/useComplaints";
+import Loading from "@/components/Loader";
+import Pagination from "@/components/Pagination";
 
 const Complaints = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  const columns = useMemo<ColumnDef<MockDataType>[]>(
+  const { data, isLoading } = useComplaints({});
+
+  const columns = useMemo<ColumnDef<ComplaintType>[]>(
     () => [
       {
         accessorFn: (_, idx) => idx + 1,
@@ -113,7 +68,7 @@ const Complaints = () => {
       {
         accessorKey: "expence",
         header: t("expence"),
-        cell: ({ row }) => numberWithCommas(row.original.expence),
+        // cell: ({ row }) => numberWithCommas(row.original.autonumber),
       },
       {
         accessorKey: "author",
@@ -132,20 +87,24 @@ const Complaints = () => {
     return <ComplaintsFilter />;
   }, []);
 
+  if (isLoading) return <Loading />;
+
   return (
     <Container>
       <div className="flex justify-between items-end">
-        <ItemsCount data={mockData} />
+        <ItemsCount data={data} />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
           </Button>
-          <Button btnType={BtnTypes.green}>Excel </Button>
+          <Button btnType={BtnTypes.green}>Excel</Button>
         </div>
       </div>
-      <VirtualTable columns={columns} data={mockData?.items}>
+      <VirtualTable columns={columns} data={data?.items}>
         {renderFilter}
       </VirtualTable>
+
+      <Pagination totalPages={data?.pages} />
     </Container>
   );
 };

@@ -1,29 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenSelector } from "reducers/auth";
+import { BaseItem, CountryType } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
-import { BaseItem, BranchType } from "@/utils/types";
 
 type Params = {
   id?: number;
-  name?: string;
-  status?: number;
-  country_id?: number;
-  enabled?: boolean;
-  page?: number;
   size?: number;
+  status?: number;
+  page?: number;
+  enabled?: boolean;
 };
 
-export const useBranches = ({ enabled = true, ...params }: Params) => {
+export const useCountries = ({ enabled = true, ...params }: Params) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["branches", params],
+    queryKey: ["country", params],
     queryFn: () =>
       baseApi
-        .get("/branches", { params })
-        .then(({ data: response }) => response as BaseItem<BranchType>),
+        .get("/country", { params })
+        .then(({ data: response }) => response as BaseItem<CountryType>),
     enabled: !!token && enabled,
   });
 };
 
-export default useBranches;
+export default useCountries;

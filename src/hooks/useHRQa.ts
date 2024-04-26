@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenSelector } from "reducers/auth";
-import { BaseItem, ClientType } from "@/utils/types";
+import { BaseItem, HRQaType } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
 
@@ -8,21 +8,20 @@ type Body = {
   enabled?: boolean;
   id?: number;
   page?: number;
+  sphere_id: string;
   size?: number;
 };
 
-export const useClients = ({ enabled = true, ...params }: Body) => {
+export const useHRQa = ({ enabled = true, ...params }: Body) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["clients", params],
+    queryKey: ["qa", params],
     queryFn: () =>
       baseApi
-        .get("/hr/clients", { params })
-        .then(({ data: response }) => response as BaseItem<ClientType>),
+        .get("/hr/questions", { params })
+        .then(({ data: response }) => response as BaseItem<HRQaType>),
     enabled: !!token && enabled,
   });
 };
 
-export default useClients;
-
-// /hr/clients
+export default useHRQa;

@@ -23,6 +23,17 @@ const HRRequests = lazy(() => import("@/pages/HRRequests"));
 const EditAddHRQa = lazy(() => import("@/pages/EditAddHRQa"));
 const HRQa = lazy(() => import("@/pages/HRQa"));
 const ShowHRRequest = lazy(() => import("@/pages/ShowHRRequest"));
+const Countries = lazy(() => import("@/pages/Countries"));
+const EditAddCountries = lazy(() => import("@/pages/EditAddCountries"));
+
+const Categories = lazy(() => import("@/pages/Categories"));
+const EditAddCategories = lazy(() => import("@/pages/EditAddCategories"));
+
+const SubCategories = lazy(() => import("@/pages/SubCategories"));
+const EditAddSubCategory = lazy(() => import("@/pages/EditAddSubCategory"));
+
+const Branches = lazy(() => import("@/pages/Branches"));
+const EditAddBranches = lazy(() => import("@/pages/EditAddBranches"));
 
 const App = () => {
   const lang = useAppSelector(langSelector);
@@ -163,6 +174,106 @@ const App = () => {
             }
           />
         </Route>
+
+        <Route
+          path={"countries"}
+          element={
+            <Suspend>
+              <Countries />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"countries/:id"}
+          element={
+            <Suspend>
+              <EditAddCountries />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"countries/add"}
+          element={
+            <Suspend>
+              <EditAddCountries />
+            </Suspend>
+          }
+        />
+
+        <Route
+          path={"categories"}
+          element={
+            <Suspend>
+              <Categories />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"categories/:id"}
+          element={
+            <Suspend>
+              <EditAddCategories />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"categories/add"}
+          element={
+            <Suspend>
+              <EditAddCategories />
+            </Suspend>
+          }
+        />
+
+        <Route
+          path={"categories/:id/child"}
+          element={
+            <Suspend>
+              <SubCategories />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"categories/:id/child/:childId"}
+          element={
+            <Suspend>
+              <EditAddSubCategory />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"categories/:id/child/add"}
+          element={
+            <Suspend>
+              <EditAddSubCategory />
+            </Suspend>
+          }
+        />
+
+        <Route
+          path={"branches"}
+          element={
+            <Suspend>
+              <Branches />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"branches/:id"}
+          element={
+            <Suspend>
+              <EditAddBranches />
+            </Suspend>
+          }
+        />
+        <Route
+          path={"branches/add"}
+          element={
+            <Suspend>
+              <EditAddBranches />
+            </Suspend>
+          }
+        />
       </Route>
     </Routes>
   );

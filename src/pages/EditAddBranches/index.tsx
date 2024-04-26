@@ -1,26 +1,28 @@
 import BaseInputs from "@/components/BaseInputs";
 import MainCheckBox from "@/components/BaseInputs/MainCheckBox";
 import MainInput from "@/components/BaseInputs/MainInput";
-import MainTextArea from "@/components/BaseInputs/MainTextArea";
+import MainSelect from "@/components/BaseInputs/MainSelect";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
-import faqsMutation from "@/hooks/mutations/faqs";
-import useHRQa from "@/hooks/useHRQa";
+import branchMutation from "@/hooks/mutations/branches";
+import useBranches from "@/hooks/useBranches";
+import useCountries from "@/hooks/useCountries";
 import { errorToast, successToast } from "@/utils/toast";
-import { BtnTypes, HRSpheres } from "@/utils/types";
+import { BtnTypes } from "@/utils/types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 
-const EditAddHRQa = () => {
+const EditAddBranches = () => {
   const { t } = useTranslation();
-  const { id, sphere } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-  const { mutate: postFaq, isPending } = faqsMutation();
-  const sphere_id = HRSpheres[sphere! as unknown as HRSpheres];
+  const { mutate: postBranch, isPending } = branchMutation();
+
+  const { data: countries, isLoading: countryLoading } = useCountries({});
 
   const {
     register,
@@ -30,19 +32,17 @@ const EditAddHRQa = () => {
     reset,
   } = useForm();
 
-  const { data, isLoading } = useHRQa({
-    sphere_id,
+  const { data, isLoading } = useBranches({
     id: Number(id),
     enabled: !!id,
   });
 
-  const qa = data?.items?.[0];
+  const branch = data?.items?.[0];
 
   const onSubmit = () => {
-    postFaq(
+    postBranch(
       {
         id: Number(id),
-        sphere_id,
         status: +getValues("status"),
         ...getValues(),
       },
@@ -57,15 +57,13 @@ const EditAddHRQa = () => {
   };
 
   useEffect(() => {
-    if (qa)
+    if (branch)
       reset({
-        question_ru: qa.question_ru,
-        question_uz: qa.question_uz,
-        answer_ru: qa.answer_ru,
-        answer_uz: qa.answer_uz,
-        status: qa.status,
+        status: branch.status,
+        name: branch.name,
+        country_id: branch.country_id,
       });
-  }, [qa]);
+  }, [branch]);
 
   if ((isLoading && !!id) || isPending) return <Loading />;
 
@@ -77,37 +75,28 @@ const EditAddHRQa = () => {
         </Button>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
-        <BaseInputs label="question_ru" error={errors.question_ru}>
+        <BaseInputs label="name_table" error={errors.name_table}>
           <MainInput
-            register={register("question_ru", {
+            register={register("name", {
               required: t("required_field"),
             })}
           />
         </BaseInputs>
-        <BaseInputs label="question_uz" error={errors.question_uz}>
-          <MainInput
-            register={register("question_uz", {
+
+        <BaseInputs label="country" error={errors.country_id}>
+          <MainSelect
+            values={countries?.items}
+            register={register("country_id", {
               required: t("required_field"),
             })}
-          />
-        </BaseInputs>
-        <BaseInputs label="answer_ru" error={errors.answer_ru}>
-          <MainTextArea
-            className="!h-24"
-            placeholder={t("answer_ru")}
-            register={register("answer_ru", { required: t("required_field") })}
-          />
-        </BaseInputs>
-        <BaseInputs label="answer_uz" error={errors.answer_uz}>
-          <MainTextArea
-            className="!h-24"
-            placeholder={t("answer_uz")}
-            register={register("answer_uz", { required: t("required_field") })}
           />
         </BaseInputs>
 
         <BaseInputs label="status">
           <MainCheckBox label={"active"} register={register("status")} />
+        </BaseInputs>
+        <BaseInputs label="password">
+          <MainCheckBox label={"password"} register={register("password")} />
         </BaseInputs>
 
         <Button type="submit" btnType={BtnTypes.black}>
@@ -118,4 +107,6 @@ const EditAddHRQa = () => {
   );
 };
 
-export default EditAddHRQa;
+export default EditAddBranches;
+
+// EditAddBranches

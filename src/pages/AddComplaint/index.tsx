@@ -2,45 +2,100 @@ import BaseInput from "@/components/BaseInputs";
 import MainDatePicker from "@/components/BaseInputs/MainDatePicker";
 import MainInput from "@/components/BaseInputs/MainInput";
 import MainRadioBtns from "@/components/BaseInputs/MainRadioBtns";
-import MainSelect from "@/components/BaseInputs/MainSelect";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
 import BranchSelect from "@/components/BranchSelect";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import MaskedInput from "@/components/MaskedInput";
 import MainDropZone from "@/components/MainDropZone";
-import {
-  CountrySelect,
-  GenderTypeSelect,
-  OrderTypeSelect,
-} from "@/utils/helper";
+import { GenderTypeSelect, fixedString } from "@/utils/helper";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import useCategories from "@/hooks/useCategories";
+import useSubCategories from "@/hooks/useSubCategories";
+import MainSelect from "@/components/BaseInputs/MainSelect";
+import useCountries from "@/hooks/useCountries";
+import useQueryString from "@/hooks/custom/useQueryString";
+import complaintsMutation from "@/hooks/mutations/complaints";
 
 const AddComplaint = () => {
   const inputFileRef = useRef();
+  const [date_purchase, $date_purchase] = useState<any>();
+  const [date_return, $date_return] = useState<any>();
+
   const { t } = useTranslation();
-  const { register, getValues, handleSubmit } = useForm();
+  const { register, getValues, handleSubmit, watch } = useForm();
+
+  const branchJson = useQueryString("branch");
+  const branch = branchJson && JSON.parse(branchJson);
+
+  const { mutate, isPending } = complaintsMutation();
+
+  const { data: categs, isLoading: categsLoading } = useCategories({});
+  const { data: country, isLoading: countryLoading } = useCountries({
+    status: 1,
+  });
+  const { data: subCategs, isFetching: subCategFetching } = useSubCategories({
+    status: 1,
+    enabled: !!watch("categ"),
+    category_id: watch("categ"),
+  });
+
+  const handleDatePurchase = (event: Date) => $date_purchase(event);
+  const handleDateReturn = (event: Date) => $date_return(event);
 
   const onSubmit = () => {
-    console.log(getValues());
-    console.log(inputFileRef, "inputFileRef");
+    const {
+      subcategory_id,
+      country_id,
+      product_name,
+      client_name,
+      client_number,
+      client_gender,
+
+      comment,
+    } = getValues();
+
+    // mutate({
+    //   files: inputFileRef.current,
+    //   branch_id: branch.id,
+
+    //   subcategory_id,
+    //   product_name,
+    //   client_name,
+    //   client_number: fixedString(client_number),
+    //   client_gender,
+    //   date_purchase: date_purchase?.current,
+    //   date_return: date_return.current,
+    //   comment,
+    // });
+    console.log({
+      files: inputFileRef.current,
+      branch_id: branch.id,
+
+      subcategory_id,
+      product_name,
+      client_name,
+      client_number: fixedString(client_number),
+      client_gender,
+      date_purchase: date_purchase?.current,
+      date_return: date_return.current,
+      comment,
+    });
+    console.log(date_purchase?.current, "date_purchase?.current");
   };
   return (
     <Container className="!pb-14 rounded-xl">
       <form onSubmit={handleSubmit(onSubmit)}>
         <BaseInput label="type">
-          <MainRadioBtns
-            values={OrderTypeSelect}
-            register={register("quality")}
-          />
+          <MainRadioBtns values={categs} register={register("categ")} />
         </BaseInput>
 
-        <BaseInput label="category">
+        <BaseInput label="subcateg">
           <MainRadioBtns
-            values={OrderTypeSelect}
-            register={register("category")}
+            values={subCategs?.items}
+            register={register("subcategory_id")}
           />
         </BaseInput>
 
@@ -50,8 +105,13 @@ const AddComplaint = () => {
           </BaseInput>
 
           <BaseInput label="country" className="flex-1">
-            <MainSelect values={CountrySelect} />
+            <MainSelect
+              values={country?.items}
+              register={register("country_id")}
+              disabled
+            />
           </BaseInput>
+
           <BaseInput label="product_name" className="flex-1">
             <MainInput register={register("product_name")} />
           </BaseInput>
@@ -59,27 +119,33 @@ const AddComplaint = () => {
 
         <div className="flex gap-4 mt-3">
           <BaseInput label="name" className="flex-1">
-            <MainInput register={register("name")} />
+            <MainInput register={register("client_name")} />
           </BaseInput>
 
           <BaseInput label="phone" className="flex-1">
-            <MaskedInput register={register("phone")} />
+            <MaskedInput register={register("client_number")} />
           </BaseInput>
 
           <BaseInput label="gender" className="flex-1">
             <MainRadioBtns
               values={GenderTypeSelect}
-              register={register("gender")}
+              register={register("client_gender")}
             />
           </BaseInput>
         </div>
 
         <div className="flex gap-4 mt-3">
           <BaseInput label="purchase_date" className="flex-1">
-            <MainDatePicker register={register("purchase_date")} />
+            <MainDatePicker
+              onChange={handleDatePurchase}
+              selected={date_purchase}
+            />
           </BaseInput>
           <BaseInput label="date_sending_samples" className="flex-1">
-            <MainDatePicker register={register("date_sample")} />
+            <MainDatePicker
+              onChange={handleDateReturn}
+              selected={date_return}
+            />
           </BaseInput>
           <div className="flex flex-1" />
         </div>
@@ -88,7 +154,7 @@ const AddComplaint = () => {
           <BaseInput label="comments" className="flex-[2]">
             <MainTextArea
               className="!h-[220px]"
-              register={register("comments")}
+              register={register("comment")}
             />
           </BaseInput>
 

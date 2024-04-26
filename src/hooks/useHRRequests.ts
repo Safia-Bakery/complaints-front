@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenSelector } from "reducers/auth";
-import { HRDeps, HRRequestsType } from "@/utils/types";
+import { BaseItem, HRDeps, HRRequest } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
 
@@ -25,7 +25,7 @@ export const useHRRequests = ({ enabled = true, ...params }: Body) => {
           }`,
           { params }
         )
-        .then(({ data: response }) => response as HRRequestsType),
+        .then(({ data: response }) => response as BaseItem<HRRequest>),
     enabled: !!token && enabled,
   });
 };

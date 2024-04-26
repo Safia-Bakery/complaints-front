@@ -34,11 +34,14 @@ export const OrderTypeSelect = {
   2: "service",
 };
 
-export const GenderTypeSelect = {
-  1: "man",
-  2: "woman",
-  3: "other",
-};
+export const GenderTypeSelect = [
+  {
+    id: 1,
+    name: "man",
+  },
+  { id: 2, name: "woman" },
+  { id: 3, name: "other" },
+];
 
 export const numberWithCommas = (val: number) => {
   return val
@@ -62,4 +65,15 @@ export const HRStatusOBJ: { [key: number]: string } = {
   [OrderStatus.new]: "new",
   [OrderStatus.received]: "answered",
   [OrderStatus.denied]: "denied",
+};
+
+export const imageContentType = "multipart/form-data";
+
+export const fixedString = (value: string) => {
+  return value
+    .split("")
+    .filter((item) => {
+      return [" ", "-", "(", ")", "_", "+"].indexOf(item) === -1;
+    })
+    .join("");
 };
