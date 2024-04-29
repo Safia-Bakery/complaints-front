@@ -5,7 +5,7 @@ import { useNavigateParams } from "custom/useCustomNavigate";
 import { useForm } from "react-hook-form";
 import useQueryString from "@/hooks/custom/useQueryString";
 import MainSelectKey from "@/components/BaseInputs/MainSelectKey";
-import { CountrySelect } from "@/utils/helper";
+import { CountrySelectValues } from "@/utils/helper";
 import BranchSelect from "@/components/BranchSelect";
 import MainDatePicker from "@/components/BaseInputs/MainDatePicker";
 import { StatusSelect } from "@/utils/types";
@@ -37,7 +37,7 @@ const ComplaintsFilter: FC = () => {
       <td>
         <BaseInput className="!m-1">
           <MainSelectKey
-            values={CountrySelect}
+            values={CountrySelectValues}
             value={country?.toString()}
             onChange={(country) => navigate({ country })}
             // onKeyDown={(e) => e.key === "Enter" && handleSubmit()}

@@ -18,9 +18,14 @@ import MainSelect from "@/components/BaseInputs/MainSelect";
 import useCountries from "@/hooks/useCountries";
 import useQueryString from "@/hooks/custom/useQueryString";
 import complaintsMutation from "@/hooks/mutations/complaints";
+import { BranchJsonVal } from "@/utils/types";
+import { errorToast, successToast } from "@/utils/toast";
+import Loading from "@/components/Loader";
+import { useNavigate } from "react-router-dom";
 
 const AddComplaint = () => {
-  const inputFileRef = useRef();
+  const inputFileRef = useRef<any>();
+  const navigate = useNavigate();
   const [date_purchase, $date_purchase] = useState<any>();
   const [date_return, $date_return] = useState<any>();
 
@@ -28,7 +33,7 @@ const AddComplaint = () => {
   const { register, getValues, handleSubmit, watch } = useForm();
 
   const branchJson = useQueryString("branch");
-  const branch = branchJson && JSON.parse(branchJson);
+  const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
 
   const { mutate, isPending } = complaintsMutation();
 
@@ -48,43 +53,39 @@ const AddComplaint = () => {
   const onSubmit = () => {
     const {
       subcategory_id,
-      country_id,
       product_name,
       client_name,
       client_number,
       client_gender,
-
       comment,
     } = getValues();
 
-    // mutate({
-    //   files: inputFileRef.current,
-    //   branch_id: branch.id,
-
-    //   subcategory_id,
-    //   product_name,
-    //   client_name,
-    //   client_number: fixedString(client_number),
-    //   client_gender,
-    //   date_purchase: date_purchase?.current,
-    //   date_return: date_return.current,
-    //   comment,
-    // });
-    console.log({
-      files: inputFileRef.current,
-      branch_id: branch.id,
-
-      subcategory_id,
-      product_name,
-      client_name,
-      client_number: fixedString(client_number),
-      client_gender,
-      date_purchase: date_purchase?.current,
-      date_return: date_return.current,
-      comment,
-    });
-    console.log(date_purchase?.current, "date_purchase?.current");
+    mutate(
+      {
+        branch_id: branch?.id,
+        subcategory_id,
+        product_name,
+        client_name,
+        client_number: fixedString(client_number),
+        client_gender,
+        date_purchase: date_purchase?.current,
+        date_return: date_return?.current,
+        comment,
+        files: inputFileRef?.current,
+      },
+      {
+        onSuccess: () => {
+          navigate("/complaints");
+          successToast("created");
+        },
+        onError: (e) => errorToast(e.message),
+      }
+    );
   };
+
+  if (isPending || categsLoading || countryLoading || subCategFetching)
+    return <Loading />;
+
   return (
     <Container className="!pb-14 rounded-xl">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,7 +108,7 @@ const AddComplaint = () => {
           <BaseInput label="country" className="flex-1">
             <MainSelect
               values={country?.items}
-              register={register("country_id")}
+              value={branch?.country_id}
               disabled
             />
           </BaseInput>

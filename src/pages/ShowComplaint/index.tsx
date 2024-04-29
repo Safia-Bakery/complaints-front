@@ -1,12 +1,29 @@
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import TableViewBtn from "@/components/TableViewBtn";
-import { BtnTypes } from "@/utils/types";
+import {
+  BtnTypes,
+  CountrySelect,
+  GenderType,
+  OrderStatus,
+  OrderTypeSelect,
+} from "@/utils/types";
 import { useTranslation } from "react-i18next";
 import trashIcon from "/icons/trash.svg";
+import useComplaints from "@/hooks/useComplaints";
+import { Link, useParams } from "react-router-dom";
+import Loading from "@/components/Loader";
+import dayjs from "dayjs";
+import { dateTimeFormat } from "@/utils/helper";
 
 const ShowComplaint = () => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const { data, isLoading } = useComplaints({ id: Number(id) });
+  const order = data?.items?.[0];
+
+  if (isLoading) return <Loading />;
+
   return (
     <>
       <Container>
@@ -16,27 +33,42 @@ const ShowComplaint = () => {
               <tbody>
                 <tr>
                   <th className="w-60">{t("type")}</th>
-                  <td>{t("service")}</td>
+                  <td>
+                    {t(
+                      `${
+                        OrderTypeSelect[Number(order?.subcategory?.category_id)]
+                      }`
+                    )}
+                  </td>
                 </tr>
                 <tr>
                   <th>{t("category")}</th>
-                  <td>{t("service")}</td>
+                  <td>{order?.subcategory?.name}</td>
                 </tr>
                 <tr>
                   <th>{t("country")}</th>
-                  <td>{t("service")}</td>
+                  <td>
+                    {CountrySelect[Number(order?.subcategory?.country_id)]}
+                  </td>
                 </tr>
                 <tr>
                   <th>{t("branch")}</th>
-                  <td>{t("service")}</td>
+                  <td>{order?.branch?.name}</td>
                 </tr>
                 <tr>
                   <th>{t("name")}</th>
-                  <td>{t("service")}</td>
+                  <td>{order?.client_name}</td>
                 </tr>
                 <tr>
                   <th>{t("phone")}</th>
-                  <td>{t("service")}</td>
+                  <td>
+                    <Link
+                      to={`tel:${order?.client_number}`}
+                      className="text-blue-500"
+                    >
+                      {order?.client_number}
+                    </Link>
+                  </td>
                 </tr>
                 <tr>
                   <th>{t("comments")}</th>
@@ -61,7 +93,7 @@ const ShowComplaint = () => {
                                   />
                                 </span>
                               )}
-                              <span>item.message</span>
+                              <span>{order?.comment}</span>
                             </div>
                           ))
                         }
@@ -80,31 +112,31 @@ const ShowComplaint = () => {
               <tbody>
                 <tr>
                   <th className="w-60">{t("status")}</th>
-                  <td>{t("service")}</td>
+                  <td>{t(OrderStatus[Number(order?.status)])}</td>
                 </tr>
                 <tr>
                   <th>{t("gender")}</th>
-                  <td>{t("service")}</td>
+                  <td>{GenderType[Number(order?.client_gender)]}</td>
                 </tr>
                 <tr>
                   <th>{t("purchase_date")}</th>
-                  <td>{t("service")}</td>
+                  <td>{dayjs(order?.date_purchase).format(dateTimeFormat)}</td>
                 </tr>
                 <tr>
                   <th>{t("sending_date")}</th>
-                  <td>{t("service")}</td>
+                  <td>{dayjs(order?.date_return).format(dateTimeFormat)}</td>
                 </tr>
                 <tr>
                   <th>{t("created_at")}</th>
-                  <td>{t("service")}</td>
+                  <td>{dayjs(order?.created_at).format(dateTimeFormat)}</td>
                 </tr>
                 <tr>
                   <th>{t("author")}</th>
-                  <td>{t("service")}</td>
+                  <td>author</td>
                 </tr>
                 <tr>
                   <th>{t("name_table")}</th>
-                  <td>{t("service")}</td>
+                  <td>{}</td>
                 </tr>
               </tbody>
             </table>

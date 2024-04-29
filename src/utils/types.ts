@@ -224,3 +224,36 @@ export interface BranchType {
   created_at: string;
   updated_at: string;
 }
+export interface SelectValue {
+  value: string;
+  label: string;
+  country_id?: number;
+}
+
+export type BranchJsonVal = {
+  id: string;
+  name: string;
+  country_id: string;
+};
+
+export interface FileItem {
+  file: File;
+  id: number | string;
+}
+
+export enum CountrySelect {
+  default,
+  UZB,
+  KZ,
+}
+
+export enum OrderTypeSelect {
+  all,
+  quality,
+  service,
+}
+export enum GenderType {
+  other,
+  man,
+  woman,
+}

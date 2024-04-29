@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import baseApi from "@/api/baseApi";
 import { imageContentType } from "@/utils/helper";
+import { FileItem } from "@/utils/types";
 
 type Body = {
   id?: number;
 
-  files?: any;
+  files?: FileItem[];
   product_name?: string;
   client_name?: string;
   client_number?: string; // phone number
@@ -23,13 +24,21 @@ type Body = {
 };
 const complaintsMutation = () => {
   return useMutation({
-    mutationKey: ["faqs_mutation"],
+    mutationKey: ["complaints_mutation"],
     mutationFn: async (body: Body) => {
+      const formData = new FormData();
+      body.files?.forEach((item: any) => {
+        formData.append("files", item);
+      });
+      Object.keys(body).forEach((key: string) => {
+        if (key !== "files" && body[key as keyof Body] !== undefined)
+          formData.append(key, body[key as keyof Body] as any);
+      });
       if (body.id) {
         const { data } = await baseApi.put("/complaints", body);
         return data;
       } else {
-        const { data } = await baseApi.post("/complaints", body, {
+        const { data } = await baseApi.post("/complaints", formData, {
           headers: { "Content-Type": imageContentType },
         });
         return data;

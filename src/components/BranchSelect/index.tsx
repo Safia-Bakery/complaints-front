@@ -4,16 +4,14 @@ import { useState } from "react";
 import useDebounce from "custom/useDebounce";
 import { useNavigateParams } from "custom/useCustomNavigate";
 import useBranches from "@/hooks/useBranches";
+import { SelectValue } from "@/utils/types";
 
 interface Props {
   enabled?: boolean;
   placeholdeer?: string;
   autoFocus?: boolean;
 }
-interface SelectValue {
-  value: string;
-  label: string;
-}
+
 const BranchSelect: FC<Props> = ({
   enabled,
   placeholdeer = "",
@@ -29,7 +27,13 @@ const BranchSelect: FC<Props> = ({
   const [items, $items] = useState<SelectValue[]>([]);
 
   const handleChange = (e: SingleValue<SelectValue>) => {
-    navigate({ branch: JSON.stringify({ id: e?.value, name: e?.label }) });
+    navigate({
+      branch: JSON.stringify({
+        id: e?.value,
+        name: e?.label,
+        country_id: e?.country_id,
+      }),
+    });
   };
 
   useEffect(() => {
@@ -40,6 +44,7 @@ const BranchSelect: FC<Props> = ({
           return {
             value: item.id,
             label: item.name,
+            country_id: item.country_id,
           };
         }),
       ]);
@@ -49,6 +54,7 @@ const BranchSelect: FC<Props> = ({
           return {
             value: item.id,
             label: item.name,
+            country_id: item.country_id,
           };
         })
       );

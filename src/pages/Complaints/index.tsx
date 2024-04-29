@@ -7,11 +7,18 @@ import Container from "@/components/Container";
 import StatusBlock from "@/components/StatusBlock";
 import ItemsCount from "@/components/ItemsCount";
 import Button from "@/components/Button";
-import { BtnTypes, ComplaintType } from "@/utils/types";
+import {
+  BtnTypes,
+  ComplaintType,
+  CountrySelect,
+  OrderTypeSelect,
+} from "@/utils/types";
 import { Link, useNavigate } from "react-router-dom";
 import useComplaints from "@/hooks/useComplaints";
 import Loading from "@/components/Loader";
 import Pagination from "@/components/Pagination";
+import dayjs from "dayjs";
+import { dateTimeFormat } from "@/utils/helper";
 
 const Complaints = () => {
   const { t } = useTranslation();
@@ -39,31 +46,38 @@ const Complaints = () => {
       {
         accessorKey: "country",
         header: t("country"),
-        cell: (info) => info.getValue(),
+        cell: ({ row }) =>
+          CountrySelect[Number(row.original?.subcategory?.country_id)],
       },
       {
-        accessorKey: "type",
+        accessorKey: "subcategory",
         header: t("type"),
+        cell: ({ row }) =>
+          OrderTypeSelect[Number(row.original?.subcategory?.category_id)],
       },
       {
         accessorKey: "category",
         header: t("category"),
+        cell: ({ row }) => row.original?.subcategory?.name,
       },
       {
         accessorKey: "branch",
         header: t("branch"),
+        cell: ({ row }) => row.original?.branch?.name,
       },
       {
-        accessorKey: "name",
+        accessorKey: "client_name",
         header: t("name"),
       }, //numberWithCommas
       {
-        accessorKey: "phone",
+        accessorKey: "client_number",
         header: t("phone"),
       },
       {
         accessorKey: "created_at",
         header: t("created_at"),
+        cell: ({ row }) =>
+          dayjs(row.original?.created_at).format(dateTimeFormat),
       },
       {
         accessorKey: "expence",

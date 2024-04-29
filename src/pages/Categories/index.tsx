@@ -2,7 +2,6 @@ import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
 import VirtualTable from "@/components/VirtualTable";
-import useQueryString from "@/hooks/custom/useQueryString";
 import { handleIdx } from "@/utils/helper";
 import { BtnTypes, CategoriesType } from "@/utils/types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -14,12 +13,9 @@ import useCategories from "@/hooks/useCategories";
 
 const Categories = () => {
   const { t } = useTranslation();
-  const page = Number(useQueryString("page")) || 1;
   const navigate = useNavigate();
 
-  const { data, isLoading } = useCategories({
-    page,
-  });
+  const { data, isLoading } = useCategories({});
 
   const columns = useMemo<ColumnDef<CategoriesType>[]>(
     () => [

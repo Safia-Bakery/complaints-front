@@ -24,14 +24,9 @@ export const queryClient = new QueryClient({
   },
 });
 
-export const CountrySelect = {
+export const CountrySelectValues = {
   1: "UZB",
   2: "KZ",
-};
-
-export const OrderTypeSelect = {
-  1: "quality",
-  2: "service",
 };
 
 export const GenderTypeSelect = [
