@@ -3,7 +3,7 @@ import baseApi from "@/api/baseApi";
 import { imageContentType } from "@/utils/helper";
 import { FileItem } from "@/utils/types";
 
-type Body = {
+export type ComplaintsBody = {
   id?: number;
 
   files?: FileItem[];
@@ -17,22 +17,24 @@ type Body = {
   autonumber?: string;
   subcategory_id?: number;
   branch_id?: string;
+  deny_reason?: string;
 
   otk_status?: number;
   status?: number;
   corrections?: string;
 };
+
 const complaintsMutation = () => {
   return useMutation({
     mutationKey: ["complaints_mutation"],
-    mutationFn: async (body: Body) => {
+    mutationFn: async (body: ComplaintsBody) => {
       const formData = new FormData();
       body.files?.forEach((item: any) => {
         formData.append("files", item);
       });
       Object.keys(body).forEach((key: string) => {
-        if (key !== "files" && body[key as keyof Body] !== undefined)
-          formData.append(key, body[key as keyof Body] as any);
+        if (key !== "files" && body[key as keyof ComplaintsBody] !== undefined)
+          formData.append(key, body[key as keyof ComplaintsBody] as any);
       });
       if (body.id) {
         const { data } = await baseApi.put("/complaints", body);

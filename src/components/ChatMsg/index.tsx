@@ -3,6 +3,8 @@ import { Fragment } from "react";
 import Avatar from "../Avatar";
 import dayjs from "dayjs";
 import { dateTimeFormat } from "@/utils/helper";
+import { Link } from "react-router-dom";
+import { baseURL } from "@/api/baseApi";
 
 type Props = {
   data: CommunicationType[];
@@ -31,9 +33,13 @@ const ChatMsg = ({ data }: Props) => {
             </p>
           )}
           {!!msg.url && (
-            <span className="text-blue-400 underline flex flex-col gap-2 max-w-[90%] relative pb-4 bg-mainGray rounded-2xl p-2 min-w-[150px] w-min">
+            <Link
+              to={`${baseURL}/${msg.url}`}
+              target="_blank"
+              className="text-blue-400 cursor-pointer underline flex flex-col gap-2 max-w-[90%] relative pb-4 bg-mainGray rounded-2xl p-2 min-w-[150px] w-min"
+            >
               file
-            </span>
+            </Link>
           )}
           <p className="text-[10px] text-mainBlack absolute bottom-1 right-1">
             {dayjs(msg.created_at).format(dateTimeFormat)}

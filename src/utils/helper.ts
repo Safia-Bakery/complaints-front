@@ -72,3 +72,14 @@ export const fixedString = (value: string) => {
     })
     .join("");
 };
+
+type CancelReasonType = {
+  [key: number]: string;
+};
+
+export const CancelReason: CancelReasonType = {
+  1: "incorrect_request",
+  2: "re_application",
+  3: "test_request",
+  4: "other",
+};

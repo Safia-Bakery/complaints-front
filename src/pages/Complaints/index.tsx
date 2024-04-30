@@ -39,7 +39,7 @@ const Complaints = () => {
         header: t("name_in_table"),
         cell: ({ row }) => (
           <Link className="text-blue-500" to={`${row.original.id}`}>
-            {row.index + 1}
+            {row.original.id}
           </Link>
         ),
       },

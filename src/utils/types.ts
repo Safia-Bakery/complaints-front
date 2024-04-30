@@ -9,6 +9,12 @@ export type UserType = {
   status: number;
   created_at: string;
   updated_at: string;
+  username?: string;
+  role?: RoleTypes;
+
+  permissions?: { [key: number]: boolean };
+  phone_number: string;
+  role_id: number;
 };
 
 export enum Language {
@@ -19,6 +25,8 @@ export enum Language {
 export enum ModalTypes {
   image,
   deny_reason,
+  edit_purchase_date,
+  edit_sending_date,
 }
 export enum FileType {
   other,
@@ -139,6 +147,46 @@ export interface ClientType {
   created_at: string;
   updated_at: string;
 }
+export interface RoleTypes {
+  id: number;
+  name: string;
+  permission: [
+    {
+      id: number;
+      action_id: number;
+      action: {
+        id: number;
+        name: string;
+        status: number;
+        created_at: string;
+        updated_at: string;
+      };
+      role_id: number;
+      status: number;
+      created_at: string;
+      updated_at: string;
+    }
+  ];
+  status: number;
+  created_at: string;
+  updated_at: string;
+}
+export interface PermissionTypes {
+  id: number;
+  name: string;
+  status: number;
+  action: [
+    {
+      id: number;
+      name: string;
+      status: number;
+      created_at: string;
+      updated_at: string;
+    }
+  ];
+  created_at: string;
+  updated_at: string;
+}
 export interface SubCategoryType {
   id: number;
   name: string;
@@ -157,6 +205,7 @@ export interface ComplaintType {
   client_gender: string;
   date_purchase: string;
   date_return: string;
+  deny_reason?: string;
   comment: string;
   otk_status: number;
   status: number;
@@ -181,7 +230,7 @@ export interface ComplaintType {
     status: number;
     created_at: string;
     updated_at: string;
-  };
+  }[];
   changes: {};
   client_id: number;
   client: {
@@ -256,4 +305,49 @@ export enum GenderType {
   other,
   man,
   woman,
+}
+export enum Permissions {
+  dashboard_stats = 1,
+
+  get_complaints = 1,
+  add_complaints = 1,
+  edit_complaints = 1,
+
+  get_internal_complaints = 1,
+  add_intrnal_complaints = 1,
+  edit_intrnal_complaints = 1,
+
+  get_reviews = 1,
+
+  get_hr_fabric = 1,
+  add_hr_fabric = 1,
+  edit_hr_fabric = 1,
+
+  get_hr_retail = 1,
+  add_hr_retail = 1,
+  edit_hr_retail = 1,
+
+  get_hr_okk = 1,
+  add_hr_okk = 1,
+  edit_hr_okk = 1,
+
+  get_users = 1,
+  add_users = 1,
+  edit_users = 1,
+
+  get_roles = 1,
+  add_roles = 1,
+  edit_roles = 1,
+
+  get_branches = 1,
+  add_branches = 1,
+  edit_branches = 1,
+
+  get_countries = 1,
+  add_countries = 1,
+  edit_countries = 1,
+
+  get_categories = 1,
+  add_categories = 1,
+  edit_categories = 1,
 }

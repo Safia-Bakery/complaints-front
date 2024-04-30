@@ -13,7 +13,7 @@ import {
   useNavigateParams,
   useRemoveParams,
 } from "@/hooks/custom/useCustomNavigate";
-import useClients from "@/hooks/useClients";
+import useHRClients from "@/hooks/useHRClients";
 import Avatar from "@/components/Avatar";
 import useCommunications from "@/hooks/useCommunications";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
@@ -51,7 +51,7 @@ const HRRequestModals = () => {
     enabled: !!chat && !!chat_modal,
   });
 
-  const { data: clients, isPending: clientsloading } = useClients({
+  const { data: clients, isPending: clientsloading } = useHRClients({
     enabled: !!chat_modal || !!chat,
     ...(!!chat && { id: chat }),
   });

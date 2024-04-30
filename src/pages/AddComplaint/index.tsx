@@ -26,8 +26,8 @@ import { useNavigate } from "react-router-dom";
 const AddComplaint = () => {
   const inputFileRef = useRef<any>();
   const navigate = useNavigate();
-  const [date_purchase, $date_purchase] = useState<any>();
-  const [date_return, $date_return] = useState<any>();
+  const [date_purchase, $date_purchase] = useState<Date>();
+  const [date_return, $date_return] = useState<Date>();
 
   const { t } = useTranslation();
   const { register, getValues, handleSubmit, watch } = useForm();
@@ -68,8 +68,8 @@ const AddComplaint = () => {
         client_name,
         client_number: fixedString(client_number),
         client_gender,
-        date_purchase: date_purchase?.current,
-        date_return: date_return?.current,
+        date_purchase: date_purchase?.toISOString(),
+        date_return: date_return?.toISOString(),
         comment,
         files: inputFileRef?.current,
       },

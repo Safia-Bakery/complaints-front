@@ -11,7 +11,7 @@ type Body = {
   size?: number;
 };
 
-export const useClients = ({ enabled = true, ...params }: Body) => {
+export const useHRClients = ({ enabled = true, ...params }: Body) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
     queryKey: ["clients", params],
@@ -23,6 +23,4 @@ export const useClients = ({ enabled = true, ...params }: Body) => {
   });
 };
 
-export default useClients;
-
-// /hr/clients
+export default useHRClients;

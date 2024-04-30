@@ -7,7 +7,7 @@ import styles from "./index.module.scss";
 import "./index.scss";
 import safiaLogo from "/images/safia-logo.png";
 import arrow from "/icons/whiteArrow.svg";
-import { HRSpheres } from "@/utils/types";
+import { HRSpheres, Permissions } from "@/utils/types";
 
 const routes = [
   {
@@ -15,72 +15,84 @@ const routes = [
     url: "/dashboard",
     icon: "/icons/dashboard.svg",
     activeIcon: "/icons/dashboard-active.svg",
+    screen: Permissions.dashboard_stats,
   },
   {
     name: "complaints",
     url: "/complaints",
     icon: "/icons/complaints.svg",
     activeIcon: "/icons/complaints-active.svg",
+    screen: Permissions.get_complaints,
   },
   {
     name: "inside-cmp",
     url: "/inside-complaints",
     icon: "/icons/inside-complaints.svg",
     activeIcon: "/icons/inside-complaints-active.svg",
+    screen: Permissions.get_internal_complaints,
   },
   {
     name: "comments",
     url: "/comments",
     icon: "/icons/comments.svg",
     activeIcon: "/icons/comments-active.svg",
+    screen: Permissions.get_reviews,
   },
   {
     name: "OKK",
     url: "/okk",
     icon: "/icons/okk.svg",
     activeIcon: "/icons/okk-active.svg",
+    screen: Permissions.get_hr_okk,
   },
   {
     name: "hr-fabric",
     url: `/hr-dashboard/${HRSpheres[HRSpheres.fabric]}`,
     icon: "/icons/hr.svg",
     activeIcon: "/icons/hr-active.svg",
+    screen: Permissions.get_hr_fabric,
   },
   {
     name: "hr-retail",
     url: `/hr-dashboard/${HRSpheres[HRSpheres.retail]}`,
     icon: "/icons/hr.svg",
     activeIcon: "/icons/hr-active.svg",
+    screen: Permissions.get_hr_retail,
   },
   {
     name: "users",
     url: "/users",
     icon: "/icons/users.svg",
     activeIcon: "/icons/users-active.svg",
+    screen: Permissions.get_users,
   },
   {
     name: "positions",
-    url: "/positions",
+    url: "/roles",
     icon: "/icons/positions.svg",
     activeIcon: "/icons/positions-active.svg",
+    screen: Permissions.get_roles,
   },
   {
     name: "branches",
     url: "/branches",
     icon: "/icons/location.svg",
     activeIcon: "/icons/location-active.svg",
+    screen: Permissions.get_branches,
   },
   {
     name: "countries",
     url: "/countries",
     icon: "/icons/location.svg",
     activeIcon: "/icons/location-active.svg",
+    screen: Permissions.get_countries,
   },
   {
     name: "categories",
     url: "/categories",
     icon: "/icons/location.svg",
     activeIcon: "/icons/location-active.svg",
+    screen: Permissions.get_categories,
   },
 ];
 

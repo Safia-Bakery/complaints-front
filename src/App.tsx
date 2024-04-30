@@ -9,6 +9,7 @@ import useToken from "@/hooks/useToken";
 import Loading from "./components/Loader";
 import "dayjs/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
+import { Permissions } from "./utils/types";
 
 const Login = lazy(() => import("@/pages/Login"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
@@ -34,6 +35,184 @@ const EditAddSubCategory = lazy(() => import("@/pages/EditAddSubCategory"));
 
 const Branches = lazy(() => import("@/pages/Branches"));
 const EditAddBranches = lazy(() => import("@/pages/EditAddBranches"));
+
+const Roles = lazy(() => import("@/pages/Roles"));
+const EditAddRoles = lazy(() => import("@/pages/EditAddRoles"));
+
+const Users = lazy(() => import("@/pages/Users"));
+const EditAddUsers = lazy(() => import("@/pages/EditAddUser"));
+
+const EditPermission = lazy(() => import("@/pages/EditPermission"));
+
+const hrRoutes = [
+  {
+    element: <HRRequests />,
+    path: ":hrdep",
+    screen: Permissions.get_hr_fabric,
+  },
+  {
+    element: <HRRequests />,
+    path: ":hrdep",
+    screen: Permissions.get_hr_retail,
+  },
+
+  { element: <HRQa />, path: "qa", screen: Permissions.get_hr_fabric },
+  { element: <HRQa />, path: "qa", screen: Permissions.get_hr_retail },
+  {
+    element: <ShowHRRequest />,
+    path: ":hrdep/:id",
+    screen: Permissions.edit_hr_fabric,
+  },
+  {
+    element: <ShowHRRequest />,
+    path: ":hrdep/:id",
+    screen: Permissions.edit_hr_retail,
+  },
+  {
+    element: <EditAddHRQa />,
+    path: ":hrdep/edit/:id",
+    screen: Permissions.edit_hr_fabric,
+  },
+  {
+    element: <EditAddHRQa />,
+    path: ":hrdep/edit/:id",
+    screen: Permissions.edit_hr_retail,
+  },
+  {
+    element: <EditAddHRQa />,
+    path: ":hrdep/add",
+    screen: Permissions.add_hr_fabric,
+  },
+  {
+    element: <EditAddHRQa />,
+    path: ":hrdep/add",
+    screen: Permissions.add_hr_retail,
+  },
+];
+
+const mainRoutes = [
+  {
+    element: <Dashboard />,
+    path: "dashboard",
+    screen: Permissions.dashboard_stats,
+  },
+  {
+    element: <Complaints />,
+    path: "complaints",
+    screen: Permissions.get_complaints,
+  },
+  {
+    element: <AddComplaint />,
+    path: "complaints/add",
+    screen: Permissions.add_complaints,
+  },
+  {
+    element: <ShowComplaint />,
+    path: "complaints/:id",
+    screen: Permissions.edit_complaints,
+  },
+
+  {
+    element: <HRDashboard />,
+    path: "hr-dashboard/:sphere",
+    screen: Permissions.get_hr_fabric,
+  },
+  {
+    element: <HRDashboard />,
+    path: "hr-dashboard/:sphere",
+    screen: Permissions.get_hr_retail,
+  },
+
+  {
+    element: <Countries />,
+    path: "countries",
+    screen: Permissions.get_countries,
+  },
+  {
+    element: <EditAddCountries />,
+    path: "countries/:id",
+    screen: Permissions.edit_countries,
+  },
+  {
+    element: <EditAddCountries />,
+    path: "countries/add",
+    screen: Permissions.add_countries,
+  },
+
+  {
+    element: <Categories />,
+    path: "categories",
+    screen: Permissions.get_categories,
+  },
+  {
+    element: <EditAddCategories />,
+    path: "categories/:id",
+    screen: Permissions.edit_categories,
+  },
+  {
+    element: <EditAddCategories />,
+    path: "categories/add",
+    screen: Permissions.add_categories,
+  },
+
+  {
+    element: <SubCategories />,
+    path: "categories/:id/child",
+    screen: Permissions.get_categories,
+  },
+  {
+    element: <EditAddSubCategory />,
+    path: "categories/:id/child/:childId",
+    screen: Permissions.edit_categories,
+  },
+  {
+    element: <EditAddSubCategory />,
+    path: "categories/:id/child/add",
+    screen: Permissions.add_categories,
+  },
+
+  { element: <Branches />, path: "branches", screen: Permissions.get_branches },
+  {
+    element: <EditAddBranches />,
+    path: "branches/:id",
+    screen: Permissions.edit_branches,
+  },
+  {
+    element: <EditAddBranches />,
+    path: "branches/add",
+    screen: Permissions.add_branches,
+  },
+
+  { element: <Roles />, path: "roles", screen: Permissions.get_roles },
+  {
+    element: <EditAddRoles />,
+    path: "roles/:id",
+    screen: Permissions.edit_roles,
+  },
+  {
+    element: <EditAddRoles />,
+    path: "roles/add",
+    screen: Permissions.add_roles,
+  },
+
+  { element: <Users />, path: "users", screen: Permissions.get_users },
+  {
+    element: <EditAddUsers />,
+    path: "users/:id",
+    screen: Permissions.edit_users,
+  },
+  {
+    element: <EditAddUsers />,
+    path: "users/add",
+    screen: Permissions.add_users,
+  },
+
+  {
+    element: <EditPermission />,
+    path: "permissions/:id",
+    screen: Permissions.edit_roles,
+  },
+];
 
 const App = () => {
   const lang = useAppSelector(langSelector);
@@ -74,57 +253,21 @@ const App = () => {
         path={"/"}
       >
         <Route
-          path={"dashboard"}
-          index
-          element={
-            <Suspend>
-              <Dashboard />
-            </Suspend>
-          }
-        />
-        <Route
           path={"*"}
+          index
           element={
             <Suspend>
               <Dashboard />
             </Suspend>
           }
         />
-
-        <Route
-          path={"complaints"}
-          index
-          element={
-            <Suspend>
-              <Complaints />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"complaints/add"}
-          element={
-            <Suspend>
-              <AddComplaint />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"complaints/:id"}
-          element={
-            <Suspend>
-              <ShowComplaint />
-            </Suspend>
-          }
-        />
-
-        <Route
-          path={"hr-dashboard/:sphere"}
-          element={
-            <Suspend>
-              <HRDashboard />
-            </Suspend>
-          }
-        />
+        {mainRoutes.map((route) => (
+          <Route
+            key={route.screen + route.path}
+            path={route.path}
+            element={<Suspend>{route.element}</Suspend>}
+          />
+        ))}
         <Route
           path={"hr-dashboard/:sphere"}
           element={
@@ -133,147 +276,14 @@ const App = () => {
             </Suspend>
           }
         >
-          <Route
-            path={":hrdep"}
-            element={
-              <Suspend>
-                <HRRequests />
-              </Suspend>
-            }
-          />
-          <Route
-            path={"qa"}
-            element={
-              <Suspend>
-                <HRQa />
-              </Suspend>
-            }
-          />
-          <Route
-            path={":hrdep/:id"}
-            element={
-              <Suspend>
-                <ShowHRRequest />
-              </Suspend>
-            }
-          />
-          <Route
-            path={":hrdep/edit/:id"}
-            element={
-              <Suspend>
-                <EditAddHRQa />
-              </Suspend>
-            }
-          />
-          <Route
-            path={":hrdep/add"}
-            element={
-              <Suspend>
-                <EditAddHRQa />
-              </Suspend>
-            }
-          />
+          {hrRoutes.map((route) => (
+            <Route
+              key={route.screen + route.path}
+              path={route.path}
+              element={<Suspend>{route.element}</Suspend>}
+            />
+          ))}
         </Route>
-
-        <Route
-          path={"countries"}
-          element={
-            <Suspend>
-              <Countries />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"countries/:id"}
-          element={
-            <Suspend>
-              <EditAddCountries />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"countries/add"}
-          element={
-            <Suspend>
-              <EditAddCountries />
-            </Suspend>
-          }
-        />
-
-        <Route
-          path={"categories"}
-          element={
-            <Suspend>
-              <Categories />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"categories/:id"}
-          element={
-            <Suspend>
-              <EditAddCategories />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"categories/add"}
-          element={
-            <Suspend>
-              <EditAddCategories />
-            </Suspend>
-          }
-        />
-
-        <Route
-          path={"categories/:id/child"}
-          element={
-            <Suspend>
-              <SubCategories />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"categories/:id/child/:childId"}
-          element={
-            <Suspend>
-              <EditAddSubCategory />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"categories/:id/child/add"}
-          element={
-            <Suspend>
-              <EditAddSubCategory />
-            </Suspend>
-          }
-        />
-
-        <Route
-          path={"branches"}
-          element={
-            <Suspend>
-              <Branches />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"branches/:id"}
-          element={
-            <Suspend>
-              <EditAddBranches />
-            </Suspend>
-          }
-        />
-        <Route
-          path={"branches/add"}
-          element={
-            <Suspend>
-              <EditAddBranches />
-            </Suspend>
-          }
-        />
       </Route>
     </Routes>
   );
