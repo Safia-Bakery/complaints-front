@@ -58,7 +58,7 @@ export const yearMonthDate = "YYYY-MM-DD";
 
 export const HRStatusOBJ: { [key: number]: string } = {
   [OrderStatus.new]: "new",
-  [OrderStatus.received]: "answered",
+  [OrderStatus.done]: "answered",
   [OrderStatus.denied]: "denied",
 };
 

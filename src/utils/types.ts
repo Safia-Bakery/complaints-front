@@ -103,6 +103,7 @@ export interface CommunicationType {
 export interface HRRequest {
   id: number;
   complaint: string;
+  deny_reason?: string;
   sphere_id: number;
   hrclient_id: number;
   hrclient: {
