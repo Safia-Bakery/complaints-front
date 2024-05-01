@@ -83,10 +83,10 @@ export enum HRSpheres {
 export enum HRDeps {
   all,
   questions,
-  complaints,
+  hr_complaints,
   suggestions,
   qa,
-  categories,
+  hr_categories,
 }
 
 export interface CommunicationType {

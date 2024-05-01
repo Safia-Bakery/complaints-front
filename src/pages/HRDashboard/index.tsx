@@ -24,12 +24,14 @@ const HRDashboard = () => {
         </HrSelectBtn>
         <div className="flex flex-col gap-2 flex-1">
           <HrSelectBtn
-            onClick={handleNavigate(`${HRDeps[HRDeps.complaints]}`)}
+            onClick={handleNavigate(`${HRDeps[HRDeps.hr_complaints]}`)}
             className="min-h-24"
           >
             {t("complaints")}
           </HrSelectBtn>
-          <HrSelectBtn onClick={handleNavigate(`${HRDeps[HRDeps.categories]}`)}>
+          <HrSelectBtn
+            onClick={handleNavigate(`${HRDeps[HRDeps.hr_categories]}`)}
+          >
             {t("categories")}
           </HrSelectBtn>
         </div>
@@ -37,7 +39,9 @@ const HRDashboard = () => {
           {t("suggestions")}
         </HrSelectBtn>
       </Container>
-      <Container className="!mt-1">s</Container>
+      <Container className="!mt-1">
+        <div className=""></div>
+      </Container>
     </>
   );
 };

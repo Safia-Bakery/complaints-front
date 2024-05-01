@@ -1,11 +1,12 @@
 import { FC } from "react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import cl from "classnames";
 import { UseFormRegisterReturn } from "react-hook-form";
 import styles from "./index.module.scss";
+import { ru } from "date-fns/locale";
 
-// registerLocale("ru", ru);
-// setDefaultLocale("ru");
+registerLocale("ru", ru);
+setDefaultLocale("ru");
 
 interface Props {
   onChange?: any;

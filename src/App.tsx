@@ -45,6 +45,9 @@ const EditAddUsers = lazy(() => import("@/pages/EditAddUser"));
 const EditPermission = lazy(() => import("@/pages/EditPermission"));
 const Reviews = lazy(() => import("@/pages/Reviews"));
 
+const HRCategories = lazy(() => import("@/pages/HRCategories"));
+const EditAddHRCategory = lazy(() => import("@/pages/EditAddHRCategory"));
+
 const hrRoutes = [
   {
     element: <HRRequests />,
@@ -59,6 +62,36 @@ const hrRoutes = [
 
   { element: <HRQa />, path: "qa", screen: Permissions.get_hr_fabric },
   { element: <HRQa />, path: "qa", screen: Permissions.get_hr_retail },
+  {
+    element: <HRCategories />,
+    path: "hr_categories",
+    screen: Permissions.get_hr_fabric,
+  },
+  {
+    element: <EditAddHRCategory />,
+    path: "hr_categories/:category_id",
+    screen: Permissions.get_hr_fabric,
+  },
+  {
+    element: <EditAddHRCategory />,
+    path: "hr_categories/add",
+    screen: Permissions.get_hr_fabric,
+  },
+  {
+    element: <HRCategories />,
+    path: "hr_categories",
+    screen: Permissions.get_hr_retail,
+  },
+  {
+    element: <EditAddHRCategory />,
+    path: "hr_categories/:category_id",
+    screen: Permissions.get_hr_retail,
+  },
+  {
+    element: <EditAddHRCategory />,
+    path: "hr_categories/add",
+    screen: Permissions.get_hr_retail,
+  },
   {
     element: <ShowHRRequest />,
     path: ":hrdep/:id",

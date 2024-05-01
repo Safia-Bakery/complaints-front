@@ -1,6 +1,5 @@
 import BaseInput from "@/components/BaseInputs";
 import MainDatePicker from "@/components/BaseInputs/MainDatePicker";
-import MainInput from "@/components/BaseInputs/MainInput";
 import MainSelect from "@/components/BaseInputs/MainSelect";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
 import Button from "@/components/Button";
@@ -17,6 +16,8 @@ import { CancelReason } from "@/utils/helper";
 import { errorToast, successToast } from "@/utils/toast";
 import { ModalTypes, OrderStatus } from "@/utils/types";
 import cl from "classnames";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -27,19 +28,25 @@ const ComplaintModals = () => {
   const removeParams = useRemoveParams();
   const modal = Number(useQueryString("modal")) as ModalTypes;
   const photo = useQueryString("photo");
-  const { refetch } = useComplaints({ id: Number(id) });
+  const [date_purchase, $date_purchase] = useState<Date>();
+  const [date_return, $date_return] = useState<Date>();
+
+  const { refetch, data } = useComplaints({ id: Number(id) });
+  const order = data?.items?.[0];
 
   const { mutate, isPending } = complaintsMutation();
 
   const closeModal = () => removeParams(["modal"]);
 
-  const { getValues, register, handleSubmit, watch } = useForm();
+  const { getValues, register, handleSubmit, watch, reset } = useForm();
 
   const handleComplaint = (body?: ComplaintsBody) => () => {
     const { fixedReason, cancel_reason } = getValues();
     mutate(
       {
         id: Number(id),
+        ...(!!date_return && { date_return: date_return?.toISOString() }),
+        ...(!!date_purchase && { date_purchase: date_purchase?.toISOString() }),
         deny_reason:
           fixedReason < 4 ? t(CancelReason[fixedReason]) : cancel_reason,
         ...body,
@@ -54,6 +61,13 @@ const ComplaintModals = () => {
       }
     );
   };
+  const handleDatePurchase = (event: Date) => $date_purchase(event);
+  const handleDateReturn = (event: Date) => $date_return(event);
+
+  useEffect(() => {
+    reset({ purchase_date: new Date() });
+    // reset({ purchase_date: data?.items?.[0]?.date_purchase });
+  }, []);
 
   const renderModal = () => {
     switch (modal) {
@@ -114,8 +128,49 @@ const ComplaintModals = () => {
               </button>
             </Header>
             <div className="p-3">
-              <BaseInput label="purchase_date">
-                <MainInput register={register("purchase_date")} type="date" />
+              <BaseInput label="date_sending_samples">
+                <MainDatePicker
+                  showTimeSelect
+                  dateFormat="Pp"
+                  selected={
+                    !!date_purchase || order?.date_purchase
+                      ? dayjs(date_purchase || order?.date_purchase).toDate()
+                      : undefined
+                  }
+                  onChange={handleDatePurchase}
+                />
+              </BaseInput>
+
+              <Button className="w-full mt-3" type="submit">
+                {t("apply")}
+              </Button>
+            </div>
+          </form>
+        );
+
+      case ModalTypes.edit_sending_date:
+        return (
+          <form
+            onSubmit={handleSubmit(handleComplaint())}
+            className={"w-[420px]"}
+          >
+            <Header title="edit_date_return">
+              <button onClick={closeModal} className="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </Header>
+            <div className="p-3">
+              <BaseInput label="date_return">
+                <MainDatePicker
+                  showTimeSelect
+                  dateFormat="Pp"
+                  selected={
+                    !!date_return || order?.date_return
+                      ? dayjs(date_return || order?.date_return).toDate()
+                      : undefined
+                  }
+                  onChange={handleDateReturn}
+                />
               </BaseInput>
 
               <Button className="w-full mt-3" type="submit">
@@ -129,6 +184,7 @@ const ComplaintModals = () => {
         break;
     }
   };
+
   return (
     <Modal
       onClose={() => removeParams(["modal", !!photo ? "photo" : ""])}

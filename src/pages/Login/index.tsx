@@ -53,7 +53,6 @@ const Login = () => {
     if (token) navigate(mainLink);
   }, [token]);
 
-  //   if (isPending) return <Loading absolute />;
   return (
     <div className="h-screen flex flex-1 w-screen">
       <div className="flex flex-[4] items-center justify-center bg-lightBrown">
