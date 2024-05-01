@@ -6,7 +6,7 @@ const localization = {
       dashboard: "Дашборд",
       complaints: "Жалобы",
       "inside-cmp": "Вн. Жалобы",
-      "inside-complaints": "Внутренние жалобы",
+      "internal-complaints": "Внутренние жалобы",
       comments: "Отзывы",
       "hr-fabric": "HR Фабрика",
       "hr-retail": "HR Розница",
@@ -99,6 +99,7 @@ const localization = {
       apply: "Применить",
       edit_purchase_date: "Изменить Дата покупки",
       edit_sending_date: "Изменить Дата отправки образцов",
+      reviews: "Отзывы",
     },
   },
   uz: {

@@ -37,7 +37,9 @@ const AddComplaint = () => {
 
   const { mutate, isPending } = complaintsMutation();
 
-  const { data: categs, isLoading: categsLoading } = useCategories({});
+  const { data: categs, isLoading: categsLoading } = useCategories({
+    status: 1,
+  });
   const { data: country, isLoading: countryLoading } = useCountries({
     status: 1,
   });
@@ -102,7 +104,7 @@ const AddComplaint = () => {
 
         <div className="flex gap-4">
           <BaseInput label="branch" className="flex-1">
-            <BranchSelect />
+            <BranchSelect enabled />
           </BaseInput>
 
           <BaseInput label="country" className="flex-1">

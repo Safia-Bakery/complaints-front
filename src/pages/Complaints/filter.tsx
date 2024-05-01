@@ -1,26 +1,66 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import BaseInput from "@/components/BaseInputs";
 import MainInput from "@/components/BaseInputs/MainInput";
-import { useNavigateParams } from "custom/useCustomNavigate";
+import { useNavigateParams, useRemoveParams } from "custom/useCustomNavigate";
 import { useForm } from "react-hook-form";
 import useQueryString from "@/hooks/custom/useQueryString";
 import MainSelectKey from "@/components/BaseInputs/MainSelectKey";
-import { CountrySelectValues } from "@/utils/helper";
 import BranchSelect from "@/components/BranchSelect";
 import MainDatePicker from "@/components/BaseInputs/MainDatePicker";
-import { StatusSelect } from "@/utils/types";
+import { OrderStatus, StatusSelect } from "@/utils/types";
+import useCategories from "@/hooks/useCategories";
+import useCountries from "@/hooks/useCountries";
+import useSubCategories from "@/hooks/useSubCategories";
+import MainSelect from "@/components/BaseInputs/MainSelect";
+import dayjs from "dayjs";
 
 const ComplaintsFilter: FC = () => {
   const navigate = useNavigateParams();
-  const name = useQueryString("name");
-  const country = useQueryString("country");
+  const deleteParam = useRemoveParams();
+  const country_id = useQueryString("country_id");
   const status = useQueryString("status");
+  const created_at = useQueryString("created_at");
+  const [enabled, $enabled] = useState(false);
+
+  const subcategory_id = useQueryString("subcategory_id");
+  const id = useQueryString("id");
+  const client_name = useQueryString("client_name");
+  const phone_number = useQueryString("phone_number");
+  const expense = useQueryString("expense");
+  const updated_by = useQueryString("updated_by");
+  const category_id = useQueryString("category_id");
+
+  const handleCreated = (start: Date | null) => {
+    if (start === undefined) deleteParam(["created_at"]);
+    if (!!start) navigate({ created_at: start.toISOString() });
+  };
+
+  const { data: categs, refetch: categoryRefech } = useCategories({
+    status: 1,
+    enabled: false,
+  });
+
+  const { data: countries, refetch: countryRefech } = useCountries({
+    status: 1,
+    enabled: false,
+  });
+
+  const { data: subCategs, refetch: subcategsRefech } = useSubCategories({
+    status: 1,
+    enabled: false,
+  });
 
   const { register, reset, getValues } = useForm();
-  const handleSubmit = () => navigate({ name: getValues("name") });
+  const handleSubmit = () => navigate({ ...getValues() });
 
   useEffect(() => {
-    if (!!name) reset({ name });
+    reset({
+      id,
+      client_name,
+      phone_number,
+      expense,
+      updated_by,
+    });
   }, []);
 
   return (
@@ -29,6 +69,7 @@ const ComplaintsFilter: FC = () => {
       <td>
         <BaseInput className="!m-1">
           <MainInput
+            type="number"
             register={register("id")}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
@@ -36,33 +77,43 @@ const ComplaintsFilter: FC = () => {
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelectKey
-            values={CountrySelectValues}
-            value={country?.toString()}
-            onChange={(country) => navigate({ country })}
-            // onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+          <MainSelect
+            values={countries?.items}
+            value={country_id}
+            onFocus={() => countryRefech()}
+            onChange={(e) => navigate({ country_id: e.target.value })}
           />
         </BaseInput>
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelectKey values={{}} />
+          <MainSelect
+            values={categs}
+            value={category_id}
+            onChange={(e) => navigate({ category_id: e.target.value })}
+            onFocus={() => categoryRefech()}
+          />
         </BaseInput>
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainSelectKey values={{}} />
+          <MainSelect
+            value={subcategory_id}
+            onChange={(e) => navigate({ subcategory_id: e.target.value })}
+            values={subCategs?.items}
+            onFocus={() => subcategsRefech()}
+          />
         </BaseInput>
       </td>
-      <td>
+      <td onFocus={() => $enabled(true)}>
         <BaseInput className="!m-1">
-          <BranchSelect />
+          <BranchSelect enabled={enabled} />
         </BaseInput>
       </td>
       <td>
         <BaseInput className="!m-1">
           <MainInput
-            register={register("name")}
+            register={register("client_name")}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
         </BaseInput>
@@ -70,20 +121,29 @@ const ComplaintsFilter: FC = () => {
       <td>
         <BaseInput className="!m-1">
           <MainInput
-            register={register("phone")}
+            type="number"
+            register={register("phone_number")}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
         </BaseInput>
       </td>
       <td>
         <BaseInput className="!m-1">
-          <MainDatePicker />
+          <MainDatePicker
+            selected={
+              !!created_at && created_at !== "undefined"
+                ? dayjs(created_at).toDate()
+                : undefined
+            }
+            onChange={handleCreated}
+            dateFormat="d.MM.yyyy"
+          />
         </BaseInput>
       </td>
       <td>
         <BaseInput className="!m-1">
           <MainInput
-            register={register("price")}
+            register={register("expense")}
             type="number"
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
@@ -92,7 +152,7 @@ const ComplaintsFilter: FC = () => {
       <td>
         <BaseInput className="!m-1">
           <MainInput
-            register={register("author")}
+            register={register("updated_by")}
             onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           />
         </BaseInput>
@@ -101,8 +161,12 @@ const ComplaintsFilter: FC = () => {
         <BaseInput className="!m-1">
           <MainSelectKey
             values={StatusSelect}
-            value={status?.toString()}
-            onChange={(status) => navigate({ status })}
+            value={OrderStatus[status as any] ?? undefined}
+            onChange={(status) =>
+              navigate({
+                status: OrderStatus[status as any],
+              })
+            }
           />
         </BaseInput>
       </td>

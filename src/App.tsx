@@ -43,6 +43,7 @@ const Users = lazy(() => import("@/pages/Users"));
 const EditAddUsers = lazy(() => import("@/pages/EditAddUser"));
 
 const EditPermission = lazy(() => import("@/pages/EditPermission"));
+const Reviews = lazy(() => import("@/pages/Reviews"));
 
 const hrRoutes = [
   {
@@ -97,9 +98,19 @@ const mainRoutes = [
     screen: Permissions.dashboard_stats,
   },
   {
-    element: <Complaints />,
+    element: <Complaints is_client />,
     path: "complaints",
     screen: Permissions.get_complaints,
+  },
+  {
+    element: <Complaints />,
+    path: "internal-complaints",
+    screen: Permissions.get_internal_complaints,
+  },
+  {
+    element: <Complaints otk_status />,
+    path: "okk",
+    screen: Permissions.get_okk,
   },
   {
     element: <AddComplaint />,
@@ -110,6 +121,16 @@ const mainRoutes = [
     element: <ShowComplaint />,
     path: "complaints/:id",
     screen: Permissions.edit_complaints,
+  },
+  {
+    element: <AddComplaint />,
+    path: "internal-complaints/add",
+    screen: Permissions.add_internal_complaints,
+  },
+  {
+    element: <ShowComplaint />,
+    path: "internal-complaints/:id",
+    screen: Permissions.edit_internal_complaints,
   },
 
   {
@@ -212,6 +233,12 @@ const mainRoutes = [
     path: "permissions/:id",
     screen: Permissions.edit_roles,
   },
+
+  {
+    element: <Reviews />,
+    path: "reviews",
+    screen: Permissions.get_reviews,
+  },
 ];
 
 const App = () => {
@@ -220,7 +247,7 @@ const App = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { error, isLoading } = useToken({});
+  const { error, isLoading, data } = useToken({});
 
   useEffect(() => {
     if (!token) navigate("/login");
@@ -261,13 +288,15 @@ const App = () => {
             </Suspend>
           }
         />
-        {mainRoutes.map((route) => (
-          <Route
-            key={route.screen + route.path}
-            path={route.path}
-            element={<Suspend>{route.element}</Suspend>}
-          />
-        ))}
+        {mainRoutes
+          .filter((item) => data?.permissions?.[item.screen])
+          .map((route) => (
+            <Route
+              key={route.screen + route.path}
+              path={route.path}
+              element={<Suspend>{route.element}</Suspend>}
+            />
+          ))}
         <Route
           path={"hr-dashboard/:sphere"}
           element={
@@ -276,13 +305,15 @@ const App = () => {
             </Suspend>
           }
         >
-          {hrRoutes.map((route) => (
-            <Route
-              key={route.screen + route.path}
-              path={route.path}
-              element={<Suspend>{route.element}</Suspend>}
-            />
-          ))}
+          {hrRoutes
+            .filter((item) => data?.permissions?.[item.screen])
+            .map((route) => (
+              <Route
+                key={route.screen + route.path}
+                path={route.path}
+                element={<Suspend>{route.element}</Suspend>}
+              />
+            ))}
         </Route>
       </Route>
     </Routes>

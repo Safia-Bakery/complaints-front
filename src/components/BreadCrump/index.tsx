@@ -9,6 +9,7 @@ import redDot from "/icons/redDot.svg";
 import { useTranslation } from "react-i18next";
 import { Language } from "@/utils/types";
 import { useAppDispatch, useAppSelector } from "@/store/rootConfig";
+import { logoutHandler } from "@/store/reducers/auth";
 
 interface Breadcrumb {
   path: string;
@@ -81,7 +82,12 @@ const Breadcrumbs: FC = () => {
               <img src={redDot} alt="" className="absolute top-0 left-0" />
             </div>
 
-            <span className="font-medium text-sm">{me?.name}</span>
+            <span
+              onClick={() => dispatch(logoutHandler())}
+              className="font-medium text-sm cursor-pointer"
+            >
+              {me?.name}
+            </span>
           </div>
         </div>
       </div>

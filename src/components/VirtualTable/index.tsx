@@ -63,7 +63,7 @@ function VirtualTable<T>({
       className={`${className} w-full bg-white h-[600px] overflow-auto`}
     >
       <div
-        style={{ height: `${virtualizer.getTotalSize() + 120}px` }}
+        style={{ height: `${virtualizer.getTotalSize() + 150}px` }}
         className="overflow-x-auto"
       >
         <table className="table table-bordered w-full">

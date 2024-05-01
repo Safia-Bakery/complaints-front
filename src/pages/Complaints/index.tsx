@@ -8,23 +8,50 @@ import StatusBlock from "@/components/StatusBlock";
 import ItemsCount from "@/components/ItemsCount";
 import Button from "@/components/Button";
 import {
+  BranchJsonVal,
   BtnTypes,
   ComplaintType,
   CountrySelect,
   OrderTypeSelect,
 } from "@/utils/types";
-import { Link, useNavigate } from "react-router-dom";
-import useComplaints from "@/hooks/useComplaints";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useComplaints, { ComplaintsParams } from "@/hooks/useComplaints";
 import Loading from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import dayjs from "dayjs";
 import { dateTimeFormat } from "@/utils/helper";
+import useQueryString from "@/hooks/custom/useQueryString";
 
-const Complaints = () => {
+const Complaints = (filter: ComplaintsParams) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const id = useQueryString("id");
+  const country_id = useQueryString("country_id");
+  const category_id = useQueryString("category_id");
+  const subcategory_id = useQueryString("subcategory_id");
+  const client_name = useQueryString("client_name");
+  const phone_number = useQueryString("phone_number");
+  const expense = useQueryString("expense");
+  const updated_by = useQueryString("updated_by");
+  const status = Number(useQueryString("status"));
+  const created_at = useQueryString("created_at");
+  const branchJson = useQueryString("branch");
+  const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
 
-  const { data, isLoading } = useComplaints({});
+  const { data, isLoading } = useComplaints({
+    ...filter,
+    ...(!!id && { id }),
+    ...(!!country_id && { country_id }),
+    ...(!!category_id && { category_id }),
+    ...(!!subcategory_id && { subcategory_id }),
+    ...(!!client_name && { client_name }),
+    ...(!!phone_number && { phone_number }),
+    ...(!!expense && { expense }),
+    ...(!!updated_by && { updated_by }),
+    ...(!!created_at && { created_at }),
+    ...(!!branch?.id && { branch_id: branch.id }),
+    ...(!!status && { status }),
+  });
 
   const columns = useMemo<ColumnDef<ComplaintType>[]>(
     () => [

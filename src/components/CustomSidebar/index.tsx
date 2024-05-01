@@ -8,6 +8,7 @@ import "./index.scss";
 import safiaLogo from "/images/safia-logo.png";
 import arrow from "/icons/whiteArrow.svg";
 import { HRSpheres, Permissions } from "@/utils/types";
+import useToken from "@/hooks/useToken";
 
 const routes = [
   {
@@ -26,14 +27,14 @@ const routes = [
   },
   {
     name: "inside-cmp",
-    url: "/inside-complaints",
+    url: "/internal-complaints",
     icon: "/icons/inside-complaints.svg",
     activeIcon: "/icons/inside-complaints-active.svg",
     screen: Permissions.get_internal_complaints,
   },
   {
     name: "comments",
-    url: "/comments",
+    url: "/reviews",
     icon: "/icons/comments.svg",
     activeIcon: "/icons/comments-active.svg",
     screen: Permissions.get_reviews,
@@ -43,7 +44,7 @@ const routes = [
     url: "/okk",
     icon: "/icons/okk.svg",
     activeIcon: "/icons/okk-active.svg",
-    screen: Permissions.get_hr_okk,
+    screen: Permissions.get_okk,
   },
   {
     name: "hr-fabric",
@@ -101,6 +102,7 @@ export const Playground: FC = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [collapsed, $collapsed] = useState(false);
+  const { data } = useToken({});
 
   const menuItemStyles: MenuItemStyles = {
     root: {
@@ -146,45 +148,32 @@ export const Playground: FC = () => {
               <img src={arrow} alt="" className="m-auto" />
             </button>
             <Menu menuItemStyles={menuItemStyles} className="mt-6">
-              {/* <MenuItem
-                className={cl(styles.content)}
-                active={pathname === "/home"}
-                onClick={() => navigate("/home")}
-                icon={
-                  <img
-                    className={styles.routeIcon}
-                    height={30}
-                    width={30}
-                    src={"/assets/icons/controlPanel.svg"}
-                  />
-                }
-              >
-                {t("dashboard")}  
-              </MenuItem> */}
-              {routes.map((route) => (
-                <Fragment key={route.url + route.name}>
-                  {
-                    <MenuItem
-                      className={cl(styles.content)}
-                      active={pathname.includes(route.url!)}
-                      onClick={() => navigate(`${route.url}`)}
-                      icon={
-                        <img
-                          className={styles.routeIcon}
-                          src={
-                            pathname.includes(route.url!)
-                              ? route.activeIcon
-                              : route.icon
-                          }
-                          alt={route.name}
-                        />
-                      }
-                    >
-                      {t(route.name)}
-                    </MenuItem>
-                  }
-                </Fragment>
-              ))}
+              {routes
+                .filter((item) => data?.permissions?.[item.screen])
+                .map((route) => (
+                  <Fragment key={route.url + route.name}>
+                    {
+                      <MenuItem
+                        className={cl(styles.content)}
+                        active={pathname.includes(route.url!)}
+                        onClick={() => navigate(`${route.url}`)}
+                        icon={
+                          <img
+                            className={styles.routeIcon}
+                            src={
+                              pathname.includes(route.url!)
+                                ? route.activeIcon
+                                : route.icon
+                            }
+                            alt={route.name}
+                          />
+                        }
+                      >
+                        {t(route.name)}
+                      </MenuItem>
+                    }
+                  </Fragment>
+                ))}
             </Menu>
           </div>
         </div>
