@@ -38,7 +38,7 @@ const Complaints = (filter: ComplaintsParams) => {
   const branchJson = useQueryString("branch");
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
 
-  const { data, isLoading } = useComplaints({
+  const { data, isLoading, isPending } = useComplaints({
     ...filter,
     ...(!!id && { id }),
     ...(!!country_id && { country_id }),
@@ -74,7 +74,7 @@ const Complaints = (filter: ComplaintsParams) => {
         accessorKey: "country",
         header: t("country"),
         cell: ({ row }) =>
-          CountrySelect[Number(row.original?.subcategory?.country_id)],
+          CountrySelect[Number(row.original?.branch?.country_id)],
       },
       {
         accessorKey: "subcategory",
@@ -132,6 +132,7 @@ const Complaints = (filter: ComplaintsParams) => {
 
   return (
     <Container>
+      {isPending && <Loading />}
       <div className="flex justify-between items-end">
         <ItemsCount data={data} />
         <div className="flex gap-2 mb-3">

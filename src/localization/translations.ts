@@ -101,6 +101,7 @@ const localization = {
       edit_date_return: "Изменить Дата отправки образцов",
       reviews: "Отзывы",
       hr_categories: "Категории",
+      incorrect_username: "Неправильное имя пользователя или пароль.",
     },
   },
   uz: {

@@ -141,7 +141,7 @@ const mainRoutes = [
     screen: Permissions.get_internal_complaints,
   },
   {
-    element: <Complaints otk_status />,
+    element: <Complaints otk />,
     path: "okk",
     screen: Permissions.get_okk,
   },

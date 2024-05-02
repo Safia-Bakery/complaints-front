@@ -30,12 +30,8 @@ export const CountrySelectValues = {
 };
 
 export const GenderTypeSelect = [
-  {
-    id: 1,
-    name: "man",
-  },
+  { id: 1, name: "man" },
   { id: 2, name: "woman" },
-  { id: 3, name: "other" },
 ];
 
 export const numberWithCommas = (val: number) => {

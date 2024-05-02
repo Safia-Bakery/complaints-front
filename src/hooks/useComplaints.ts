@@ -9,7 +9,8 @@ export type ComplaintsParams = {
   subcategory_id?: string;
   branch_id?: string;
   status?: number;
-  otk_status?: boolean;
+  otk_status?: number;
+  otk?: boolean;
   size?: number;
   page?: number;
   enabled?: boolean;

@@ -111,9 +111,7 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("country")}</th>
-                  <td>
-                    {CountrySelect[Number(order?.subcategory?.country_id)]}
-                  </td>
+                  <td>{CountrySelect[Number(order?.branch.country_id)]}</td>
                 </tr>
                 <tr>
                   <th>{t("branch")}</th>
@@ -177,7 +175,7 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("gender")}</th>
-                  <td>{GenderType[Number(order?.client_gender)]}</td>
+                  <td>{t(GenderType[Number(order?.client_gender)])}</td>
                 </tr>
                 <tr>
                   <th>{t("purchase_date")}</th>
