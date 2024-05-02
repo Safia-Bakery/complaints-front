@@ -29,8 +29,6 @@ const resetData = {
 };
 
 const Chat = () => {
-  const navigate = useNavigate();
-  const { t } = useTranslation();
   const page = Number(useQueryString("page")) || 1;
   const chat_modal = Number(useQueryString("chat_modal"));
   const chat = Number(useQueryString("chat"));
@@ -40,7 +38,6 @@ const Chat = () => {
 
   const { mutate: sendMsg, isPending } = communicationMutation();
   const { register, getValues, reset } = useForm();
-  const closeModal = () => removeParam(["chat_modal", "chat"]);
 
   const {
     data: communication,
@@ -48,7 +45,6 @@ const Chat = () => {
     refetch,
   } = useCommunications({
     page,
-    // hrcomplaint_id: chat_modal,
     hrclient_id: chat,
     enabled: !!chat && !!chat_modal,
   });
@@ -57,7 +53,7 @@ const Chat = () => {
     (event: React.UIEvent<HTMLDivElement>) => {
       const { scrollTop } = event.currentTarget;
       if (scrollTop === 0) {
-        navigateParam({ page: page + 1 }); // Increment page number
+        navigateParam({ page: page + 1 });
       }
     },
     [page]
@@ -91,6 +87,9 @@ const Chat = () => {
       reset(resetData);
     };
   }, []);
+
+  if (commLoading || isPending) return <Loading />;
+
   return (
     <div className="flex flex-1 pb-24 h-[90%]">
       <div

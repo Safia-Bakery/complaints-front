@@ -21,6 +21,9 @@ const EditAddBranches = () => {
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
   const { mutate: postBranch, isPending } = branchMutation();
+  const { refetch } = useBranches({
+    page: 1,
+  });
 
   const { data: countries, isLoading: countryLoading } = useCountries({});
 
@@ -48,8 +51,9 @@ const EditAddBranches = () => {
       },
       {
         onSuccess: () => {
-          successToast(!id ? "created" : "updated");
+          refetch();
           goBack();
+          successToast(!id ? "created" : "updated");
         },
         onError: (e) => errorToast(e.message),
       }
@@ -65,7 +69,7 @@ const EditAddBranches = () => {
       });
   }, [branch]);
 
-  if ((isLoading && !!id) || isPending) return <Loading />;
+  if ((isLoading && !!id) || isPending || countryLoading) return <Loading />;
 
   return (
     <Container>

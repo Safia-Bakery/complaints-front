@@ -15,10 +15,10 @@
   }
 
   &:hover {
-    // @media (min-width: 1200px) {
-    //   width: 260px !important;
-    //   min-width: 260px !important;
-    // }
+    @media (min-width: 1200px) {
+      width: 260px !important;
+      min-width: 260px !important;
+    }
 
     .content {
       opacity: 1;

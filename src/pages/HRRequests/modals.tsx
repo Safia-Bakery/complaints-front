@@ -83,25 +83,36 @@ const HRRequestModals = () => {
   const privateClient = !!chat ? clients?.items?.[0] : undefined;
 
   return (
-    <Modal isOpen={!!chat_modal} onClose={closeModal} className="h-full">
+    <Modal
+      isOpen={!!chat_modal}
+      onClose={closeModal}
+      className="h-full !left-[78%] !-translate-y-1/2 "
+    >
       {(clientsloading || commLoading || isPending) && <Loading />}
       <div className="h-full flex flex-col">
-        <div className="w-full p-3 bg-green-700 rounded-t-xl">
+        <div className="w-full p-3 bg-green-700 rounded-t-xl relative">
           {!chat ? (
             <div className="flex items-center justify-center h-10">
               <h3 className="text-white">{t("chat")}</h3>
             </div>
           ) : (
             <div className="flex gap-2 items-center">
-              <button
+              {/* <button
                 className="flex items-center justify-center h-5 w-5"
                 onClick={() => navigate(-1)}
               >
                 <img src={arrowWhite} alt="back" className="rotate-180" />
-              </button>
+              </button> */}
               <Avatar />
 
               <h3 className="text-white font-bold">{privateClient?.name}</h3>
+
+              <button
+                onClick={closeModal}
+                className="absolute top-1/2 -translate-y-1/2 right-2"
+              >
+                <span className="flex h-5 w-5">&times;</span>
+              </button>
             </div>
           )}
         </div>

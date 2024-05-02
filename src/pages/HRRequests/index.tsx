@@ -59,7 +59,10 @@ const HRRequests = () => {
         header: t("chat"),
         size: 10,
         cell: ({ row }) => (
-          <Link to={`?chat_modal=${row.original?.id}`} className="w-full">
+          <Link
+            to={`?chat_modal=${row.original?.id}&chat=${row.original?.hrclient_id}`}
+            className="w-full"
+          >
             <img src={chatIcon} alt="chat" className="mx-auto" />
           </Link>
         ),
