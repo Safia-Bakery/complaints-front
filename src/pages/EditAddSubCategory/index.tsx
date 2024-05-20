@@ -8,6 +8,7 @@ import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import subCategoryMutation from "@/hooks/mutations/subCategories";
 import useCategories from "@/hooks/useCategories";
+import useCountries from "@/hooks/useCountries";
 import useSubCategories from "@/hooks/useSubCategories";
 import { errorToast, successToast } from "@/utils/toast";
 import { BtnTypes } from "@/utils/types";
@@ -32,6 +33,9 @@ const EditAddSubCategory = () => {
   } = useForm();
 
   const { data: categories, isLoading: categoryLoading } = useCategories({});
+  const { data: countries, isLoading: countryLoading } = useCountries({
+    status: 1,
+  });
 
   const { data, isLoading } = useSubCategories({
     id: Number(childId),
@@ -42,11 +46,14 @@ const EditAddSubCategory = () => {
   const category = data?.items?.[0];
 
   const onSubmit = () => {
+    const { status, category_id, country_id, name } = getValues();
     postCategory(
       {
-        id: Number(id),
-        status: +getValues("status"),
-        ...getValues(),
+        category_id,
+        status: +status,
+        country_id,
+        name,
+        ...(childId && { id: +childId }),
       },
       {
         onSuccess: () => {
@@ -60,13 +67,15 @@ const EditAddSubCategory = () => {
 
   useEffect(() => {
     reset({
-      category: id,
+      category_id: id,
+      country_id: category?.country_id,
       ...(category?.name && { name: category.name }),
       ...(category?.status && { status: category.status }),
     });
   }, [category]);
 
-  if ((isLoading && !!id) || isPending || categoryLoading) return <Loading />;
+  if ((isLoading && !!id) || isPending || categoryLoading || countryLoading)
+    return <Loading />;
 
   return (
     <Container>
@@ -76,10 +85,10 @@ const EditAddSubCategory = () => {
         </Button>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
-        <BaseInputs label="category" error={errors.category}>
+        <BaseInputs label="category" error={errors.category_id}>
           <MainSelect
             values={categories}
-            register={register("category", {
+            register={register("category_id", {
               required: t("required_field"),
             })}
           />
@@ -87,6 +96,14 @@ const EditAddSubCategory = () => {
         <BaseInputs label="name" error={errors.name}>
           <MainInput
             register={register("name", {
+              required: t("required_field"),
+            })}
+          />
+        </BaseInputs>
+        <BaseInputs label="country" error={errors.country_id}>
+          <MainSelect
+            values={countries?.items}
+            register={register("country_id", {
               required: t("required_field"),
             })}
           />
