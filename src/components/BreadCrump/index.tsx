@@ -86,7 +86,7 @@ const Breadcrumbs: FC = () => {
               onClick={() => dispatch(logoutHandler())}
               className="font-medium text-sm cursor-pointer"
             >
-              {me?.name}
+              {me?.name ?? me?.username}
             </span>
           </div>
         </div>

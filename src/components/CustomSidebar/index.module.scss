@@ -9,13 +9,13 @@
   min-height: 100lvh;
   height: 100%;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 920px) {
     width: 0;
     min-width: 0;
   }
 
   &:hover {
-    @media (min-width: 1200px) {
+    @media (min-width: 920px) {
       width: 260px !important;
       min-width: 260px !important;
     }

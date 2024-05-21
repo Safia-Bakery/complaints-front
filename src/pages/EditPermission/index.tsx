@@ -53,7 +53,7 @@ const EditPermission = () => {
 
   return (
     <Container className={"pb-11"}>
-      <Header title={`${roles?.items?.[0]?.name}`} className="my-4">
+      <Header title={`${roles?.items?.[0]?.name}`}>
         <Button onClick={() => navigate(-1)}>{t("back")}</Button>
       </Header>
 
@@ -77,9 +77,7 @@ const EditPermission = () => {
                       key={child?.id}
                       className="hover:bg-gray-300 transition-colors border-b border-b-gray-500"
                     >
-                      <td>
-                        {child?.name} = {child.id}
-                      </td>
+                      <td>{child?.name}</td>
                       <td width={50}>
                         <input
                           type="checkbox"
