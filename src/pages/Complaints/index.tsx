@@ -142,7 +142,7 @@ const Complaints = (filter: ComplaintsParams) => {
           <Button btnType={BtnTypes.green}>Excel</Button>
         </div>
       </div>
-      <VirtualTable columns={columns} data={data?.items}>
+      <VirtualTable columns={columns} data={data?.items} extraHeight={220}>
         {renderFilter}
       </VirtualTable>
 

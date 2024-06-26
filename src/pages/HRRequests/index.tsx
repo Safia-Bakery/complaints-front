@@ -104,6 +104,7 @@ const HRRequests = () => {
       <VirtualTable
         columns={columns}
         data={data?.items}
+        extraHeight={150}
         rowClassName={"text-center"}
       />
 

@@ -140,12 +140,16 @@ const AddComplaint = () => {
         <div className="flex gap-4 mt-3">
           <BaseInput label="purchase_date" className="flex-1">
             <MainDatePicker
+              dateFormat="dd.MM.YYYY, h:mm"
+              showTimeSelect
               onChange={handleDatePurchase}
               selected={date_purchase}
             />
           </BaseInput>
           <BaseInput label="date_sending_samples" className="flex-1">
             <MainDatePicker
+              dateFormat="dd.MM.YYYY, h:mm"
+              showTimeSelect
               onChange={handleDateReturn}
               selected={date_return}
             />

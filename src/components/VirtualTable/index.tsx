@@ -20,6 +20,7 @@ interface Props<TData> {
   className?: string;
   children?: ReactNode;
   rowClassName?: RowClassName<Row<TData>>;
+  extraHeight?: number;
 }
 
 function VirtualTable<T>({
@@ -28,6 +29,7 @@ function VirtualTable<T>({
   className,
   children,
   rowClassName,
+  extraHeight,
 }: Props<T>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -53,8 +55,8 @@ function VirtualTable<T>({
   const virtualizer = useVirtualizer({
     count: rows.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 55,
-    overscan: 20,
+    estimateSize: () => 45,
+    overscan: 30,
   });
 
   return (
@@ -63,7 +65,9 @@ function VirtualTable<T>({
       className={`${className} w-full bg-white h-[600px] overflow-auto`}
     >
       <div
-        style={{ height: `${virtualizer.getTotalSize() + 150}px` }}
+        style={{
+          height: `${virtualizer.getTotalSize() + (extraHeight || 40)}px`,
+        }}
         className="overflow-x-auto"
       >
         <table className="table table-bordered w-full">
@@ -123,7 +127,10 @@ function VirtualTable<T>({
                 >
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <td key={cell.id} className="p-2">
+                      <td
+                        key={cell.id}
+                        className="p-2 overflow-ellipsis whitespace-nowrap overflow-hidden max-w-48"
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

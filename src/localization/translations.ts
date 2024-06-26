@@ -102,6 +102,7 @@ const localization = {
       reviews: "Отзывы",
       hr_categories: "Категории",
       incorrect_username: "Неправильное имя пользователя или пароль.",
+      hr_complaints: "HR жалобы",
     },
   },
   uz: {
