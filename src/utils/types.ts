@@ -106,6 +106,15 @@ export interface HRRequest {
   deny_reason?: string;
   sphere_id: number;
   hrclient_id: number;
+  hrcategory?: {
+    id: number;
+    name: string;
+    status: number;
+    hrsphere_id?: number;
+    hrsphere: number;
+    created_at: string;
+    updated_at: null;
+  };
   hrclient: {
     id: number;
     name: string;

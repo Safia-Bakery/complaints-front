@@ -3,6 +3,7 @@ import { tokenSelector } from "reducers/auth";
 import { BaseItem, SubCategoryType } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
+import { EPresetTimes } from "@/utils/helper";
 
 type Params = {
   id?: number;
@@ -12,9 +13,14 @@ type Params = {
   page?: number;
   enabled?: boolean;
   status?: number;
+  staleTime?: EPresetTimes;
 };
 
-export const useSubCategories = ({ enabled = true, ...params }: Params) => {
+export const useSubCategories = ({
+  enabled = true,
+  staleTime,
+  ...params
+}: Params) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
     queryKey: ["sub_category", params],
@@ -23,6 +29,7 @@ export const useSubCategories = ({ enabled = true, ...params }: Params) => {
         .get("/sub-category", { params })
         .then(({ data: response }) => response as BaseItem<SubCategoryType>),
     enabled: !!token && enabled,
+    staleTime,
   });
 };
 

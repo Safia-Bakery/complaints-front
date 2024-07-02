@@ -14,7 +14,7 @@ import {
   CountrySelect,
   OrderTypeSelect,
 } from "@/utils/types";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useComplaints, { ComplaintsParams } from "@/hooks/useComplaints";
 import Loading from "@/components/Loader";
 import Pagination from "@/components/Pagination";
@@ -80,7 +80,7 @@ const Complaints = (filter: ComplaintsParams) => {
         accessorKey: "subcategory",
         header: t("type"),
         cell: ({ row }) =>
-          OrderTypeSelect[Number(row.original?.subcategory?.category_id)],
+          t(OrderTypeSelect[Number(row.original?.subcategory?.category_id)]),
       },
       {
         accessorKey: "category",

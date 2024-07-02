@@ -13,6 +13,7 @@ import useCountries from "@/hooks/useCountries";
 import useSubCategories from "@/hooks/useSubCategories";
 import MainSelect from "@/components/BaseInputs/MainSelect";
 import dayjs from "dayjs";
+import { EPresetTimes } from "@/utils/helper";
 
 const ComplaintsFilter: FC = () => {
   const navigate = useNavigateParams();
@@ -38,16 +39,19 @@ const ComplaintsFilter: FC = () => {
   const { data: categs, refetch: categoryRefech } = useCategories({
     status: 1,
     enabled: false,
+    staleTime: EPresetTimes.MINUTE * 10,
   });
 
   const { data: countries, refetch: countryRefech } = useCountries({
     status: 1,
     enabled: false,
+    staleTime: EPresetTimes.MINUTE * 10,
   });
 
   const { data: subCategs, refetch: subcategsRefech } = useSubCategories({
     status: 1,
     enabled: false,
+    staleTime: EPresetTimes.MINUTE * 10,
   });
 
   const { register, reset, getValues } = useForm();

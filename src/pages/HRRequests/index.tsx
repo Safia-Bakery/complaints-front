@@ -36,7 +36,7 @@ const HRRequests = () => {
       },
 
       {
-        accessorKey: "name",
+        accessorKey: "hrclient.name",
         header: t("user"),
 
         cell: ({ row }) => row.original.hrclient.name,
@@ -45,6 +45,12 @@ const HRRequests = () => {
       {
         accessorKey: "complaint",
         header: t("question"),
+      },
+
+      {
+        accessorKey: "hrcategory.name",
+        header: t("category"),
+        cell: ({ row }) => row.original.hrcategory?.name,
       },
       {
         accessorKey: "status",

@@ -77,7 +77,7 @@ const AddComplaint = () => {
       },
       {
         onSuccess: () => {
-          navigate("/complaints");
+          navigate(-1);
           successToast("created");
         },
         onError: (e) => errorToast(e.message),
