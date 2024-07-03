@@ -62,7 +62,7 @@ function VirtualTable<T>({
   return (
     <div
       ref={parentRef}
-      className={`${className} w-full bg-white h-[600px] overflow-auto`}
+      className={`${className} w-full bg-white h-full overflow-auto`}
     >
       <div
         style={{
@@ -70,7 +70,7 @@ function VirtualTable<T>({
         }}
         className="overflow-x-auto"
       >
-        <table className="table table-bordered w-full">
+        <table>
           <thead>
             {data &&
               table.getHeaderGroups().map((headerGroup) => (

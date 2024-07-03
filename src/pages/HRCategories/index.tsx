@@ -3,19 +3,22 @@ import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
 import VirtualTable from "@/components/VirtualTable";
 import { handleIdx } from "@/utils/helper";
-import { BtnTypes, CategoriesType } from "@/utils/types";
+import { BtnTypes, CategoriesType, HRSpheres } from "@/utils/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "@/components/Button";
 import useHrCategories from "@/hooks/useHrCategories";
 
 const HRCategories = () => {
   const { t } = useTranslation();
+  const { sphere } = useParams();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useHrCategories({});
+  const { data, isLoading } = useHrCategories({
+    hrsphere_id: +HRSpheres[sphere as any],
+  });
 
   const columns = useMemo<ColumnDef<CategoriesType>[]>(
     () => [

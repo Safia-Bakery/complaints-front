@@ -33,13 +33,13 @@ const HRQa = () => {
       },
 
       {
-        accessorKey: "answer_ru",
-        header: t("answer"),
+        accessorKey: "question_ru",
+        header: t("question"),
       },
 
       {
-        accessorKey: "question_ru",
-        header: t("question"),
+        accessorKey: "answer_ru",
+        header: t("answer"),
       },
       {
         accessorKey: "status",
@@ -77,11 +77,13 @@ const HRQa = () => {
           </Button>
         </div>
       </div>
-      <VirtualTable
-        columns={columns}
-        data={data?.items}
-        rowClassName={"text-center"}
-      />
+      {data?.items && (
+        <VirtualTable
+          columns={columns}
+          data={data?.items}
+          rowClassName={"text-center"}
+        />
+      )}
     </Container>
   );
 };

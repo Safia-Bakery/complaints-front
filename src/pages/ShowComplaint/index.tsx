@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import TableViewBtn from "@/components/TableViewBtn";
 import {
   BtnTypes,
+  ComplaintsSpheres,
   CountrySelect,
   GenderType,
   ModalTypes,
@@ -31,7 +32,7 @@ const DisableAction: { [key: number]: boolean } = {
 
 const ShowComplaint = () => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { id, com_sphere } = useParams();
   const navigate = useNavigate();
   const navigateParams = useNavigateParams();
   const { data, isLoading, refetch } = useComplaints({ id: Number(id) });
@@ -43,7 +44,12 @@ const ShowComplaint = () => {
 
   const handleStatus = (st: OrderStatus) => () => {
     mutate(
-      { status: st, id: Number(id) },
+      {
+        [+ComplaintsSpheres[com_sphere! as any] === ComplaintsSpheres.otk
+          ? "otk_status"
+          : "status"]: st,
+        id: Number(id),
+      },
       {
         onSuccess: () => {
           refetch();

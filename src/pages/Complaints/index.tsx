@@ -14,7 +14,7 @@ import {
   CountrySelect,
   OrderTypeSelect,
 } from "@/utils/types";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useComplaints, { ComplaintsParams } from "@/hooks/useComplaints";
 import Loading from "@/components/Loader";
 import Pagination from "@/components/Pagination";
@@ -24,6 +24,7 @@ import useQueryString from "@/hooks/custom/useQueryString";
 
 const Complaints = (filter: ComplaintsParams) => {
   const { t } = useTranslation();
+  const { com_sphere } = useParams();
   const navigate = useNavigate();
   const id = useQueryString("id");
   const country_id = useQueryString("country_id");
@@ -51,6 +52,7 @@ const Complaints = (filter: ComplaintsParams) => {
     ...(!!created_at && { created_at }),
     ...(!!branch?.id && { branch_id: branch.id }),
     ...(!!status && { status }),
+    ...(!!com_sphere && { [com_sphere]: 1 }),
   });
 
   const columns = useMemo<ColumnDef<ComplaintType>[]>(

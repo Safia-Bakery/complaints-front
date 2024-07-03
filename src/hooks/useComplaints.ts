@@ -22,6 +22,7 @@ export type ComplaintsParams = {
   category_id?: string;
   country_id?: string;
   updated_by?: string;
+  is_internal?: number;
 };
 
 export const useComplaints = ({

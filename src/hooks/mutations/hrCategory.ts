@@ -5,6 +5,7 @@ type Body = {
   name?: string;
   status?: number;
   id?: number;
+  hrsphere_id: number | string;
 };
 const hrCategoryMutation = () => {
   return useMutation({

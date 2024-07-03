@@ -7,7 +7,11 @@ import styles from "./index.module.scss";
 import "./index.scss";
 import safiaLogo from "/images/safia-logo.png";
 import arrow from "/icons/whiteArrow.svg";
-import { HRSpheres, Permissions } from "@/utils/types";
+import {
+  ComplaintsSpheres as ComSpheres,
+  HRSpheres,
+  Permissions,
+} from "@/utils/types";
 import useToken from "@/hooks/useToken";
 
 const routes = [
@@ -20,14 +24,14 @@ const routes = [
   },
   {
     name: "complaints",
-    url: "/complaints",
+    url: `/complaints/${ComSpheres[ComSpheres.is_client]}`,
     icon: "/icons/complaints.svg",
     activeIcon: "/icons/complaints-active.svg",
     screen: Permissions.get_complaints,
   },
   {
     name: "inside-cmp",
-    url: "/internal-complaints",
+    url: `/complaints/${ComSpheres[ComSpheres.is_internal]}`,
     icon: "/icons/inside-complaints.svg",
     activeIcon: "/icons/inside-complaints-active.svg",
     screen: Permissions.get_internal_complaints,
@@ -41,7 +45,7 @@ const routes = [
   },
   {
     name: "OKK",
-    url: "/okk",
+    url: `/complaints/${ComSpheres[ComSpheres.otk]}`,
     icon: "/icons/okk.svg",
     activeIcon: "/icons/okk-active.svg",
     screen: Permissions.get_okk,

@@ -7,7 +7,7 @@ import Loading from "@/components/Loader";
 import hrCategoryMutation from "@/hooks/mutations/hrCategory";
 import useHrCategories from "@/hooks/useHrCategories";
 import { errorToast, successToast } from "@/utils/toast";
-import { BtnTypes } from "@/utils/types";
+import { BtnTypes, HRSpheres } from "@/utils/types";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -15,10 +15,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const EditAddHRCategory = () => {
   const { t } = useTranslation();
-  const { category_id } = useParams();
+  const { category_id, sphere } = useParams();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
   const { mutate: postCategory, isPending } = hrCategoryMutation();
+
+  console.log(sphere, "sphere");
 
   const {
     register,
@@ -40,6 +42,7 @@ const EditAddHRCategory = () => {
       {
         id: Number(category_id),
         status: +getValues("status"),
+        hrsphere_id: HRSpheres[sphere as any],
         ...getValues(),
       },
       {

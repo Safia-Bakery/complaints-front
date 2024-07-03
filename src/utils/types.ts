@@ -89,6 +89,12 @@ export enum HRDeps {
   hr_categories,
 }
 
+export enum ComplaintsSpheres {
+  is_internal,
+  otk,
+  is_client,
+}
+
 export interface CommunicationType {
   id: number;
   hrcomplaint_id: number;

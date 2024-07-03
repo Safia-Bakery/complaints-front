@@ -9,7 +9,7 @@ import useToken from "@/hooks/useToken";
 import Loading from "./components/Loader";
 import "dayjs/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
-import { Permissions } from "./utils/types";
+import { ComplaintsSpheres as ComSpheres, Permissions } from "./utils/types";
 
 const Login = lazy(() => import("@/pages/Login"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
@@ -131,38 +131,43 @@ const mainRoutes = [
     screen: Permissions.dashboard_stats,
   },
   {
-    element: <Complaints is_client />,
-    path: "complaints",
+    element: <Complaints />,
+    path: `complaints/:com_sphere`,
     screen: Permissions.get_complaints,
   },
   {
     element: <Complaints />,
-    path: "internal-complaints",
+    path: `complaints/:com_sphere`,
     screen: Permissions.get_internal_complaints,
   },
   {
     element: <Complaints otk />,
-    path: "okk",
+    path: `complaints/:com_sphere`,
     screen: Permissions.get_okk,
   },
   {
+    element: <ShowComplaint />,
+    path: `complaints/:com_sphere/:id`,
+    screen: Permissions.edit_okk,
+  },
+  {
     element: <AddComplaint />,
-    path: "complaints/add",
+    path: `complaints/:com_sphere/add`,
     screen: Permissions.add_complaints,
   },
   {
     element: <ShowComplaint />,
-    path: "complaints/:id",
+    path: `complaints/:com_sphere/:id`,
     screen: Permissions.edit_complaints,
   },
   {
     element: <AddComplaint />,
-    path: "internal-complaints/add",
+    path: `complaints/:com_sphere/add`,
     screen: Permissions.add_internal_complaints,
   },
   {
     element: <ShowComplaint />,
-    path: "internal-complaints/:id",
+    path: `complaints/:com_sphere/:id`,
     screen: Permissions.edit_internal_complaints,
   },
 

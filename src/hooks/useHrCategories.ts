@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenSelector } from "reducers/auth";
-import { BaseItem, CategoriesType } from "@/utils/types";
+import { BaseItem, CategoriesType, HRSpheres } from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import { useAppSelector } from "@/store/rootConfig";
 
@@ -8,6 +8,7 @@ type Params = {
   id?: number;
   status?: number;
   enabled?: boolean;
+  hrsphere_id?: number;
 };
 
 export const useHrCategories = ({ enabled = true, ...params }: Params) => {

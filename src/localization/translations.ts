@@ -7,6 +7,7 @@ const localization = {
       complaints: "Жалобы",
       "inside-cmp": "Вн. Жалобы",
       "internal-complaints": "Внутренние жалобы",
+      is_internal: "Внутренние жалобы",
       comments: "Отзывы",
       "hr-fabric": "HR Фабрика",
       "hr-retail": "HR Розница",
@@ -103,6 +104,7 @@ const localization = {
       hr_categories: "Категории",
       incorrect_username: "Неправильное имя пользователя или пароль.",
       hr_complaints: "HR жалобы",
+      is_client: "Все жалобы",
     },
   },
   uz: {
