@@ -95,7 +95,9 @@ const ShowComplaint = () => {
     <>
       <Container>
         <Header>
-          <Button onClick={() => navigate("/complaints")}>{t("back")}</Button>
+          <Button onClick={() => navigate(`/complaints/${com_sphere}`)}>
+            {t("back")}
+          </Button>
         </Header>
         <div className="w-full flex gap-3">
           <div className="w-full">
