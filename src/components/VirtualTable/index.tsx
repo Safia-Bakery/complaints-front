@@ -60,18 +60,14 @@ function VirtualTable<T>({
   });
 
   return (
-    <div
-      ref={parentRef}
-      className={`${className} w-full bg-white h-full overflow-auto`}
-    >
+    <div ref={parentRef} className={`${className} w-full bg-white h-full`}>
       <div
         style={{
           height: `${virtualizer.getTotalSize() + (extraHeight || 40)}px`,
         }}
-        className="overflow-x-auto"
       >
         <table>
-          <thead>
+          <thead className="sticky top-0 z-10">
             {data &&
               table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -80,7 +76,7 @@ function VirtualTable<T>({
                       <th
                         key={header.id}
                         colSpan={header.colSpan}
-                        className="bg-mainBlack text-white p-2"
+                        className="bg-mainBlack text-white p-2 z-10"
                         style={{ width: header.getSize() }}
                       >
                         {header.isPlaceholder ? null : (
