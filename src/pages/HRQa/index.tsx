@@ -77,13 +77,7 @@ const HRQa = () => {
           </Button>
         </div>
       </div>
-      {data?.items && (
-        <VirtualTable
-          columns={columns}
-          data={data?.items}
-          rowClassName={"text-center"}
-        />
-      )}
+      {data?.items && <VirtualTable columns={columns} data={data?.items} />}
     </Container>
   );
 };
