@@ -174,7 +174,7 @@ const ComplaintsFilter: FC = () => {
           />
         </BaseInput>
       </td>
-      <td></td>
+      {/* <td></td> */}
     </>
   );
 };

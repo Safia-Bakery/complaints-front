@@ -20,7 +20,7 @@ const MainDropZone = ({ forwardedRef }: Props) => {
   return (
     <div
       {...getRootProps()}
-      className="flex flex-1 bg-white rounded-xl border border-borderColor p-4 items-center justify-center relative"
+      className="flex flex-1 bg-white rounded-xl border border-borderColor p-4 items-center justify-center relative h-[80px]"
     >
       <input
         onChange={onDrop}
@@ -28,9 +28,9 @@ const MainDropZone = ({ forwardedRef }: Props) => {
         multiple
         className="h-full w-full !flex opacity-0 absolute inset-0"
       />
-      {isDragActive ? (
-        <div className="h-full w-full items-center justify-center flex bg-green-400">
-          <img src={dragimg} alt="dragFile" className="w-40 h-40" />
+      {!isDragActive ? (
+        <div className="w-full items-center justify-center flex bg-green-400 h-min">
+          <img src={dragimg} alt="dragFile" className="w-14 h-14" />
         </div>
       ) : (
         <div className="flex h-full w-full justify-center items-center border border-borderColor text-[#00000063]">

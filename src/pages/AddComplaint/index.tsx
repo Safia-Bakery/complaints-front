@@ -95,7 +95,7 @@ const AddComplaint = () => {
           <MainRadioBtns values={categs} register={register("categ")} />
         </BaseInput>
 
-        <BaseInput label="subcateg">
+        <BaseInput label="category">
           <MainRadioBtns
             values={subCategs?.items}
             register={register("subcategory_id")}
@@ -158,7 +158,7 @@ const AddComplaint = () => {
         </div>
 
         <div className="flex gap-4 mt-3">
-          <BaseInput label="comments" className="flex-[2]">
+          <BaseInput label="comments" className="flex-[2] !mb-0">
             <MainTextArea
               className="!h-[220px]"
               register={register("comment")}
