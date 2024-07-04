@@ -28,7 +28,7 @@ const MainDropZone = ({ forwardedRef }: Props) => {
         multiple
         className="h-full w-full !flex opacity-0 absolute inset-0"
       />
-      {!isDragActive ? (
+      {isDragActive ? (
         <div className="w-full items-center justify-center flex bg-green-400 h-min">
           <img src={dragimg} alt="dragFile" className="w-14 h-14" />
         </div>
