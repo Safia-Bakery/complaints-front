@@ -11,6 +11,7 @@ import {
   BranchJsonVal,
   BtnTypes,
   ComplaintType,
+  ComplaintsSpheres,
   CountrySelect,
   OrderTypeSelect,
 } from "@/utils/types";
@@ -52,7 +53,10 @@ const Complaints = (filter: ComplaintsParams) => {
     ...(!!created_at && { created_at }),
     ...(!!branch?.id && { branch_id: branch.id }),
     ...(!!status && { status }),
-    ...(!!com_sphere && { [com_sphere]: 1 }),
+    ...(!!com_sphere &&
+    com_sphere === ComplaintsSpheres[ComplaintsSpheres.is_client]
+      ? { [ComplaintsSpheres[ComplaintsSpheres.is_internal]]: 0 }
+      : { [com_sphere!]: 1 }),
   });
 
   const columns = useMemo<ColumnDef<ComplaintType>[]>(
