@@ -63,7 +63,7 @@ const HRRequestModals = () => {
         text: msg_text,
         file: msg_file?.[0],
         // hrcomplaint_id: chat_modal,
-        hrcomplaint_id: communication?.items?.[0].hrcomplaint_id,
+        hrcomplaint_id: communication?.items?.[0]?.hrcomplaint_id,
       },
       {
         onSuccess: () => {

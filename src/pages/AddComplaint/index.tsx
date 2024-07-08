@@ -19,12 +19,12 @@ import useCountries from "@/hooks/useCountries";
 import useQueryString from "@/hooks/custom/useQueryString";
 import complaintsMutation from "@/hooks/mutations/complaints";
 import { BranchJsonVal } from "@/utils/types";
-import { errorToast, successToast } from "@/utils/toast";
 import Loading from "@/components/Loader";
 import { useNavigate, useParams } from "react-router-dom";
+import { errorToast, successToast } from "@/utils/toast";
 
 const AddComplaint = () => {
-  const inputFileRef = useRef<any>();
+  const inputFileRef = useRef<any>([]);
   const navigate = useNavigate();
   const [date_purchase, $date_purchase] = useState<Date>();
   const [date_return, $date_return] = useState<Date>();
