@@ -22,6 +22,10 @@ export type ComplaintsBody = {
   otk_status?: number;
   status?: number;
   corrections?: string;
+
+  is_client?: boolean;
+  producer_guilty?: boolean;
+  is_returned?: boolean;
 };
 
 const complaintsMutation = () => {

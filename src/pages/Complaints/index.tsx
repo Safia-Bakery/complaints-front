@@ -51,7 +51,7 @@ const Complaints = () => {
     ...(!!updated_by && { updated_by }),
     ...(!!created_at && { created_at }),
     ...(!!branch?.id && { branch_id: branch.id }),
-    ...(!!status && { status }),
+    ...((!!status || status === 0) && { status: +status }),
     ...(!!com_sphere &&
     com_sphere === ComplaintsSpheres[ComplaintsSpheres.is_client]
       ? { [ComplaintsSpheres[ComplaintsSpheres.is_internal]]: 0 }

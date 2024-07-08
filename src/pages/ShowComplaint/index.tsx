@@ -24,6 +24,7 @@ import { useNavigateParams } from "@/hooks/custom/useCustomNavigate";
 import ComplaintModals from "./modals";
 import Header from "@/components/Header";
 import { errorToast, successToast } from "@/utils/toast";
+import Otkchild from "./Otkchild";
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -63,7 +64,7 @@ const ShowComplaint = () => {
   const renderBtns = useMemo(() => {
     if (!DisableAction[order?.status!])
       return (
-        <div className="flex justify-end items-center gap-2">
+        <div className="flex justify-end items-center gap-2 mt-4">
           <Button
             btnType={BtnTypes.red}
             onClick={handleModal(ModalTypes.deny_reason)}
@@ -119,7 +120,7 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("country")}</th>
-                  <td>{CountrySelect[Number(order?.branch.country_id)]}</td>
+                  <td>{CountrySelect[Number(order?.branch?.country_id)]}</td>
                 </tr>
                 <tr>
                   <th>{t("branch")}</th>
@@ -142,34 +143,7 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("comments")}</th>
-                  <td>
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-col flex-1">
-                        {
-                          // !!order?.communication?.length &&
-                          [...Array(3)].map((item, idx) => (
-                            <div className="mt-2 flex gap-1" key={idx}>
-                              <span className="font-bold flex">
-                                item.user.full_name:
-                              </span>
-                              {!!item?.photo && (
-                                <span className="cursor-pointer">
-                                  <img
-                                    src="/assets/icons/attached.svg"
-                                    alt="file"
-                                  />
-                                </span>
-                              )}
-                              <span>{order?.comment}</span>
-                            </div>
-                          ))
-                        }
-                      </div>
-
-                      <TableViewBtn onClick={() => null} />
-                    </div>
-                    <div className="relative"></div>
-                  </td>
+                  <td>{order?.comment}</td>
                 </tr>
               </tbody>
             </table>
@@ -181,6 +155,12 @@ const ShowComplaint = () => {
                   <th className="w-60">{t("status")}</th>
                   <td>{t(OrderStatus[Number(order?.status)])}</td>
                 </tr>
+                {com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk] && (
+                  <tr>
+                    <th className="w-60">{t("otk_status")}</th>
+                    <td>{t(OrderStatus[Number(order?.otk_status)])}</td>
+                  </tr>
+                )}
                 <tr>
                   <th>{t("gender")}</th>
                   <td>{t(GenderType[Number(order?.client_gender)])}</td>
@@ -213,10 +193,10 @@ const ShowComplaint = () => {
                   <th>{t("created_at")}</th>
                   <td>{dayjs(order?.created_at).format(dateTimeFormat)}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <th>{t("author")}</th>
                   <td>author</td>
-                </tr>
+                </tr> */}
                 <tr>
                   <th>{t("name_table")}</th>
                   <td>{order?.client_name}</td>
@@ -231,6 +211,10 @@ const ShowComplaint = () => {
             </table>
           </div>
         </div>
+
+        {com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk] && (
+          <Otkchild />
+        )}
 
         {renderBtns}
       </Container>

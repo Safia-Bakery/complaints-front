@@ -258,6 +258,8 @@ export interface ComplaintType {
   };
   created_at: string;
   updated_at: string;
+  producer_guilty?: boolean;
+  is_returned?: boolean;
 }
 
 export interface CountryType {

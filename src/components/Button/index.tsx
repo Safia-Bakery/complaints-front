@@ -10,6 +10,7 @@ type Props = {
   onClick?: () => void;
   type?: "submit" | "reset" | "button";
   btnType?: BtnTypes;
+  disabled?: boolean;
 };
 
 const Button = ({
