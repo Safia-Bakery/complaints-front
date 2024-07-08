@@ -33,7 +33,7 @@ const EditAddHRQa = () => {
   const { data, isLoading } = useHRQa({
     sphere_id,
     id: Number(id),
-    enabled: !!id,
+    enabled: !!Number(id),
   });
 
   const qa = data?.items?.[0];

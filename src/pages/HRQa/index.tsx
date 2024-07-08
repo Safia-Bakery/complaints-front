@@ -72,7 +72,7 @@ const HRQa = () => {
       <div className="flex justify-between items-end">
         <ItemsCount data={data} />
         <div className="flex gap-2 mb-3">
-          <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
+          <Button onClick={() => navigate("edit/add")} btnType={BtnTypes.black}>
             {t("add")}
           </Button>
         </div>

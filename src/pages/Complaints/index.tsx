@@ -16,14 +16,14 @@ import {
   OrderTypeSelect,
 } from "@/utils/types";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import useComplaints, { ComplaintsParams } from "@/hooks/useComplaints";
+import useComplaints from "@/hooks/useComplaints";
 import Loading from "@/components/Loader";
 import Pagination from "@/components/Pagination";
 import dayjs from "dayjs";
 import { dateTimeFormat } from "@/utils/helper";
 import useQueryString from "@/hooks/custom/useQueryString";
 
-const Complaints = (filter: ComplaintsParams) => {
+const Complaints = () => {
   const { t } = useTranslation();
   const { com_sphere } = useParams();
   const navigate = useNavigate();
@@ -41,7 +41,6 @@ const Complaints = (filter: ComplaintsParams) => {
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
 
   const { data, isLoading, isPending } = useComplaints({
-    ...filter,
     ...(!!id && { id }),
     ...(!!country_id && { country_id }),
     ...(!!category_id && { category_id }),

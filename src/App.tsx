@@ -92,35 +92,36 @@ const hrRoutes = [
     path: "hr_categories/add",
     screen: Permissions.get_hr_retail,
   },
-  {
-    element: <ShowHRRequest />,
-    path: ":hrdep/:id",
-    screen: Permissions.edit_hr_fabric,
-  },
-  {
-    element: <ShowHRRequest />,
-    path: ":hrdep/:id",
-    screen: Permissions.edit_hr_retail,
-  },
+
   {
     element: <EditAddHRQa />,
-    path: ":hrdep/edit/:id",
+    path: "qa/edit/:id",
     screen: Permissions.edit_hr_fabric,
   },
   {
     element: <EditAddHRQa />,
-    path: ":hrdep/edit/:id",
+    path: "qa/edit/:id",
     screen: Permissions.edit_hr_retail,
   },
   {
     element: <EditAddHRQa />,
-    path: ":hrdep/add",
+    path: "qa/edit/add",
     screen: Permissions.add_hr_fabric,
   },
   {
     element: <EditAddHRQa />,
-    path: ":hrdep/add",
+    path: "qa/edit/add",
     screen: Permissions.add_hr_retail,
+  },
+  {
+    element: <ShowHRRequest />,
+    path: ":hrdep/:id",
+    screen: Permissions.edit_hr_fabric,
+  },
+  {
+    element: <ShowHRRequest />,
+    path: ":hrdep/:id",
+    screen: Permissions.edit_hr_retail,
   },
 ];
 
@@ -141,7 +142,7 @@ const mainRoutes = [
     screen: Permissions.get_internal_complaints,
   },
   {
-    element: <Complaints otk />,
+    element: <Complaints />,
     path: `complaints/:com_sphere`,
     screen: Permissions.get_okk,
   },
@@ -290,7 +291,7 @@ const App = () => {
   useEffect(() => {
     if (!token) navigate("/login");
     if (!!error) dispatch(logoutHandler());
-  }, [token, error]);
+  }, [token, error]); //todo
 
   useEffect(() => {
     i18n.changeLanguage(lang);
@@ -335,6 +336,9 @@ const App = () => {
               element={<Suspend>{route.element}</Suspend>}
             />
           ))}
+
+        {/* hr requests */}
+
         <Route
           path={"hr-dashboard/:sphere"}
           element={

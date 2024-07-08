@@ -13,6 +13,7 @@ const HRDashboard = () => {
     navigate(`/hr-dashboard/${sphere}/${url}`);
 
   if (!sphere) return;
+
   return (
     <>
       <Container className="flex gap-14">
