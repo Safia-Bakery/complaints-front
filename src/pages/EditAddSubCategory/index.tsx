@@ -2,7 +2,6 @@ import BaseInputs from "@/components/BaseInputs";
 import MainCheckBox from "@/components/BaseInputs/MainCheckBox";
 import MainInput from "@/components/BaseInputs/MainInput";
 import MainSelect from "@/components/BaseInputs/MainSelect";
-import MainSelectKey from "@/components/BaseInputs/MainSelectKey";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";

@@ -21,13 +21,14 @@ import complaintsMutation from "@/hooks/mutations/complaints";
 import { BranchJsonVal } from "@/utils/types";
 import { errorToast, successToast } from "@/utils/toast";
 import Loading from "@/components/Loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const AddComplaint = () => {
   const inputFileRef = useRef<any>();
   const navigate = useNavigate();
   const [date_purchase, $date_purchase] = useState<Date>();
   const [date_return, $date_return] = useState<Date>();
+  const { com_sphere } = useParams();
 
   const { t } = useTranslation();
   const { register, getValues, handleSubmit, watch } = useForm();
@@ -77,7 +78,7 @@ const AddComplaint = () => {
       },
       {
         onSuccess: () => {
-          navigate(-1);
+          navigate(`/complaints/${com_sphere}`);
           successToast("created");
         },
         onError: (e) => errorToast(e.message),
