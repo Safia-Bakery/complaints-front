@@ -20,8 +20,6 @@ const EditAddHRCategory = () => {
   const goBack = () => navigate(-1);
   const { mutate: postCategory, isPending } = hrCategoryMutation();
 
-  console.log(sphere, "sphere");
-
   const {
     register,
     handleSubmit,
