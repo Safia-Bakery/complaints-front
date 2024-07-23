@@ -13,13 +13,14 @@ import Button from "@/components/Button";
 import Pagination from "@/components/Pagination";
 import useBranches from "@/hooks/useBranches";
 
-const Categories = () => {
+const Branches = () => {
   const { t } = useTranslation();
   const page = Number(useQueryString("page")) || 1;
   const navigate = useNavigate();
 
   const { data, isLoading } = useBranches({
     page,
+    size: 50,
   });
 
   const columns = useMemo<ColumnDef<BranchType>[]>(
@@ -78,4 +79,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Branches;

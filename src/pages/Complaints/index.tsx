@@ -38,6 +38,7 @@ const Complaints = () => {
   const status = Number(useQueryString("status"));
   const created_at = useQueryString("created_at");
   const branchJson = useQueryString("branch");
+  const page = Number(useQueryString("page")) || 1;
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
 
   const { data, isLoading, isPending } = useComplaints({
@@ -56,6 +57,7 @@ const Complaints = () => {
     com_sphere === ComplaintsSpheres[ComplaintsSpheres.is_client]
       ? { [ComplaintsSpheres[ComplaintsSpheres.is_internal]]: 0 }
       : { [com_sphere!]: 1 }),
+    page,
   });
 
   const columns = useMemo<ColumnDef<ComplaintType>[]>(
@@ -136,7 +138,7 @@ const Complaints = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <Container>
+    <Container className="main-container">
       {isPending && <Loading />}
       <div className="flex justify-between items-end">
         <ItemsCount data={data} />

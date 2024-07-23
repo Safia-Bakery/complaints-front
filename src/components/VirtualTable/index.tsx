@@ -61,11 +61,7 @@ function VirtualTable<T>({
 
   return (
     <div ref={parentRef} className={`${className} w-full bg-white h-full`}>
-      <div
-        style={{
-          height: `${virtualizer.getTotalSize() + (extraHeight || 40)}px`,
-        }}
-      >
+      <div>
         <table>
           <thead className="sticky top-0 z-10">
             {data &&

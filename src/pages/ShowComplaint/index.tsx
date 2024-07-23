@@ -116,7 +116,14 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("category")}</th>
-                  <td>{order?.subcategory?.name}</td>
+                  <td>
+                    <div className="flex justify-between">
+                      <p>{order?.subcategory?.name}</p>
+                      <TableViewBtn
+                        onClick={handleModal(ModalTypes.edit_category)}
+                      />
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <th>{t("country")}</th>
@@ -124,7 +131,14 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("branch")}</th>
-                  <td>{order?.branch?.name}</td>
+                  <td>
+                    <div className="flex justify-between">
+                      <p>{order?.branch?.name}</p>
+                      <TableViewBtn
+                        onClick={handleModal(ModalTypes.edit_branch)}
+                      />
+                    </div>
+                  </td>
                 </tr>
                 <tr>
                   <th>{t("name")}</th>
@@ -143,7 +157,20 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("comments")}</th>
-                  <td>{order?.comment}</td>
+                  <td>
+                    <div className="flex justify-between">
+                      <p
+                        style={{
+                          width: "90%",
+                        }}
+                      >
+                        {order?.comment}
+                      </p>
+                      <TableViewBtn
+                        onClick={handleModal(ModalTypes.edit_comment)}
+                      />
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>

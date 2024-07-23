@@ -27,6 +27,9 @@ export enum ModalTypes {
   deny_reason,
   edit_purchase_date,
   edit_sending_date,
+  edit_comment,
+  edit_branch,
+  edit_category,
 }
 export enum FileType {
   other,

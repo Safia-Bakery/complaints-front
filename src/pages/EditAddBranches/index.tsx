@@ -66,6 +66,7 @@ const EditAddBranches = () => {
         status: branch.status,
         name: branch.name,
         country_id: branch.country_id,
+        password: branch.password,
       });
   }, [branch]);
 
@@ -100,7 +101,7 @@ const EditAddBranches = () => {
           <MainCheckBox label={"active"} register={register("status")} />
         </BaseInputs>
         <BaseInputs label="password">
-          <MainCheckBox label={"password"} register={register("password")} />
+          <MainInput register={register("password")} disabled={true} />
         </BaseInputs>
 
         <Button type="submit" btnType={BtnTypes.black}>
@@ -112,5 +113,3 @@ const EditAddBranches = () => {
 };
 
 export default EditAddBranches;
-
-// EditAddBranches

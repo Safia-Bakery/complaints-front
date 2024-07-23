@@ -14,13 +14,16 @@ import complaintsMutation, {
 import useComplaints from "@/hooks/useComplaints";
 import { CancelReason } from "@/utils/helper";
 import { errorToast, successToast } from "@/utils/toast";
-import { ModalTypes, OrderStatus } from "@/utils/types";
+import { BranchJsonVal, ModalTypes, OrderStatus } from "@/utils/types";
 import cl from "classnames";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import BranchSelect from "@/components/BranchSelect";
+import useSubCategories from "@/hooks/useSubCategories.ts";
+import MainRadioBtns from "@/components/BaseInputs/MainRadioBtns.tsx";
 
 const ComplaintModals = () => {
   const { t } = useTranslation();
@@ -36,21 +39,53 @@ const ComplaintModals = () => {
 
   const { mutate, isPending } = complaintsMutation();
 
+  const branchJson = useQueryString("branch");
+  const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
+
   const closeModal = () => removeParams(["modal"]);
 
   const { getValues, register, handleSubmit, watch, reset } = useForm();
 
+  const { data: subCategs, isFetching: subCategFetching } = useSubCategories({
+    status: 1,
+    category_id: watch("categ"),
+  });
+
   const handleComplaint = (body?: ComplaintsBody) => () => {
-    const { fixedReason, cancel_reason } = getValues();
+    const { fixedReason, cancel_reason, comment, subcategory_id } = getValues();
+
     mutate(
-      {
-        id: Number(id),
-        ...(!!date_return && { date_return: date_return?.toISOString() }),
-        ...(!!date_purchase && { date_purchase: date_purchase?.toISOString() }),
-        deny_reason:
-          fixedReason < 4 ? t(CancelReason[fixedReason]) : cancel_reason,
-        ...body,
-      },
+      Object.assign(
+        Object.assign(
+          Object.assign(
+            {
+              id: Number(id),
+              ...(!!date_return && { date_return: date_return?.toISOString() }),
+              ...(!!date_purchase && {
+                date_purchase: date_purchase?.toISOString(),
+              }),
+              deny_reason:
+                fixedReason < 4 ? t(CancelReason[fixedReason]) : cancel_reason,
+              ...body,
+            },
+            comment && comment !== ""
+              ? {
+                  comment: comment,
+                }
+              : {}
+          ),
+          branch && branch.id
+            ? {
+                branch_id: branch.id,
+              }
+            : {}
+        ),
+        subcategory_id
+          ? {
+              subcategory_id: subcategory_id,
+            }
+          : {}
+      ),
       {
         onSuccess: () => {
           refetch();
@@ -170,6 +205,82 @@ const ComplaintModals = () => {
                       : undefined
                   }
                   onChange={handleDateReturn}
+                />
+              </BaseInput>
+
+              <Button className="w-full mt-3" type="submit">
+                {t("apply")}
+              </Button>
+            </div>
+          </form>
+        );
+
+      case ModalTypes.edit_comment:
+        return (
+          <form
+            onSubmit={handleSubmit(handleComplaint())}
+            className={"w-[420px]"}
+          >
+            <Header title="edit_comment">
+              <button onClick={closeModal} className="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </Header>
+            <div className="p-3">
+              <BaseInput label="comments">
+                <MainTextArea
+                  className="!h-[220px]"
+                  register={register("comment")}
+                />
+              </BaseInput>
+
+              <Button className="w-full mt-3" type="submit">
+                {t("apply")}
+              </Button>
+            </div>
+          </form>
+        );
+
+      case ModalTypes.edit_branch:
+        return (
+          <form
+            onSubmit={handleSubmit(handleComplaint())}
+            className={"w-[420px]"}
+          >
+            <Header title="edit_branch">
+              <button onClick={closeModal} className="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </Header>
+            <div className="p-3">
+              <BaseInput label="branch" className="flex-1">
+                <BranchSelect enabled />
+              </BaseInput>
+
+              <Button className="w-full mt-3" type="submit">
+                {t("apply")}
+              </Button>
+            </div>
+          </form>
+        );
+
+      case ModalTypes.edit_category:
+        return (
+          <form
+            onSubmit={handleSubmit(handleComplaint())}
+            className={"w-[420px]"}
+          >
+            <Header title="edit_category">
+              <button onClick={closeModal} className="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </Header>
+
+            <div className="p-3">
+              <BaseInput label="category">
+                <MainRadioBtns
+                  values={subCategs?.items}
+                  register={register("subcategory_id")}
                 />
               </BaseInput>
 
