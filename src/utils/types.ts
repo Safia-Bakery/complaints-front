@@ -372,3 +372,24 @@ export enum Permissions {
   edit_categories = 31,
   add_categories = 32,
 }
+
+export interface CountsStats {
+  last_30_days: number;
+  last_60_and_30_days: number;
+  change: number;
+  percentage_change: number;
+}
+
+export interface StatsTypes {
+  workers_comparison: CountsStats;
+  complaint_service: CountsStats;
+  complaint_quality: CountsStats;
+  qrcode_stats: CountsStats;
+  with_categories: {
+    [key: string]: number;
+  };
+  monthly_stats: {
+    service: { [key: string]: number };
+    quality: { [key: string]: number };
+  };
+}
