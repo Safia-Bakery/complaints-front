@@ -127,6 +127,7 @@ const localization = {
       clients_rate: "Оценка клиентов",
       orders_by_qr: "Поступившых отзывов по QR",
       service_shop: "Сервис магазин",
+      req_stats: "Статистика запросов",
     },
   },
   uz: {

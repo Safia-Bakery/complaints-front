@@ -33,6 +33,7 @@ const Dashboard = () => {
   const { data, isLoading } = useStats({
     to_date: dayjs(endDate).format(yearMonthDate),
     from_date: dayjs(startDate).format(yearMonthDate),
+    enabled: !!endDate && !!startDate,
   });
 
   const donutSeries = useMemo(() => {
@@ -48,6 +49,10 @@ const Dashboard = () => {
   }, [data?.with_categories]);
 
   const donutOptions: ApexOptions = {
+    title: {
+      text: t("with_category"),
+      align: "left",
+    },
     plotOptions: {
       pie: {
         donut: {
@@ -165,7 +170,14 @@ const Dashboard = () => {
           <div className="flex justify-between">
             <div className="flex items-end gap-3">
               <span className="flex items-center gap-2">
-                <img src={incrementIcon} alt="" />
+                <img
+                  src={
+                    data?.qrcode_stats?.percentage_change! < 0
+                      ? decrementIcon
+                      : incrementIcon
+                  }
+                  alt=""
+                />
                 <span
                   className={cl(" font-medium text-xs", {
                     ["text-[#0DA06A]"]:
@@ -202,7 +214,14 @@ const Dashboard = () => {
           <div className="flex justify-between">
             <div className="flex items-end gap-3">
               <span className="flex items-center gap-2">
-                <img src={incrementIcon} alt="" />
+                <img
+                  src={
+                    data?.complaint_service?.percentage_change! < 0
+                      ? decrementIcon
+                      : incrementIcon
+                  }
+                  alt=""
+                />
                 <span
                   className={cl(" font-medium text-xs", {
                     ["text-[#0DA06A]"]:
@@ -239,7 +258,14 @@ const Dashboard = () => {
           <div className="flex justify-between">
             <div className="flex items-end gap-3">
               <span className="flex items-center gap-2">
-                <img src={incrementIcon} alt="" />
+                <img
+                  src={
+                    data?.workers_comparison?.percentage_change! < 0
+                      ? decrementIcon
+                      : incrementIcon
+                  }
+                  alt=""
+                />
                 <span
                   className={cl(" font-medium text-xs", {
                     ["text-[#0DA06A]"]:
@@ -276,7 +302,14 @@ const Dashboard = () => {
           <div className="flex justify-between">
             <div className="flex items-end gap-3">
               <span className="flex items-center gap-2">
-                <img src={incrementIcon} alt="" />
+                <img
+                  src={
+                    data?.complaint_quality?.percentage_change! < 0
+                      ? decrementIcon
+                      : incrementIcon
+                  }
+                  alt=""
+                />
                 <span
                   className={cl(" font-medium text-xs", {
                     ["text-[#0DA06A]"]:
@@ -319,7 +352,6 @@ const Dashboard = () => {
           />
           <div className="flex gap-5">
             <div className="w-full">
-              <h2 className="font-bold text-sm">{t("with_category")}</h2>
               <Chart
                 options={donutOptions}
                 series={donutSeries?.series}

@@ -393,3 +393,12 @@ export interface StatsTypes {
     quality: { [key: string]: number };
   };
 }
+
+export interface HRStatsTypes {
+  with_categories: {
+    [key: string]: number;
+  };
+  complaint_count: number;
+  question_count: number;
+  advice_count: number;
+}
