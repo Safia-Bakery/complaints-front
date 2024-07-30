@@ -17,10 +17,10 @@ export const authReducer = createSlice({
   reducers: {
     logoutHandler: (state) => {
       state.token = null;
-      window.location.reload();
 
       const { pathname, search } = window.location;
-      if (pathname.includes("login")) state.link = "/dashboard";
+      if (pathname.includes("login") || pathname === "/")
+        state.link = "/dashboard";
       else state.link = pathname + search;
     },
     loginHandler: (state, { payload }) => {

@@ -26,6 +26,7 @@ export type ComplaintsBody = {
   is_client?: boolean;
   producer_guilty?: boolean;
   is_returned?: boolean;
+  expense?: number;
 };
 
 const complaintsMutation = () => {

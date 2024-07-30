@@ -82,12 +82,12 @@ const Breadcrumbs: FC = () => {
               <img src={redDot} alt="" className="absolute top-0 left-0" />
             </div>
 
-            <span
+            <button
               onClick={() => dispatch(logoutHandler())}
               className="font-medium text-sm cursor-pointer"
             >
               {me?.name ?? me?.username}
-            </span>
+            </button>
           </div>
         </div>
       </div>

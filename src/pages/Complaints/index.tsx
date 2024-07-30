@@ -102,7 +102,7 @@ const Complaints = () => {
       {
         accessorKey: "client_name",
         header: t("name"),
-      }, //numberWithCommas
+      },
       {
         accessorKey: "client_number",
         header: t("phone"),
@@ -116,7 +116,6 @@ const Complaints = () => {
       {
         accessorKey: "expence",
         header: t("expence"),
-        // cell: ({ row }) => numberWithCommas(row.original.autonumber),
       },
       {
         accessorKey: "author",
@@ -125,7 +124,15 @@ const Complaints = () => {
       {
         accessorKey: "status",
         header: t("status"),
-        cell: ({ row }) => <StatusBlock status={row.original.status} />,
+        cell: ({ row }) => (
+          <StatusBlock
+            status={
+              com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk]
+                ? row.original.otk_status
+                : row.original.status
+            }
+          />
+        ),
       },
     ],
     []

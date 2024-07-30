@@ -30,6 +30,7 @@ export enum ModalTypes {
   edit_comment,
   edit_branch,
   edit_category,
+  add_expense,
 }
 export enum FileType {
   other,
@@ -223,6 +224,7 @@ export interface ComplaintType {
   client_number: string;
   client_gender: string;
   date_purchase: string;
+  expense?: number;
   date_return: string;
   deny_reason?: string;
   comment: string;

@@ -43,7 +43,7 @@ const ShowComplaint = () => {
 
   const handleModal = (modal: ModalTypes) => () => navigateParams({ modal });
 
-  const handleStatus = (st: OrderStatus) => () => {
+  const handleStatus = (st: OrderStatus) => {
     mutate(
       {
         [+ComplaintsSpheres[com_sphere! as any] === ComplaintsSpheres.otk
@@ -61,8 +61,21 @@ const ShowComplaint = () => {
     );
   };
 
+  const handleExpenceMdoal = () => {
+    return order?.status === OrderStatus.received &&
+      +ComplaintsSpheres[com_sphere! as any] !== ComplaintsSpheres.otk
+      ? navigateParams({ modal: ModalTypes.add_expense })
+      : handleStatus(OrderStatus.done);
+  };
+
   const renderBtns = useMemo(() => {
-    if (!DisableAction[order?.status!])
+    if (
+      !DisableAction[
+        +ComplaintsSpheres[com_sphere! as any] === ComplaintsSpheres.otk
+          ? order?.otk_status!
+          : order?.status!
+      ]
+    )
       return (
         <div className="flex justify-end items-center gap-2 mt-4">
           <Button
@@ -74,21 +87,18 @@ const ShowComplaint = () => {
           {order?.status === OrderStatus.new ? (
             <Button
               btnType={BtnTypes.darkBlue}
-              onClick={handleStatus(OrderStatus.received)}
+              onClick={() => handleStatus(OrderStatus.received)}
             >
               {t("receive")}
             </Button>
           ) : (
-            <Button
-              btnType={BtnTypes.green}
-              onClick={handleStatus(OrderStatus.done)}
-            >
+            <Button btnType={BtnTypes.green} onClick={handleExpenceMdoal}>
               {t("to_close")}
             </Button>
           )}
         </div>
       );
-  }, [order]);
+  }, [order?.status, order?.otk_status]);
 
   if (isLoading || isPending) return <Loading />;
 
@@ -220,13 +230,13 @@ const ShowComplaint = () => {
                   <th>{t("created_at")}</th>
                   <td>{dayjs(order?.created_at).format(dateTimeFormat)}</td>
                 </tr>
-                {/* <tr>
-                  <th>{t("author")}</th>
-                  <td>author</td>
-                </tr> */}
                 <tr>
                   <th>{t("name_table")}</th>
                   <td>{order?.client_name}</td>
+                </tr>
+                <tr>
+                  <th>{t("expence")}</th>
+                  <td>{order?.expense ? order?.expense : t("not_given")}</td>
                 </tr>
                 {!!order?.deny_reason && (
                   <tr>

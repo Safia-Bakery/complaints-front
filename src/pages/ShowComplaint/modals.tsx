@@ -14,7 +14,12 @@ import complaintsMutation, {
 import useComplaints from "@/hooks/useComplaints";
 import { CancelReason } from "@/utils/helper";
 import { errorToast, successToast } from "@/utils/toast";
-import { BranchJsonVal, ModalTypes, OrderStatus } from "@/utils/types";
+import {
+  BranchJsonVal,
+  BtnTypes,
+  ModalTypes,
+  OrderStatus,
+} from "@/utils/types";
 import cl from "classnames";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
@@ -24,6 +29,7 @@ import { useParams } from "react-router-dom";
 import BranchSelect from "@/components/BranchSelect";
 import useSubCategories from "@/hooks/useSubCategories.ts";
 import MainRadioBtns from "@/components/BaseInputs/MainRadioBtns.tsx";
+import MainInput from "@/components/BaseInputs/MainInput";
 
 const ComplaintModals = () => {
   const { t } = useTranslation();
@@ -51,48 +57,55 @@ const ComplaintModals = () => {
     category_id: watch("categ"),
   });
 
+  const handleExpense = (has_expense: boolean) => {
+    const { comment, expense } = getValues();
+    if (has_expense && !expense) return;
+    else
+      mutate(
+        {
+          id: Number(id),
+          ...(comment && comment !== "" && { comment }),
+          ...(has_expense && expense && { expense: +expense }),
+          status: OrderStatus.done,
+        },
+        {
+          onSuccess: () => {
+            refetch();
+            successToast("success");
+            closeModal();
+          },
+          onError: (e: { message: string }) => errorToast(e.message),
+        }
+      );
+  };
+
   const handleComplaint = (body?: ComplaintsBody) => () => {
-    const { fixedReason, cancel_reason, comment, subcategory_id } = getValues();
+    const { fixedReason, cancel_reason, comment, subcategory_id, expense } =
+      getValues();
 
     mutate(
-      Object.assign(
-        Object.assign(
-          Object.assign(
-            {
-              id: Number(id),
-              ...(!!date_return && { date_return: date_return?.toISOString() }),
-              ...(!!date_purchase && {
-                date_purchase: date_purchase?.toISOString(),
-              }),
-              deny_reason:
-                fixedReason < 4 ? t(CancelReason[fixedReason]) : cancel_reason,
-              ...body,
-            },
-            comment && comment !== ""
-              ? {
-                  comment: comment,
-                }
-              : {}
-          ),
-          branch && branch.id
-            ? {
-                branch_id: branch.id,
-              }
-            : {}
-        ),
-        subcategory_id
-          ? {
-              subcategory_id: subcategory_id,
-            }
-          : {}
-      ),
+      {
+        id: Number(id),
+        ...(!!date_return && { date_return: date_return?.toISOString() }),
+        ...(!!date_purchase && {
+          date_purchase: date_purchase?.toISOString(),
+        }),
+        deny_reason:
+          fixedReason < 4 ? t(CancelReason[fixedReason]) : cancel_reason,
+
+        ...(comment && comment !== "" && { comment }),
+        ...(subcategory_id && { subcategory_id }),
+        ...(expense && { expense: +expense }),
+        ...(!!branch?.id && { branch_id: branch.id }),
+        ...body,
+      },
       {
         onSuccess: () => {
           refetch();
           successToast("success");
           closeModal();
         },
-        onError: (e) => errorToast(e.message),
+        onError: (e: { message: string }) => errorToast(e.message),
       }
     );
   };
@@ -262,6 +275,41 @@ const ComplaintModals = () => {
               </Button>
             </div>
           </form>
+        );
+
+      case ModalTypes.add_expense:
+        return (
+          <div className={"w-[420px]"}>
+            <Header title="add_summ_of_expense">
+              <button onClick={closeModal} className="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </Header>
+            <div className="p-3">
+              <MainInput
+                register={register("expense")}
+                placeholder={"summ"}
+                type="number"
+                className="mb-4"
+              />
+              <MainTextArea register={register("comment")} />
+
+              <Button
+                btnType={BtnTypes.green}
+                className="w-full mt-3"
+                onClick={() => handleExpense(true)}
+              >
+                {t("save")}
+              </Button>
+              <Button
+                btnType={BtnTypes.brown}
+                className="w-full mt-3"
+                onClick={() => handleExpense(false)}
+              >
+                {t("close_wothout_expense")}
+              </Button>
+            </div>
+          </div>
         );
 
       case ModalTypes.edit_category:

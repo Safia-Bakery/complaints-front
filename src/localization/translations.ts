@@ -128,6 +128,11 @@ const localization = {
       orders_by_qr: "Поступившых отзывов по QR",
       service_shop: "Сервис магазин",
       req_stats: "Статистика запросов",
+
+      close_wothout_expense: "Закрыть без рассхода",
+      summ: "Сумма",
+      add_summ_of_expense: "Внесите сумму расхода",
+      not_given: "Не задано",
     },
   },
   uz: {

@@ -8,7 +8,7 @@ const AdminRoutes = () => {
       <Playground />
       <BreadCrump />
 
-      <div className="">
+      <div>
         <Outlet />
       </div>
     </>
