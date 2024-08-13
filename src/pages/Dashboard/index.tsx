@@ -129,7 +129,7 @@ const Dashboard = () => {
       },
     },
     stroke: {
-      curve: "straight",
+      curve: "smooth",
     },
     legend: { position: "top" },
     title: {
@@ -186,7 +186,7 @@ const Dashboard = () => {
                       data?.qrcode_stats?.percentage_change! < 0,
                   })}
                 >
-                  {data?.qrcode_stats?.percentage_change}%
+                  {data?.qrcode_stats?.percentage_change.toFixed(2)}%
                 </span>
               </span>
               <img
@@ -230,7 +230,7 @@ const Dashboard = () => {
                       data?.complaint_service?.percentage_change! < 0,
                   })}
                 >
-                  {data?.complaint_service?.percentage_change}%
+                  {data?.complaint_service?.percentage_change.toFixed(2)}%
                 </span>
               </span>
               <img
@@ -274,7 +274,7 @@ const Dashboard = () => {
                       data?.workers_comparison?.percentage_change! < 0,
                   })}
                 >
-                  {data?.workers_comparison?.percentage_change}%
+                  {data?.workers_comparison?.percentage_change.toFixed(2)}%
                 </span>
               </span>
               <img
@@ -318,7 +318,7 @@ const Dashboard = () => {
                       data?.complaint_quality?.percentage_change! < 0,
                   })}
                 >
-                  {data?.complaint_quality?.percentage_change}%
+                  {data?.complaint_quality?.percentage_change.toFixed(2)}%
                 </span>
               </span>
               <img
@@ -344,6 +344,7 @@ const Dashboard = () => {
             className="!border mb-6 !border-[#0000000F] rounded-lg max-w-80 w-full text-center py-2"
             selectsRange={true}
             startDate={startDate}
+            dateFormat={"dd.MM.YYYY"}
             endDate={endDate}
             onChange={(update) => {
               setDateRange(update);
