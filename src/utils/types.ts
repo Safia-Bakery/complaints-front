@@ -394,6 +394,10 @@ export interface StatsTypes {
     service: { [key: string]: number };
     quality: { [key: string]: number };
   };
+  country_stats: {
+    service: { [key: string]: number };
+    quality: { [key: string]: number };
+  };
 }
 
 export interface HRStatsTypes {

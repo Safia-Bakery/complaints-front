@@ -17,7 +17,6 @@ import ItemsCount from "@/components/ItemsCount";
 const Users = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-
   const { data, isLoading } = useUsers({});
 
   const columns = useMemo<ColumnDef<UserType>[]>(
@@ -73,7 +72,6 @@ const Users = () => {
     ],
     []
   );
-
   if (isLoading) return <Loading />;
 
   return (

@@ -371,6 +371,30 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      <div>
+        <h3 className="text-[#00000080] text-sm">{t("expenses")}</h3>
+        <div className="flex border border-[#8B8B8B] mt-2 shadow-[0px_2px_2px_0px_#00000040] rounded-md w-min">
+          {Object.keys(data?.country_stats?.quality!).map((country) => (
+            <div className="border-r border-r-[#8B8B8B] p-4 last:border-r-0 min-w-44">
+              <h2 className="font-bold text-sm mb-4">{country}</h2>
+
+              <div className="mt-3">
+                <h4 className="text-xs font-bold">{t("service")}</h4>
+                <p className="text-xs">
+                  {data?.country_stats.service?.[country]} сум
+                </p>
+              </div>
+              <div className="mt-3">
+                <h4 className="text-xs font-bold">{t("quality")}</h4>
+                <p className="text-xs">
+                  {data?.country_stats.quality?.[country]} сум
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </Container>
   );
 };

@@ -4,7 +4,11 @@ import { useAppDispatch, useAppSelector } from "./store/rootConfig";
 import { langSelector } from "@/store/reducers/selects";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Suspend from "./components/Suspend";
-import { logoutHandler, tokenSelector } from "./store/reducers/auth";
+import {
+  linkSelector,
+  logoutHandler,
+  tokenSelector,
+} from "./store/reducers/auth";
 import useToken from "@/hooks/useToken";
 import Loading from "./components/Loader";
 import "dayjs/locale/ru";

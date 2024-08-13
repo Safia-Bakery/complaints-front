@@ -133,6 +133,7 @@ const localization = {
       summ: "Сумма",
       add_summ_of_expense: "Внесите сумму расхода",
       not_given: "Не задано",
+      expenses: "Расходы",
     },
   },
   uz: {
