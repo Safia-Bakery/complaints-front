@@ -36,7 +36,10 @@ const ShowComplaint = () => {
   const { id, com_sphere } = useParams();
   const navigate = useNavigate();
   const navigateParams = useNavigateParams();
-  const { data, isLoading, refetch } = useComplaints({ id: Number(id) });
+  const { data, isLoading, refetch } = useComplaints({
+    id: Number(id),
+    enabled: !!id,
+  });
   const order = data?.items?.[0];
 
   const { mutate, isPending } = complaintsMutation();

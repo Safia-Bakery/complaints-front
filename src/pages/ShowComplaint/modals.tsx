@@ -40,7 +40,7 @@ const ComplaintModals = () => {
   const [date_purchase, $date_purchase] = useState<Date>();
   const [date_return, $date_return] = useState<Date>();
 
-  const { refetch, data } = useComplaints({ id: Number(id) });
+  const { refetch, data } = useComplaints({ id: Number(id), enabled: !!id });
   const order = data?.items?.[0];
 
   const { mutate, isPending } = complaintsMutation();

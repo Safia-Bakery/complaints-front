@@ -17,7 +17,7 @@ const Otkchild = () => {
   const { register, reset, getValues } = useForm();
   const { mutate, isPending } = complaintsMutation();
   const { id } = useParams();
-  const { data, refetch } = useComplaints({ id: Number(id) });
+  const { data, refetch } = useComplaints({ id: Number(id), enabled: !!id });
 
   const complaint = data?.items?.[0];
 

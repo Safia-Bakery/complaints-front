@@ -4,16 +4,12 @@ import { useAppDispatch, useAppSelector } from "./store/rootConfig";
 import { langSelector } from "@/store/reducers/selects";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Suspend from "./components/Suspend";
-import {
-  linkSelector,
-  logoutHandler,
-  tokenSelector,
-} from "./store/reducers/auth";
+import { logoutHandler, tokenSelector } from "./store/reducers/auth";
 import useToken from "@/hooks/useToken";
 import Loading from "./components/Loader";
 import "dayjs/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
-import { ComplaintsSpheres as ComSpheres, Permissions } from "./utils/types";
+import { Permissions } from "./utils/types";
 
 const Login = lazy(() => import("@/pages/Login"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
@@ -159,6 +155,11 @@ const mainRoutes = [
     element: <AddComplaint />,
     path: `complaints/:com_sphere/add`,
     screen: Permissions.add_complaints,
+  },
+  {
+    element: <AddComplaint />,
+    path: `complaints/:com_sphere/add`,
+    screen: Permissions.add_okk,
   },
   {
     element: <ShowComplaint />,
