@@ -235,7 +235,7 @@ const ShowComplaint = () => {
                 </tr>
                 <tr>
                   <th>{t("name_table")}</th>
-                  <td>{order?.client_name}</td>
+                  <td>{order?.product_name}</td>
                 </tr>
                 <tr>
                   <th>{t("expence")}</th>
