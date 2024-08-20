@@ -215,6 +215,7 @@ export interface SubCategoryType {
   status: number;
   created_at: string;
   updated_at: string;
+  category: { name: string };
 }
 
 export interface ComplaintType {

@@ -44,7 +44,7 @@ const EditAddUser = () => {
       getValues();
     postUser(
       {
-        status,
+        status: status ? 1 : 0,
         name,
         username,
         role_id: +role_id,
@@ -65,7 +65,7 @@ const EditAddUser = () => {
   useEffect(() => {
     if (role)
       reset({
-        status: role.status,
+        status: !!role.status,
         name: role.name,
         username: role.username,
         role_id: role.role_id,

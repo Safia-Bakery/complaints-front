@@ -86,8 +86,7 @@ const Complaints = () => {
       {
         accessorKey: "subcategory",
         header: t("type"),
-        cell: ({ row }) =>
-          t(OrderTypeSelect[Number(row.original?.subcategory?.category_id)]),
+        cell: ({ row }) => row.original?.subcategory?.category?.name,
       },
       {
         accessorKey: "category",
