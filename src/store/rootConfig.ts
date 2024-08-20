@@ -7,7 +7,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 const persistConfig = {
   key: "complaints",
   storage,
-  whitelist: ["auth", "language"],
+  whitelist: ["auth", "language", "version"],
 };
 export const store = configureStore({
   reducer: persistReducer(persistConfig, reducer),
