@@ -324,7 +324,6 @@ const App = () => {
         path={"/"}
       >
         <Route
-          path={"*"}
           index
           element={
             <Suspend>

@@ -44,7 +44,7 @@ const routes = [
     screen: Permissions.get_reviews,
   },
   {
-    name: "OKK",
+    name: "ДКК",
     url: `/complaints/${ComSpheres[ComSpheres.otk]}`,
     icon: "/icons/okk.svg",
     activeIcon: "/icons/okk-active.svg",
