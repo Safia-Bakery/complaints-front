@@ -33,14 +33,10 @@ baseApi.interceptors.response.use(
   },
   (error) => {
     if (logoutObj[error?.response?.status]) {
-      logoutUser();
+      store?.dispatch(logoutHandler());
     }
     return Promise.reject(error);
   }
 );
-
-function logoutUser() {
-  store?.dispatch(logoutHandler());
-}
 
 export default baseApi;

@@ -315,15 +315,6 @@ const App = () => {
       />
 
       <Route
-        path={"*"}
-        index
-        element={
-          <Suspend>
-            <Dashboard />
-          </Suspend>
-        }
-      />
-      <Route
         element={
           <Suspend>
             <AdminRoutes />
@@ -331,6 +322,15 @@ const App = () => {
         }
         path={"/"}
       >
+        <Route
+          path={"*"}
+          index
+          element={
+            <Suspend>
+              <Dashboard />
+            </Suspend>
+          }
+        />
         {mainRoutes
           .filter((item) => data?.permissions?.[item.screen])
           .map((route) => (
