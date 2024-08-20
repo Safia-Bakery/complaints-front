@@ -7,7 +7,7 @@ import useStats from "@/hooks/useStats";
 import Loading from "@/components/Loader";
 import { useMemo, useState } from "react";
 import dayjs from "dayjs";
-import { yearMonthDate } from "@/utils/helper";
+import { numberWithCommas, yearMonthDate } from "@/utils/helper";
 import incrementIcon from "/icons/increment.svg";
 import decrementIcon from "/icons/decrement.svg";
 import incrementGraph from "/icons/incrementGr.svg";
@@ -39,7 +39,7 @@ const Dashboard = () => {
   const donutSeries = useMemo(() => {
     if (data?.with_categories)
       return {
-        series: Object.values(data?.with_categories),
+        series: Object.values(data?.with_categories) || [],
         labels: Object.keys(data?.with_categories),
         total: Object.values(data?.with_categories).reduce(
           (acc, item) => (acc += item),
@@ -375,7 +375,7 @@ const Dashboard = () => {
       <div>
         <h3 className="text-[#00000080] text-sm">{t("expenses")}</h3>
         <div className="flex border border-[#8B8B8B] mt-2 shadow-[0px_2px_2px_0px_#00000040] rounded-md w-min">
-          {Object.keys(data?.country_stats?.quality!).map((country) => (
+          {Object.keys(data?.country_stats?.quality! || {}).map((country) => (
             <div
               key={country[0]}
               className="border-r border-r-[#8B8B8B] p-4 last:border-r-0 min-w-44"
@@ -385,13 +385,19 @@ const Dashboard = () => {
               <div className="mt-3">
                 <h4 className="text-xs font-bold">{t("service")}</h4>
                 <p className="text-xs">
-                  {data?.country_stats.service?.[country]} сум
+                  {numberWithCommas(
+                    data?.country_stats?.service?.[country] || 0
+                  )}{" "}
+                  сум
                 </p>
               </div>
               <div className="mt-3">
                 <h4 className="text-xs font-bold">{t("quality")}</h4>
                 <p className="text-xs">
-                  {data?.country_stats.quality?.[country]} сум
+                  {numberWithCommas(
+                    data?.country_stats?.quality?.[country] || 0
+                  )}{" "}
+                  сум
                 </p>
               </div>
             </div>

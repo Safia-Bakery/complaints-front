@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../rootConfig";
+import { queryClient } from "@/utils/helper";
 
 interface State {
   token: string | null;
@@ -17,6 +18,7 @@ export const authReducer = createSlice({
   reducers: {
     logoutHandler: (state) => {
       state.token = null;
+      queryClient.clear();
 
       const { pathname, search } = window.location;
       if (pathname.includes("login") || pathname === "/")
