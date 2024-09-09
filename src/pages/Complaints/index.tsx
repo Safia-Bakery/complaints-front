@@ -1,11 +1,8 @@
-import VirtualTable from "@/components/VirtualTable";
-import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import ComplaintsFilter from "./filter";
 import Container from "@/components/Container";
 import StatusBlock from "@/components/StatusBlock";
-import ItemsCount from "@/components/ItemsCount";
 import Button from "@/components/Button";
 import {
   BranchJsonVal,
@@ -13,15 +10,15 @@ import {
   ComplaintType,
   ComplaintsSpheres,
   CountrySelect,
-  OrderTypeSelect,
 } from "@/utils/types";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useComplaints from "@/hooks/useComplaints";
 import Loading from "@/components/Loader";
-import Pagination from "@/components/Pagination";
 import dayjs from "dayjs";
 import { dateTimeFormat } from "@/utils/helper";
 import useQueryString from "@/hooks/custom/useQueryString";
+import Table, { ColumnsType } from "antd/es/table";
+import AntdTable from "@/components/AntdTable";
 
 const Complaints = () => {
   const { t } = useTranslation();
@@ -60,75 +57,73 @@ const Complaints = () => {
     page,
   });
 
-  const columns = useMemo<ColumnDef<ComplaintType>[]>(
+  const columns = useMemo<ColumnsType<ComplaintType>>(
     () => [
       {
-        accessorFn: (_, idx) => idx + 1,
-        cell: (props) => <div className="w-4">{props.row.index + 1}</div>,
-        header: "№",
-        size: 10,
+        render: (_, r, index) => index + 1,
+        title: "№",
+        width: 50,
       },
       {
-        accessorKey: "id",
-        header: t("name_in_table"),
-        cell: ({ row }) => (
-          <Link className="text-blue-500" to={`${row.original.id}`}>
-            {row.original.id}
+        dataIndex: "id",
+        title: t("name_in_table"),
+        render: (_, record) => (
+          <Link className="text-blue-500" to={`${record.id}`}>
+            {record.id}
           </Link>
         ),
       },
       {
-        accessorKey: "country",
-        header: t("country"),
-        cell: ({ row }) =>
-          CountrySelect[Number(row.original?.branch?.country_id)],
+        dataIndex: "country",
+        title: t("country"),
+        render: (_, record) =>
+          CountrySelect[Number(record?.branch?.country_id)],
       },
       {
-        accessorKey: "subcategory",
-        header: t("type"),
-        cell: ({ row }) => row.original?.subcategory?.category?.name,
+        dataIndex: "subcategory",
+        title: t("type"),
+        render: (_, record) => record?.subcategory?.category?.name,
       },
       {
-        accessorKey: "category",
-        header: t("category"),
-        cell: ({ row }) => row.original?.subcategory?.name,
+        dataIndex: "category",
+        title: t("category"),
+        render: (_, record) => record?.subcategory?.name,
       },
       {
-        accessorKey: "branch",
-        header: t("branch"),
-        cell: ({ row }) => row.original?.branch?.name,
+        dataIndex: "branch",
+        title: t("branch"),
+        render: (_, record) => record?.branch?.name,
       },
       {
-        accessorKey: "client_name",
-        header: t("name"),
+        dataIndex: "client_name",
+        title: t("name"),
       },
       {
-        accessorKey: "client_number",
-        header: t("phone"),
+        dataIndex: "client_number",
+        title: t("phone"),
       },
       {
-        accessorKey: "created_at",
-        header: t("created_at"),
-        cell: ({ row }) =>
-          dayjs(row.original?.created_at).format(dateTimeFormat),
+        dataIndex: "created_at",
+        title: t("created_at"),
+        render: (_, record) => dayjs(record?.created_at).format(dateTimeFormat),
       },
       {
-        accessorKey: "expence",
-        header: t("expence"),
+        dataIndex: "expence",
+        title: t("expence"),
       },
       {
-        accessorKey: "author",
-        header: t("author"),
+        dataIndex: "author",
+        title: t("author"),
       },
       {
-        accessorKey: "status",
-        header: t("status"),
-        cell: ({ row }) => (
+        dataIndex: "status",
+        title: t("status"),
+        render: (_, record) => (
           <StatusBlock
             status={
               com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk]
-                ? row.original.otk_status
-                : row.original.status
+                ? record.otk_status
+                : record.status
             }
           />
         ),
@@ -138,7 +133,13 @@ const Complaints = () => {
   );
 
   const renderFilter = useMemo(() => {
-    return <ComplaintsFilter />;
+    return (
+      <Table.Summary fixed={"top"}>
+        <Table.Summary.Row>
+          <ComplaintsFilter />
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
   }, []);
 
   if (isLoading) return <Loading />;
@@ -147,19 +148,22 @@ const Complaints = () => {
     <Container className="main-container">
       {isPending && <Loading />}
       <div className="flex justify-between items-end">
-        <ItemsCount data={data} />
+        <div />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
           </Button>
-          <Button btnType={BtnTypes.green}>Excel</Button>
+          <Button disabled btnType={BtnTypes.green}>
+            Excel
+          </Button>
         </div>
       </div>
-      <VirtualTable columns={columns} data={data?.items} extraHeight={220}>
-        {renderFilter}
-      </VirtualTable>
-
-      <Pagination totalPages={data?.pages} />
+      <AntdTable
+        columns={columns}
+        data={data?.items}
+        totalItems={data?.total}
+        summary={() => renderFilter}
+      />
     </Container>
   );
 };

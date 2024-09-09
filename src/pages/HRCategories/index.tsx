@@ -1,15 +1,15 @@
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
-import VirtualTable from "@/components/VirtualTable";
 import { handleIdx } from "@/utils/helper";
 import { BtnTypes, CategoriesType, HRSpheres } from "@/utils/types";
-import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "@/components/Button";
 import useHrCategories from "@/hooks/useHrCategories";
+import AntdTable from "@/components/AntdTable";
+import { ColumnsType } from "antd/es/table";
 
 const HRCategories = () => {
   const { t } = useTranslation();
@@ -20,30 +20,29 @@ const HRCategories = () => {
     hrsphere_id: +HRSpheres[sphere as any],
   });
 
-  const columns = useMemo<ColumnDef<CategoriesType>[]>(
+  const columns = useMemo<ColumnsType<CategoriesType>>(
     () => [
       {
-        cell: ({ row }) => handleIdx(row.index),
-        header: "№",
-        size: 5,
+        render: (_, r, index) => handleIdx(index),
+        title: "№",
+        width: 50,
       },
 
       {
-        accessorKey: "name",
-        header: t("name_table"),
+        dataIndex: "name",
+        title: t("name_table"),
       },
       {
-        accessorKey: "status",
-        header: t("status"),
-        cell: ({ row }) =>
-          !!row.original?.status ? t("active") : t("inactive"),
+        dataIndex: "status",
+        title: t("status"),
+        render: (_, record) => (!!record?.status ? t("active") : t("inactive")),
       },
       {
-        accessorKey: "action",
-        header: "",
-        size: 1,
-        cell: ({ row }) => (
-          <Link className="w-18" to={`${row.original.id}`}>
+        dataIndex: "action",
+        title: "",
+        width: 50,
+        render: (_, record) => (
+          <Link className="w-18" to={`${record.id}`}>
             <TableViewBtn />
           </Link>
         ),
@@ -57,15 +56,15 @@ const HRCategories = () => {
   return (
     <Container>
       <div className="flex justify-between items-end">
-        {/* <ItemsCount data={data} /> */}
-        <div className="" />
+        <div />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
           </Button>
         </div>
       </div>
-      <VirtualTable
+      <AntdTable
+        totalItems={data?.total}
         columns={columns}
         data={data?.items}
         rowClassName={"text-center"}

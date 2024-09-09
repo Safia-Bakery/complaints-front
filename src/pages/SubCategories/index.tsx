@@ -1,18 +1,16 @@
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
-import VirtualTable from "@/components/VirtualTable";
 import useQueryString from "@/hooks/custom/useQueryString";
 import { handleIdx } from "@/utils/helper";
 import { BtnTypes, SubCategoryType } from "@/utils/types";
-import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import ItemsCount from "@/components/ItemsCount";
 import Button from "@/components/Button";
 import useSubCategories from "@/hooks/useSubCategories";
-import Pagination from "@/components/Pagination";
+import AntdTable from "@/components/AntdTable";
+import { ColumnsType } from "antd/es/table";
 
 const SubCategories = () => {
   const { id } = useParams();
@@ -25,35 +23,34 @@ const SubCategories = () => {
     category_id: id,
   });
 
-  const columns = useMemo<ColumnDef<SubCategoryType>[]>(
+  const columns = useMemo<ColumnsType<SubCategoryType>>(
     () => [
       {
-        cell: ({ row }) => handleIdx(row.index),
-        header: "№",
-        size: 5,
+        render: (_, r, index) => handleIdx(index),
+        title: "№",
+        width: 50,
       },
 
       {
-        accessorKey: "name",
-        header: t("name_table"),
+        dataIndex: "name",
+        title: t("name_table"),
       },
 
       {
-        accessorKey: "code",
-        header: t("code"),
+        dataIndex: "code",
+        title: t("code"),
       },
       {
-        accessorKey: "status",
-        header: t("status"),
-        cell: ({ row }) =>
-          !!row.original?.status ? t("active") : t("inactive"),
+        dataIndex: "status",
+        title: t("status"),
+        render: (_, record) => (!!record?.status ? t("active") : t("inactive")),
       },
       {
-        accessorKey: "action",
-        header: t(""),
-        size: 1,
-        cell: ({ row }) => (
-          <Link className="w-18" to={`${row.original.id}`}>
+        dataIndex: "action",
+        title: t(""),
+        width: 50,
+        render: (_, record) => (
+          <Link className="w-18" to={`${record.id}`}>
             <TableViewBtn />
           </Link>
         ),
@@ -67,19 +64,19 @@ const SubCategories = () => {
   return (
     <Container>
       <div className="flex justify-between items-end">
-        <ItemsCount data={data} />
+        <div />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
           </Button>
         </div>
       </div>
-      <VirtualTable
+      <AntdTable
         columns={columns}
         data={data?.items}
+        totalItems={data?.total}
         rowClassName={"text-center"}
       />
-      <Pagination totalPages={data?.pages} />
     </Container>
   );
 };

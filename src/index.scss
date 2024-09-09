@@ -110,3 +110,7 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.ant-table-title {
+  padding: 0 !important;
+}

@@ -1,12 +1,10 @@
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
-import VirtualTable from "@/components/VirtualTable";
 import useQueryString from "@/hooks/custom/useQueryString";
 import useHRRequests from "@/hooks/useHRRequests";
 import { HRStatusOBJ, handleIdx } from "@/utils/helper";
 import { BtnTypes, HRDeps, HRRequest, HRSpheres } from "@/utils/types";
-import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -14,6 +12,8 @@ import chatIcon from "/icons/chat.svg";
 
 import HRRequestModals from "./modals";
 import Button from "@/components/Button";
+import AntdTable from "@/components/AntdTable";
+import { ColumnsType } from "antd/es/table";
 
 const HRRequests = () => {
   const { hrdep, sphere } = useParams();
@@ -27,46 +27,45 @@ const HRRequests = () => {
     page,
   });
 
-  const columns = useMemo<ColumnDef<HRRequest>[]>(
+  const columns = useMemo<ColumnsType<HRRequest>>(
     () => [
       {
-        cell: ({ row }) => handleIdx(row.index),
-        header: "№",
-        size: 5,
+        render: (_, r, index) => handleIdx(index),
+        title: "№",
+        width: 50,
       },
 
       {
-        accessorKey: "hrclient.name",
-        header: t("user"),
+        dataIndex: "hrclient.name",
+        title: t("user"),
 
-        cell: ({ row }) => row.original.hrclient.name,
+        render: (_, record) => record.hrclient.name,
       },
 
       {
-        accessorKey: "complaint",
-        header: t("question"),
+        dataIndex: "complaint",
+        title: t("question"),
       },
 
       {
-        accessorKey: "hrcategory.name",
-        header: t("category"),
-        cell: ({ row }) => row.original.hrcategory?.name,
+        dataIndex: "hrcategory.name",
+        title: t("category"),
+        render: (_, record) => record.hrcategory?.name,
       },
       {
-        accessorKey: "status",
-        header: t("status"),
+        dataIndex: "status",
+        title: t("status"),
 
-        cell: ({ row }) =>
-          !!row.original?.status?.toString() &&
-          t(HRStatusOBJ[row.original.status]),
+        render: (_, record) =>
+          !!record?.status?.toString() && t(HRStatusOBJ[record.status]),
       },
       {
-        accessorKey: "chat",
-        header: t("chat"),
-        size: 10,
-        cell: ({ row }) => (
+        dataIndex: "chat",
+        title: t("chat"),
+        width: 50,
+        render: (_, record) => (
           <Link
-            to={`?chat_modal=${row.original?.id}&chat=${row.original?.hrclient_id}`}
+            to={`?chat_modal=${record?.id}&chat=${record?.hrclient_id}`}
             className="w-full"
           >
             <img src={chatIcon} alt="chat" className="mx-auto" />
@@ -74,16 +73,14 @@ const HRRequests = () => {
         ),
       },
       {
-        accessorKey: "action",
-        header: t(""),
-        size: 1,
-        cell: ({ row }) => (
+        dataIndex: "action",
+        title: t(""),
+        width: 50,
+        render: (_, record) => (
           <Link
             className="w-18"
             to={
-              hrdep == HRDeps[HRDeps.qa]
-                ? `edit/${row.original.id}`
-                : `${row.original.id}`
+              hrdep == HRDeps[HRDeps.qa] ? `edit/${record.id}` : `${record.id}`
             }
           >
             <TableViewBtn />
@@ -107,10 +104,9 @@ const HRRequests = () => {
           {t("back")}
         </Button>
       </div>
-      <VirtualTable
+      <AntdTable
         columns={columns}
         data={data?.items}
-        extraHeight={150}
         rowClassName={"text-center"}
       />
 

@@ -84,34 +84,33 @@ const HRRequestModals = () => {
 
   return (
     <Modal
-      isOpen={!!chat_modal}
+      open={!!chat_modal}
+      footer={false}
+      rootClassName="!p-0"
+      closable={false}
+      centered={false}
+      maskClosable
+      className="left-[30%] !w-96"
       onClose={closeModal}
-      className="h-full !left-[78%] !-translate-y-1/2 "
+      loading={clientsloading || commLoading || isPending}
+      classNames={{
+        content: "!p-0 !rounded-xl overflow-hidden",
+      }}
     >
-      {(clientsloading || commLoading || isPending) && <Loading />}
-      <div className="h-full flex flex-col">
+      <div className="h-full flex flex-col ">
         <div className="w-full p-3 bg-green-700 rounded-t-xl relative">
           {!chat ? (
             <div className="flex items-center justify-center h-10">
               <h3 className="text-white">{t("chat")}</h3>
             </div>
           ) : (
-            <div className="flex gap-2 items-center">
-              {/* <button
-                className="flex items-center justify-center h-5 w-5"
-                onClick={() => navigate(-1)}
-              >
-                <img src={arrowWhite} alt="back" className="rotate-180" />
-              </button> */}
-              <Avatar />
-
-              <h3 className="text-white font-bold">{privateClient?.name}</h3>
-
-              <button
-                onClick={closeModal}
-                className="absolute top-1/2 -translate-y-1/2 right-2"
-              >
-                <span className="flex h-5 w-5">&times;</span>
+            <div className="flex gap-2 items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Avatar />
+                <h3 className="text-white font-bold">{privateClient?.name}</h3>
+              </div>
+              <button onClick={closeModal}>
+                <span className="flex text-xl">&times;</span>
               </button>
             </div>
           )}
@@ -137,8 +136,8 @@ const HRRequestModals = () => {
             ))}
           </ul>
         ) : (
-          <div className="flex flex-1 pb-24 h-[90%]">
-            <div className="h-full overflow-y-auto px-2 flex flex-1 flex-col-reverse gap-2">
+          <div className="flex flex-1 pb-24 ">
+            <div className="h-full overflow-y-auto px-2 flex flex-1 flex-col-reverse gap-2 max-h-96">
               {!!communication?.items.length && (
                 <ChatMsg data={communication?.items} />
               )}

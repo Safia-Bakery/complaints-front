@@ -17,7 +17,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "@/components/Loader";
 import dayjs from "dayjs";
 import { dateTimeFormat } from "@/utils/helper";
-import { useMemo } from "react";
+import { lazy, useMemo } from "react";
 import { baseURL } from "@/api/baseApi";
 import complaintsMutation from "@/hooks/mutations/complaints";
 import { useNavigateParams } from "@/hooks/custom/useCustomNavigate";
@@ -25,6 +25,9 @@ import ComplaintModals from "./modals";
 import Header from "@/components/Header";
 import { errorToast, successToast } from "@/utils/toast";
 import Otkchild from "./Otkchild";
+import useQueryString from "@/hooks/custom/useQueryString";
+
+// const ComplaintModals = lazy(() => import("./modals"));
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -35,6 +38,7 @@ const ShowComplaint = () => {
   const { t } = useTranslation();
   const { id, com_sphere } = useParams();
   const navigate = useNavigate();
+  const modal = useQueryString("modal");
   const navigateParams = useNavigateParams();
   const { data, isLoading, refetch } = useComplaints({
     id: Number(id),
@@ -108,6 +112,7 @@ const ShowComplaint = () => {
   return (
     <>
       <Container>
+        <ComplaintModals />
         <Header>
           <Button onClick={() => navigate(`/complaints/${com_sphere}`)}>
             {t("back")}
@@ -275,7 +280,7 @@ const ShowComplaint = () => {
                     to={`${baseURL}/${item.url}`}
                     target="_blank"
                   >
-                    <span>image.png</span>
+                    <span>image</span>
                     <button>
                       <img
                         height={30}
@@ -291,8 +296,6 @@ const ShowComplaint = () => {
           </div>
         </Container>
       )}
-
-      <ComplaintModals />
     </>
   );
 };
