@@ -1,17 +1,16 @@
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
-import VirtualTable from "@/components/VirtualTable";
 import useQueryString from "@/hooks/custom/useQueryString";
 import { handleIdx } from "@/utils/helper";
 import { BtnTypes, HRQaType, HRSpheres } from "@/utils/types";
-import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useHRQa from "@/hooks/useHRQa";
-import ItemsCount from "@/components/ItemsCount";
 import Button from "@/components/Button";
+import AntdTable from "@/components/AntdTable";
+import { ColumnsType } from "antd/es/table";
 
 const HRQa = () => {
   const { sphere } = useParams();
@@ -24,39 +23,40 @@ const HRQa = () => {
     page,
   });
 
-  const columns = useMemo<ColumnDef<HRQaType>[]>(
+  const columns = useMemo<ColumnsType<HRQaType>>(
     () => [
       {
-        cell: ({ row }) => handleIdx(row.index),
-        header: "№",
-        size: 5,
+        render: (_, r, index) => handleIdx(index),
+        title: "№",
+        width: 50,
       },
 
       {
-        accessorKey: "question_ru",
-        header: t("question"),
+        dataIndex: "question_ru",
+        title: t("question"),
+        width: 250,
       },
 
       {
-        accessorKey: "answer_ru",
-        header: t("answer"),
+        dataIndex: "answer_ru",
+        title: t("answer"),
       },
       {
-        accessorKey: "status",
-        header: t("status"),
-
-        cell: ({ row }) => (
+        dataIndex: "status",
+        title: t("status"),
+        width: 150,
+        render: (_, record) => (
           <p className="text-center w-full">
-            {!!row.original?.status ? t("active") : t("inactive")}
+            {!!record?.status ? t("active") : t("inactive")}
           </p>
         ),
       },
       {
-        accessorKey: "action",
-        header: t(""),
-        size: 1,
-        cell: ({ row }) => (
-          <Link className="w-18" to={`edit/${row.original.id}`}>
+        dataIndex: "action",
+        title: t(""),
+        width: 50,
+        render: (_, record) => (
+          <Link className="w-18" to={`edit/${record.id}`}>
             <TableViewBtn />
           </Link>
         ),
@@ -70,14 +70,18 @@ const HRQa = () => {
   return (
     <Container>
       <div className="flex justify-between items-end">
-        <ItemsCount data={data} />
+        <div />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("edit/add")} btnType={BtnTypes.black}>
             {t("add")}
           </Button>
         </div>
       </div>
-      {data?.items && <VirtualTable columns={columns} data={data?.items} />}
+      <AntdTable
+        columns={columns}
+        data={data?.items}
+        totalItems={data?.total}
+      />
     </Container>
   );
 };

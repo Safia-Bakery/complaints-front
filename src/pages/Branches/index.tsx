@@ -1,17 +1,16 @@
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import TableViewBtn from "@/components/TableViewBtn";
-import VirtualTable from "@/components/VirtualTable";
 import useQueryString from "@/hooks/custom/useQueryString";
 import { handleIdx } from "@/utils/helper";
 import { BranchType, BtnTypes } from "@/utils/types";
-import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
-import Pagination from "@/components/Pagination";
 import useBranches from "@/hooks/useBranches";
+import AntdTable from "@/components/AntdTable";
+import { ColumnsType } from "antd/es/table";
 
 const Branches = () => {
   const { t } = useTranslation();
@@ -23,30 +22,31 @@ const Branches = () => {
     size: 50,
   });
 
-  const columns = useMemo<ColumnDef<BranchType>[]>(
+  const columns = useMemo<ColumnsType<BranchType>>(
     () => [
       {
-        cell: ({ row }) => handleIdx(row.index),
-        header: "№",
-        size: 5,
+        render: (_, r, index) => handleIdx(index),
+        title: "№",
+        width: 50,
+        className: "!p-0",
       },
 
       {
-        accessorKey: "name",
-        header: t("name_table"),
+        dataIndex: "name",
+        title: t("name_table"),
       },
       {
-        accessorKey: "status",
-        header: t("status"),
-        cell: ({ row }) =>
-          !!row.original?.status ? t("active") : t("inactive"),
+        title: t("status"),
+        dataIndex: "status",
+        render: (_, record) => (!!record.status ? t("active") : t("inactive")),
       },
       {
-        accessorKey: "action",
-        header: "",
-        size: 1,
-        cell: ({ row }) => (
-          <Link className="w-18" to={`${row.original.id}`}>
+        dataIndex: "action",
+        title: "",
+        width: 50,
+        className: "!p-1",
+        render: (_, record) => (
+          <Link className="w-18" to={`${record.id}`}>
             <TableViewBtn />
           </Link>
         ),
@@ -60,7 +60,6 @@ const Branches = () => {
   return (
     <Container>
       <div className="flex justify-between items-end">
-        {/* <ItemsCount data={data} /> */}
         <div className="" />
         <div className="flex gap-2 mb-3">
           <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
@@ -68,13 +67,13 @@ const Branches = () => {
           </Button>
         </div>
       </div>
-      <VirtualTable
+
+      <AntdTable
         columns={columns}
         data={data?.items}
         rowClassName={"text-center"}
+        totalItems={data?.total}
       />
-
-      <Pagination totalPages={data?.pages} />
     </Container>
   );
 };

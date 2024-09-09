@@ -130,15 +130,21 @@ const ShowHRRequest = () => {
 
       <Modal
         onClose={closeModal}
-        isOpen={!!modal}
-        className={cl("!h-[400px] w-min p-1 overflow-y-auto")}
+        open={!!modal}
+        closable={false}
+        maskClosable
+        classNames={{
+          content: "!p-0",
+        }}
+        footer={false}
+        className={cl("!h-[400px] !w-min p-1 overflow-y-auto")}
       >
         <form
           onSubmit={handleSubmit(() => handleRequst(OrderStatus.denied))}
           className={"w-[420px]"}
         >
           <Header title="deny_reason">
-            <button onClick={closeModal} className="close">
+            <button onClick={closeModal} className="close" type="button">
               <span aria-hidden="true">&times;</span>
             </button>
           </Header>
