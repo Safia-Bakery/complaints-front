@@ -14,13 +14,24 @@ interface Props {
   checked?: number;
 }
 
-const MainRadioBtns: FC<Props> = ({ values, register }) => {
+const MainRadioBtns: FC<Props> = ({ values, register, className }) => {
   const { t } = useTranslation();
   return (
-    <div className={cl(styles.inputBox, "bg-white !flex flex-wrap gap-4")}>
+    <div
+      className={cl(
+        styles.inputBox,
+        className,
+        "bg-white !flex flex-wrap gap-4"
+      )}
+    >
       {values?.map((item) => (
         <label key={item.id} className={styles.radioBtn}>
-          <input type="radio" value={item.id} {...register} />
+          <input
+            type="radio"
+            value={item.id}
+            id={item.id.toString()}
+            {...register}
+          />
           {t(item.name)}
         </label>
       ))}

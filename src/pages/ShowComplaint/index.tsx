@@ -124,13 +124,7 @@ const ShowComplaint = () => {
               <tbody>
                 <tr>
                   <th className="w-60">{t("type")}</th>
-                  <td>
-                    {t(
-                      `${
-                        OrderTypeSelect[Number(order?.subcategory?.category_id)]
-                      }`
-                    )}
-                  </td>
+                  <td>{t(`${order?.subcategory?.category?.name}`)}</td>
                 </tr>
                 <tr>
                   <th>{t("category")}</th>

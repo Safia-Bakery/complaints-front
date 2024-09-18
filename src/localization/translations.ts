@@ -102,6 +102,7 @@ const localization = {
       apply: "Применить",
       edit_purchase_date: "Изменить Дата покупки",
       edit_date_return: "Изменить Дата отправки образцов",
+      date_return: "Дата отправки",
       edit_comment: "Редактировать Комментарий",
       edit_branch: "Изменить Филиал",
       edit_category: "Изменить Категорию",
@@ -135,6 +136,7 @@ const localization = {
       add_summ_of_expense: "Внесите сумму расхода",
       not_given: "Не задано",
       expenses: "Расходы",
+      who_created: "Кто оформил",
     },
   },
   uz: {

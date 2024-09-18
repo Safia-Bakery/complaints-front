@@ -92,6 +92,9 @@ const AddComplaint = () => {
   return (
     <Container className="!pb-14 rounded-xl">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <BaseInput label="branch" className="flex-1">
+          <BranchSelect enabled />
+        </BaseInput>
         <BaseInput label="type">
           <MainRadioBtns values={categs} register={register("categ")} />
         </BaseInput>
@@ -104,10 +107,6 @@ const AddComplaint = () => {
         </BaseInput>
 
         <div className="flex gap-4">
-          <BaseInput label="branch" className="flex-1">
-            <BranchSelect enabled />
-          </BaseInput>
-
           <BaseInput label="country" className="flex-1">
             <MainSelect
               values={country?.items}

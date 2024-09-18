@@ -5,6 +5,7 @@ import MainSelect from "@/components/BaseInputs/MainSelect";
 import Button from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
+import useQueryString from "@/hooks/custom/useQueryString";
 import branchMutation from "@/hooks/mutations/branches";
 import useBranches from "@/hooks/useBranches";
 import useCountries from "@/hooks/useCountries";
@@ -19,10 +20,12 @@ const EditAddBranches = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const page = Number(useQueryString("page")) || 1;
   const goBack = () => navigate(-1);
   const { mutate: postBranch, isPending } = branchMutation();
   const { refetch } = useBranches({
-    page: 1,
+    page,
+    size: 50,
   });
 
   const { data: countries, isLoading: countryLoading } = useCountries({});
