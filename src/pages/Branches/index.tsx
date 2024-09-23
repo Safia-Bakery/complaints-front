@@ -10,16 +10,21 @@ import { Link, useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import useBranches from "@/hooks/useBranches";
 import AntdTable from "@/components/AntdTable";
-import { ColumnsType } from "antd/es/table";
+import Table, { ColumnsType } from "antd/es/table";
+import BranchFilter from "./filter";
 
 const Branches = () => {
   const { t } = useTranslation();
   const page = Number(useQueryString("page")) || 1;
+  const name = useQueryString("name");
+  const status = useQueryString("status");
   const navigate = useNavigate();
 
   const { data, isLoading } = useBranches({
     page,
     size: 50,
+    name,
+    ...(!!status && { status: Number(status) }),
   });
 
   const columns = useMemo<ColumnsType<BranchType>>(
@@ -55,6 +60,16 @@ const Branches = () => {
     []
   );
 
+  const renderFilter = useMemo(() => {
+    return (
+      <Table.Summary fixed={"top"}>
+        <Table.Summary.Row>
+          <BranchFilter />
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  }, []);
+
   if (isLoading) return <Loading />;
 
   return (
@@ -76,6 +91,7 @@ const Branches = () => {
         data={data?.items}
         rowClassName={"text-center"}
         totalItems={data?.total}
+        summary={() => renderFilter}
       />
     </Container>
   );
