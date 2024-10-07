@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Container from "@/components/Container";
 import TableViewBtn from "@/components/TableViewBtn";
 import {
@@ -85,23 +85,23 @@ const ShowComplaint = () => {
     )
       return (
         <div className="flex justify-end items-center gap-2 mt-4">
-          <Button
+          <MyButton
             btnType={BtnTypes.red}
             onClick={handleModal(ModalTypes.deny_reason)}
           >
             {t("cancel")}
-          </Button>
+          </MyButton>
           {order?.status === OrderStatus.new ? (
-            <Button
+            <MyButton
               btnType={BtnTypes.darkBlue}
               onClick={() => handleStatus(OrderStatus.received)}
             >
               {t("receive")}
-            </Button>
+            </MyButton>
           ) : (
-            <Button btnType={BtnTypes.green} onClick={handleExpenceMdoal}>
+            <MyButton btnType={BtnTypes.green} onClick={handleExpenceMdoal}>
               {t("to_close")}
-            </Button>
+            </MyButton>
           )}
         </div>
       );
@@ -114,9 +114,9 @@ const ShowComplaint = () => {
       <Container>
         <ComplaintModals />
         <Header>
-          <Button onClick={() => navigate(`/complaints/${com_sphere}`)}>
+          <MyButton onClick={() => navigate(`/complaints/${com_sphere}`)}>
             {t("back")}
-          </Button>
+          </MyButton>
         </Header>
         <div className="w-full flex gap-3">
           <div className="w-full">

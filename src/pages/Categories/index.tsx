@@ -6,7 +6,7 @@ import { BtnTypes, CategoriesType } from "@/utils/types";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import useCategories from "@/hooks/useCategories";
 import AntdTable from "@/components/AntdTable";
 import { ColumnsType } from "antd/es/table";
@@ -60,9 +60,9 @@ const Categories = () => {
       <div className="flex justify-between items-end">
         <div className="" />
         <div className="flex gap-2 mb-3">
-          <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
+          <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
-          </Button>
+          </MyButton>
         </div>
       </div>
       <AntdTable columns={columns} data={data} rowClassName={"text-center"} />

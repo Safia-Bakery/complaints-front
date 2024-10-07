@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import roleMutation from "@/hooks/mutations/roles";
 import Container from "@/components/Container";
 import useRoles from "@/hooks/useRoles";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 
 const EditPermission = () => {
   const { t } = useTranslation();
@@ -54,7 +54,7 @@ const EditPermission = () => {
   return (
     <Container className={"pb-11"}>
       <Header title={`${roles?.items?.[0]?.name}`}>
-        <Button onClick={() => navigate(-1)}>{t("back")}</Button>
+        <MyButton onClick={() => navigate(-1)}>{t("back")}</MyButton>
       </Header>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +93,7 @@ const EditPermission = () => {
           })}
         </table>
         <div className="flex w-full justify-end mt-3">
-          <Button type="submit">{t("save")}</Button>
+          <MyButton type="submit">{t("save")}</MyButton>
         </div>
       </form>
     </Container>

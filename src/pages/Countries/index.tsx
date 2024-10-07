@@ -7,7 +7,7 @@ import { BtnTypes, CountryType } from "@/utils/types";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import useCountries from "@/hooks/useCountries";
 import AntdTable from "@/components/AntdTable";
 import { ColumnsType } from "antd/es/table";
@@ -63,9 +63,9 @@ const Countries = () => {
       <div className="flex justify-between items-end">
         <div />
         <div className="flex gap-2 mb-3">
-          <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
+          <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
-          </Button>
+          </MyButton>
         </div>
       </div>
       <AntdTable

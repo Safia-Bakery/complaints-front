@@ -1,7 +1,7 @@
 import BaseInput from "@/components/BaseInputs";
 import MainInput from "@/components/BaseInputs/MainInput";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Loading from "@/components/Loader";
 import complaintsMutation from "@/hooks/mutations/complaints";
 import useComplaints from "@/hooks/useComplaints";
@@ -134,14 +134,14 @@ const Otkchild = () => {
       </div>
       <div className="flex justify-end">
         {complaint?.otk_status! < OrderStatus.done && (
-          <Button
+          <MyButton
             className="float-end"
             onClick={handleSubmit}
             disabled={isPending}
             btnType={BtnTypes.black}
           >
             {t("to_proccess")}
-          </Button>
+          </MyButton>
         )}
       </div>
     </>

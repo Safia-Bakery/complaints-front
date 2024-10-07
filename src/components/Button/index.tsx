@@ -2,6 +2,7 @@ import cl from "classnames";
 import styles from "./index.module.scss";
 import { ReactNode } from "react";
 import { BtnTypes } from "@/utils/types";
+import { Button } from "antd";
 
 type Props = {
   green?: boolean;
@@ -13,21 +14,23 @@ type Props = {
   disabled?: boolean;
 };
 
-const Button = ({
+const MyButton = ({
   green,
   children,
   className = "",
+  type,
   btnType = BtnTypes.black,
   ...others
 }: Props) => {
   return (
-    <button
+    <Button
+      htmlType={type}
       className={`${className} ${cl(styles.btn, styles[btnType])}`}
       {...others}
     >
       {children}
-    </button>
+    </Button>
   );
 };
 
-export default Button;
+export default MyButton;

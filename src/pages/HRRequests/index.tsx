@@ -11,7 +11,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import chatIcon from "/icons/chat.svg";
 
 import HRRequestModals from "./modals";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import AntdTable from "@/components/AntdTable";
 import { ColumnsType } from "antd/es/table";
 
@@ -100,9 +100,9 @@ const HRRequests = () => {
   return (
     <Container>
       <div className="flex justify-end mb-2 gap-2">
-        <Button onClick={() => navigate(-1)} btnType={BtnTypes.black}>
+        <MyButton onClick={() => navigate(-1)} btnType={BtnTypes.black}>
           {t("back")}
-        </Button>
+        </MyButton>
       </div>
       <AntdTable
         columns={columns}

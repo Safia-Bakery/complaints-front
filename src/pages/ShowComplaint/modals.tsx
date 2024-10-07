@@ -2,7 +2,7 @@ import BaseInput from "@/components/BaseInputs";
 import MainDatePicker from "@/components/BaseInputs/MainDatePicker";
 import MainSelect from "@/components/BaseInputs/MainSelect";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Header from "@/components/Header";
 import Modal from "@/components/Modal";
 import { useRemoveParams } from "@/hooks/custom/useCustomNavigate";
@@ -152,9 +152,9 @@ const ComplaintModals = () => {
               </BaseInput>
             )}
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("send")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       );
@@ -182,9 +182,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       );
@@ -212,9 +212,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       );
@@ -238,9 +238,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       );
@@ -261,9 +261,9 @@ const ComplaintModals = () => {
               <BranchSelect enabled />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       );
@@ -285,20 +285,20 @@ const ComplaintModals = () => {
             />
             <MainTextArea register={register("comment")} />
 
-            <Button
+            <MyButton
               btnType={BtnTypes.green}
               className="w-full mt-3"
               onClick={() => handleExpense(true)}
             >
               {t("save")}
-            </Button>
-            <Button
+            </MyButton>
+            <MyButton
               btnType={BtnTypes.brown}
               className="w-full mt-3"
               onClick={() => handleExpense(false)}
             >
               {t("close_wothout_expense")}
-            </Button>
+            </MyButton>
           </Footer>
         </div>
       );
@@ -324,9 +324,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       );
@@ -395,9 +395,9 @@ const ComplaintModals = () => {
               </BaseInput>
             )}
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("send")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       )}
@@ -424,9 +424,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       )}
@@ -453,9 +453,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       )}
@@ -478,9 +478,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       )}
@@ -500,9 +500,9 @@ const ComplaintModals = () => {
               <BranchSelect enabled />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       )}
@@ -523,20 +523,20 @@ const ComplaintModals = () => {
             />
             <MainTextArea register={register("comment")} />
 
-            <Button
+            <MyButton
               btnType={BtnTypes.green}
               className="w-full mt-3"
               onClick={() => handleExpense(true)}
             >
               {t("save")}
-            </Button>
-            <Button
+            </MyButton>
+            <MyButton
               btnType={BtnTypes.brown}
               className="w-full mt-3"
               onClick={() => handleExpense(false)}
             >
               {t("close_wothout_expense")}
-            </Button>
+            </MyButton>
           </Footer>
         </div>
       )}
@@ -561,9 +561,9 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("apply")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       )}

@@ -1,6 +1,6 @@
 import BaseInput from "@/components/BaseInputs";
 import MainInput from "@/components/BaseInputs/MainInput";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Loading from "@/components/Loader";
 import loginMutation from "@/hooks/mutations/login";
 import {
@@ -89,9 +89,9 @@ const Login = () => {
             <p className={"text-sm text-red-400"}>{t("incorrect_username")}</p>
           )}
 
-          <Button className="!bg-lightBrown" type="submit">
+          <MyButton className="!bg-lightBrown" type="submit">
             {t("login")}
-          </Button>
+          </MyButton>
         </form>
 
         <div className="max-w-[24vw] w-full">

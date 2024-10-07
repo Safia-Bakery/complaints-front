@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import ComplaintsFilter from "./filter";
 import Container from "@/components/Container";
 import StatusBlock from "@/components/StatusBlock";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import {
   BranchJsonVal,
   BtnTypes,
@@ -19,6 +19,7 @@ import { dateTimeFormat } from "@/utils/helper";
 import useQueryString from "@/hooks/custom/useQueryString";
 import Table, { ColumnsType } from "antd/es/table";
 import AntdTable from "@/components/AntdTable";
+import { Flex } from "antd";
 
 const Complaints = () => {
   const { t } = useTranslation();
@@ -147,17 +148,17 @@ const Complaints = () => {
   return (
     <Container className="main-container">
       {isPending && <Loading />}
-      <div className="flex justify-between items-end">
+      <Flex justify={"space-between"} align="end">
         <div />
-        <div className="flex gap-2 mb-3">
-          <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
+        <Flex gap={8} className="mb-3">
+          <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
-          </Button>
-          <Button disabled btnType={BtnTypes.green}>
+          </MyButton>
+          <MyButton disabled btnType={BtnTypes.green}>
             Excel
-          </Button>
-        </div>
-      </div>
+          </MyButton>
+        </Flex>
+      </Flex>
       <AntdTable
         columns={columns}
         data={data?.items}

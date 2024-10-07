@@ -4,7 +4,7 @@ import MainInput from "@/components/BaseInputs/MainInput";
 import MainRadioBtns from "@/components/BaseInputs/MainRadioBtns";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
 import BranchSelect from "@/components/BranchSelect";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Container from "@/components/Container";
 import MaskedInput from "@/components/MaskedInput";
 import MainDropZone from "@/components/MainDropZone";
@@ -170,9 +170,9 @@ const AddComplaint = () => {
           </BaseInput>
         </div>
 
-        <Button className="float-end mt-2 w-52" type="submit">
+        <MyButton className="float-end mt-2 w-52" type="submit">
           {t("create")}
-        </Button>
+        </MyButton>
       </form>
     </Container>
   );

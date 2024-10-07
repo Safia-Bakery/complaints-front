@@ -2,7 +2,7 @@ import BaseInputs from "@/components/BaseInputs";
 import MainCheckBox from "@/components/BaseInputs/MainCheckBox";
 import MainInput from "@/components/BaseInputs/MainInput";
 import MainSelect from "@/components/BaseInputs/MainSelect";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Container from "@/components/Container";
 import Loading from "@/components/Loader";
 import userMutation from "@/hooks/mutations/user";
@@ -78,9 +78,9 @@ const EditAddUser = () => {
   return (
     <Container>
       <div className="flex justify-end">
-        <Button onClick={() => navigate(-1)} btnType={BtnTypes.black}>
+        <MyButton onClick={() => navigate(-1)} btnType={BtnTypes.black}>
           {t("back")}
-        </Button>
+        </MyButton>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex w-full gap-6 flex-wrap">
@@ -132,9 +132,9 @@ const EditAddUser = () => {
             </BaseInputs>
           </div>
         </div>
-        <Button type="submit" btnType={BtnTypes.black}>
+        <MyButton type="submit" btnType={BtnTypes.black}>
           {t("save")}
-        </Button>
+        </MyButton>
       </form>
     </Container>
   );

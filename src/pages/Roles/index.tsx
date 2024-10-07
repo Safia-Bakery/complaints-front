@@ -6,7 +6,7 @@ import { BtnTypes, RoleTypes } from "@/utils/types";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import useRoles from "@/hooks/useRoles";
 import AntdTable from "@/components/AntdTable";
 import { ColumnsType } from "antd/es/table";
@@ -61,9 +61,9 @@ const Roles = () => {
         <div />
         <div className="" />
         <div className="flex gap-2 mb-3">
-          <Button onClick={() => navigate("add")} btnType={BtnTypes.black}>
+          <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
-          </Button>
+          </MyButton>
         </div>
       </div>
       <AntdTable

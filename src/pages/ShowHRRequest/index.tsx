@@ -1,7 +1,7 @@
 import BaseInput from "@/components/BaseInputs";
 import MainSelect from "@/components/BaseInputs/MainSelect";
 import MainTextArea from "@/components/BaseInputs/MainTextArea";
-import Button from "@/components/Button";
+import MyButton from "@/components/Button";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import Loading from "@/components/Loader";
@@ -74,9 +74,9 @@ const ShowHRRequest = () => {
   return (
     <Container>
       <div className="flex w-full justify-end mb-4">
-        <Button onClick={() => navigate(-1)} btnType={BtnTypes.darkBlue}>
+        <MyButton onClick={() => navigate(-1)} btnType={BtnTypes.darkBlue}>
           {t("back")}
-        </Button>
+        </MyButton>
       </div>
       <table className="bordered gray w-full">
         <tbody>
@@ -112,18 +112,18 @@ const ShowHRRequest = () => {
       <div className="flex justify-end w-full mt-4 gap-3">
         {data?.items?.[0]?.status! === OrderStatus.new && (
           <>
-            <Button
+            <MyButton
               onClick={() => handleRequst(OrderStatus.done)}
               btnType={BtnTypes.green}
             >
               {t("answered")}
-            </Button>
-            <Button
+            </MyButton>
+            <MyButton
               onClick={() => navigateParams({ modal: ModalTypes.deny_reason })}
               btnType={BtnTypes.red}
             >
               {t("deny")}
-            </Button>
+            </MyButton>
           </>
         )}
       </div>
@@ -171,9 +171,9 @@ const ShowHRRequest = () => {
               </BaseInput>
             )}
 
-            <Button className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" type="submit">
               {t("send")}
-            </Button>
+            </MyButton>
           </div>
         </form>
       </Modal>
