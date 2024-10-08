@@ -52,6 +52,7 @@ h1 {
     background-color: #f9f9f9;
   }
 }
+
 .css-13cymwt-control {
   border-radius: 12px !important;
 }
@@ -59,6 +60,7 @@ h1 {
 table {
   font-size: 14px;
   width: 100%;
+
   tbody {
     tr {
       td,
@@ -93,9 +95,11 @@ table {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar:horizontal {
   height: 4px;
 }
@@ -113,4 +117,10 @@ input[type="number"] {
 
 .ant-table-title {
   padding: 0 !important;
+}
+
+.ant-table-header {
+  overflow: visible !important;
+  // overflow-x: scroll;
+  // ;
 }
