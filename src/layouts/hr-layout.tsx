@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const HRRequestBlock = () => {
+const HRRequestLayout = () => {
   return (
     <>
       <Outlet />
@@ -8,4 +8,4 @@ const HRRequestBlock = () => {
   );
 };
 
-export default HRRequestBlock;
+export default HRRequestLayout;

@@ -11,7 +11,7 @@
   user-select: none;
   border-radius: 8px;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   color: #ffffff;
   min-width: 140px;
 }
@@ -24,6 +24,10 @@
   background-color: var(--mainGreen);
 }
 
+.tgPrimary {
+  background-color: var(--tgPrimary);
+}
+
 .brown {
   background-color: #bea087;
 }
@@ -31,6 +35,7 @@
 .red {
   background: #f34a7c;
 }
+
 .darkBlue {
   background: #315594;
 }

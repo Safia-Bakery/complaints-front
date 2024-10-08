@@ -12,7 +12,8 @@ import complaintsMutation, {
 } from "@/hooks/mutations/complaints";
 import useComplaints from "@/hooks/useComplaints";
 import { CancelReason } from "@/utils/helper";
-import { errorToast, successToast } from "@/utils/toast";
+import errorToast from "@/utils/error-toast.ts";
+import successToast from "@/utils/success-toast.ts";
 import {
   BranchJsonVal,
   BtnTypes,

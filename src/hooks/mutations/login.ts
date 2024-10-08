@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import baseApi from "@/api/baseApi";
-import { errorToast } from "@/utils/toast";
+import errorToast from "@/utils/error-toast.ts";
 
 interface LoginTypes {
   access_token: string;

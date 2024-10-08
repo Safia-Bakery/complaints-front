@@ -14,7 +14,8 @@ import useQueryString from "@/hooks/custom/useQueryString";
 import hrRequestMutation from "@/hooks/mutations/hrRequest";
 import useHRRequests from "@/hooks/useHRRequests";
 import { CancelReason, HRStatusOBJ, dateTimeFormat } from "@/utils/helper";
-import { errorToast, successToast } from "@/utils/toast";
+import errorToast from "@/utils/error-toast.ts";
+import successToast from "@/utils/success-toast.ts";
 import {
   BtnTypes,
   HRDeps,

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../rootConfig";
 import { CURRENT_VERSION } from "@/utils/version";
-import { successToast } from "@/utils/toast";
+import successToast from "@/utils/success-toast.ts";
 interface State {
   version: string | null;
 }

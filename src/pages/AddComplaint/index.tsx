@@ -21,7 +21,8 @@ import complaintsMutation from "@/hooks/mutations/complaints";
 import { BranchJsonVal } from "@/utils/types";
 import Loading from "@/components/Loader";
 import { useNavigate, useParams } from "react-router-dom";
-import { errorToast, successToast } from "@/utils/toast";
+import errorToast from "@/utils/error-toast.ts";
+import successToast from "@/utils/success-toast.ts";
 
 const AddComplaint = () => {
   const inputFileRef = useRef<any>([]);

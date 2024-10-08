@@ -23,7 +23,8 @@ import complaintsMutation from "@/hooks/mutations/complaints";
 import { useNavigateParams } from "@/hooks/custom/useCustomNavigate";
 import ComplaintModals from "./modals";
 import Header from "@/components/Header";
-import { errorToast, successToast } from "@/utils/toast";
+import errorToast from "@/utils/error-toast.ts";
+import successToast from "@/utils/success-toast.ts";
 import Otkchild from "./Otkchild";
 import useQueryString from "@/hooks/custom/useQueryString";
 

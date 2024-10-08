@@ -9,7 +9,7 @@ import {
   tokenSelector,
 } from "@/store/reducers/auth";
 import { useAppDispatch, useAppSelector } from "@/store/rootConfig";
-import { successToast } from "@/utils/toast";
+import successToast from "@/utils/success-toast.ts";
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
