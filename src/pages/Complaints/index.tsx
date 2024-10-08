@@ -20,6 +20,7 @@ import useQueryString from "@/hooks/custom/useQueryString";
 import Table, { ColumnsType } from "antd/es/table";
 import AntdTable from "@/components/AntdTable";
 import { Flex } from "antd";
+import DownloadExcell from "@/components/DownloadExcel";
 
 const Complaints = () => {
   const { t } = useTranslation();
@@ -151,11 +152,10 @@ const Complaints = () => {
       <Flex justify={"space-between"} align="end">
         <div />
         <Flex gap={8} className="mb-3">
+          {/*todo*/}
+          {com_sphere === "otk" && <DownloadExcell />}
           <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
             {t("add")}
-          </MyButton>
-          <MyButton disabled btnType={BtnTypes.green}>
-            Excel
           </MyButton>
         </Flex>
       </Flex>

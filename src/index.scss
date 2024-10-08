@@ -119,3 +119,9 @@ input[type="number"] {
 .ant-table-title {
   padding: 0 !important;
 }
+
+.ant-table-header {
+  overflow: visible !important;
+  // overflow-x: scroll;
+  // ;
+}

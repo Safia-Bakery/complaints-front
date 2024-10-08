@@ -73,6 +73,7 @@ const localization = {
       hr: "HR",
       active: "Активный",
       inactive: "Не активный",
+      export_to_excel: "Экспорт в Excel",
       save: "Cохранить",
       received_at: "Поступлен в",
       back: "Назад",
