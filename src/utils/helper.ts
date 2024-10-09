@@ -16,7 +16,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      gcTime: EPresetTimes.MINUTE * 10,
+      gcTime: EPresetTimes.MINUTE * 5,
       staleTime: EPresetTimes.SECOND * 10,
       refetchOnReconnect: true,
       refetchOnMount: true,
