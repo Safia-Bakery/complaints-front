@@ -9,8 +9,6 @@ type Params = {
 };
 
 export const useComplaintExcel = ({ enabled = true, ...params }: Params) => {
-  console.log(params, "params");
-
   return useQuery({
     queryKey: ["complaints_excel", params],
     queryFn: () =>
