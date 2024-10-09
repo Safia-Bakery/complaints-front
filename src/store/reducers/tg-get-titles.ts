@@ -4,14 +4,16 @@ import {RootState} from "../rootConfig";
 interface State {
     branch_id?: string;
     branch_name?: string;
+    headerTitle?: string
 }
 
 const initialState: State = {
     branch_id: undefined,
-    branch_name: undefined,
+    branch_name: 'Rakat', // todo
+    headerTitle: undefined,
 };
 
-export const getBranchReducer = createSlice({
+export const getTitleReducer = createSlice({
     name: "get-branch",
     initialState,
     reducers: {
@@ -19,11 +21,13 @@ export const getBranchReducer = createSlice({
             state.branch_id = payload.branch_id;
             state.branch_name = payload.branch_name;
         },
-
+        getHeaderTitle: (state, action: PayloadAction<string>) => {
+            state.headerTitle = action.payload;
+        }
     },
 });
 
 export const branchSelector = (state: RootState) => state.getBranch;
 
-export const {getBranch} = getBranchReducer.actions;
-export default getBranchReducer.reducer;
+export const {getBranch, getHeaderTitle} = getTitleReducer.actions;
+export default getTitleReducer.reducer;

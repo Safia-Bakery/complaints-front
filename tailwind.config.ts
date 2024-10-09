@@ -14,7 +14,9 @@ module.exports = {
                 mainGreen: "#0DA06A",
                 borderGray: "#E7E7E7",
 
-                tgPrimary: '#DCC38B'
+                tgPrimary: '#DCC38B',
+                tgHeader: '#BEA087',
+                tgText: "#382E66"
             },
             boxShadow: {
                 selected: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",

@@ -10,7 +10,7 @@ import Loading from "./components/Loader";
 import "dayjs/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
 import {Permissions} from "./utils/types";
-import routePath from "../routes.ts";
+import routePath from "./routes.ts";
 
 const Login = lazy(() => import("@/pages/Login"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
@@ -51,6 +51,10 @@ const HRCategories = lazy(() => import("@/pages/HRCategories"));
 const EditAddHRCategory = lazy(() => import("@/pages/EditAddHRCategory"));
 
 const SelectCategory = lazy(() => import("@/web-ui/screens/select-category"));
+const SelectSubCategory = lazy(() => import("@/web-ui/screens/select-sub-category"))
+const CreateOrderScreen = lazy(
+    () => import("@/web-ui/screens/create-order")
+);
 
 const hrRoutes = [
     {
@@ -367,13 +371,40 @@ const App = () => {
                 </Route>
             </Route>
 
-            <Route path={routePath.mainTgRoute} element={
-                <Suspend>
-                    <TgRoutes/>
-                </Suspend>
-            }>
+            <Route
+                path={routePath.mainTgRoute}
+                element={
+                    <Suspend>
+                        <TgRoutes/>
+                    </Suspend>
+                }
+            >
+                <Route
+                    index
+                    path={routePath.tgSelectCategory}
+                    element={
+                        <Suspend>
+                            <SelectCategory/>
+                        </Suspend>
+                    }
+                />
+                <Route
+                    path={routePath.tgSelectCategory + routePath.tgSelectSubCategory}
+                    element={
+                        <Suspend>
+                            <SelectSubCategory/>
+                        </Suspend>
+                    }
+                />
 
-                <Route path={routePath.tgSelectCategory} element={<Suspend><SelectCategory/></Suspend>}/>
+                <Route
+                    path={"select-category/:childId/:subId"}
+                    element={
+                        <Suspend>
+                            <CreateOrderScreen/>
+                        </Suspend>
+                    }
+                />
             </Route>
         </Routes>
     );
