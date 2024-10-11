@@ -1,10 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../rootConfig";
 
 const initialState: FileState = {
   product_images: undefined,
-  brochures: undefined,
-  sertificates: undefined,
 };
 
 export const imageReducer = createSlice({
@@ -24,11 +22,11 @@ export const imageReducer = createSlice({
     },
     removeImage: (
       state,
-      { payload }: PayloadAction<{ key: keyof FileState; value: number }>
+      { payload }: PayloadAction<{ key: keyof FileState; value: string }>
     ) => {
       if (!!state[payload.key]?.length) {
         const filtered: FileUploadRes["files"] = state[payload.key]!.filter(
-          (item) => item.id !== payload.value
+          (item) => item.file_name !== payload.value
         );
         state[payload.key] = filtered;
       }

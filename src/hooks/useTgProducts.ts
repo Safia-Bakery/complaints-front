@@ -1,6 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
 import {tokenSelector} from "reducers/auth";
-import {CategoriesType} from "@/utils/types";
 import baseApi from "@/api/baseApi";
 import {useAppSelector} from "@/store/rootConfig";
 import {EPresetTimes} from "@/utils/helper";
@@ -8,6 +7,7 @@ import {EPresetTimes} from "@/utils/helper";
 type Params = {
     name?: string
     enabled?: boolean;
+    parent_id?: string
 };
 
 export const useTgProducts = ({enabled = true, ...params}: Params) => {
@@ -16,8 +16,8 @@ export const useTgProducts = ({enabled = true, ...params}: Params) => {
         queryKey: ["tg_products", params],
         queryFn: () =>
             baseApi
-                .get("/category", {params})
-                .then(({data: response}) => response as CategoriesType[]),
+                .get("/folders/search/", {params})
+                .then(({data: response}) => response as SearchProducts),
         enabled: !!token && enabled,
         staleTime: EPresetTimes.MINUTE * 10,
     });

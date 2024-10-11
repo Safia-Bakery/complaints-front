@@ -52,10 +52,8 @@ const EditAddHRCategory = lazy(() => import("@/pages/EditAddHRCategory"));
 
 const SelectCategory = lazy(() => import("@/web-ui/screens/select-category"));
 const SelectSubCategory = lazy(() => import("@/web-ui/screens/select-sub-category"))
-const CreateOrderScreen = lazy(
-    () => import("@/web-ui/screens/create-order")
-);
-
+const CreateOrderScreen = lazy(() => import("@/web-ui/screens/create-order"))
+const CheckOrderDetails = lazy(() => import("@/web-ui/screens/check-order-details"));
 const hrRoutes = [
     {
         element: <HRRequests/>,
@@ -402,6 +400,15 @@ const App = () => {
                     element={
                         <Suspend>
                             <CreateOrderScreen/>
+                        </Suspend>
+                    }
+                />
+
+                <Route
+                    path={`select-category/:childId/:subId/${routePath.checkData}`}
+                    element={
+                        <Suspend>
+                            <CheckOrderDetails/>
                         </Suspend>
                     }
                 />

@@ -1,19 +1,25 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import useSubCategories from "@/hooks/useSubCategories.ts";
 import Loading from "@/components/Loader";
-import { Col, Flex, Row } from "antd";
+import { Flex } from "antd";
 import Button from "@/components/Button";
 import { BtnTypes } from "@/utils/types.ts";
-import TgHeader from "@/web-ui/components/header";
 import TgContainer from "@/web-ui/components/tg-container";
+import { useEffect } from "react";
 
 const SelectSubCategory = () => {
   const { childId } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
   const { data, isLoading } = useSubCategories({
     category_id: childId,
     enabled: !!childId,
   });
+
+  useEffect(() => {
+    if (!state?.title) navigate("/tg/select-category");
+  }, [state?.title]);
 
   if (isLoading) return <Loading />;
 
