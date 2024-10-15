@@ -1,7 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import baseApi from "@/api/baseApi";
-import { imageContentType } from "@/utils/helper";
-import { FileItem } from "@/utils/types";
 import { ComplaintsBody } from "@/types/order-details";
 
 const complaintsMutation = () => {

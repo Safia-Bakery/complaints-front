@@ -11,13 +11,13 @@ import "dayjs/locale/ru";
 import "react-datepicker/dist/react-datepicker.css";
 import {Permissions} from "./utils/types";
 import routePath from "./routes.ts";
+import AdminRoutes from "@/layouts/admin-routes.tsx";
 
 const Login = lazy(() => import("@/pages/Login"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const Complaints = lazy(() => import("@/pages/Complaints"));
 const AddComplaint = lazy(() => import("@/pages/AddComplaint"));
 const ShowComplaint = lazy(() => import("@/pages/ShowComplaint"));
-const AdminRoutes = lazy(() => import("@/layouts/admin-routes.tsx"));
 const HRRequestLayout = lazy(() => import("@/layouts/hr-layout.tsx"));
 const TgRoutes = lazy(() => import("@/layouts/tg-routes.tsx"));
 
@@ -51,9 +51,17 @@ const HRCategories = lazy(() => import("@/pages/HRCategories"));
 const EditAddHRCategory = lazy(() => import("@/pages/EditAddHRCategory"));
 
 const SelectCategory = lazy(() => import("@/web-ui/screens/select-category"));
-const SelectSubCategory = lazy(() => import("@/web-ui/screens/select-sub-category"))
-const CreateOrderScreen = lazy(() => import("@/web-ui/screens/create-order"))
-const CheckOrderDetails = lazy(() => import("@/web-ui/screens/check-order-details"));
+const SelectSubCategory = lazy(
+    () => import("@/web-ui/screens/select-sub-category")
+);
+const CreateOrderScreen = lazy(() => import("@/web-ui/screens/create-order"));
+const CheckOrderDetails = lazy(
+    () => import("@/web-ui/screens/check-order-details")
+);
+const Success = lazy(() => import("@/web-ui/screens/success"));
+const TgNewOrders = lazy(() => import("@/web-ui/screens/new-orders"));
+const TgOrdersResults = lazy(() => import("@/web-ui/screens/tg-complaints-results"));
+const ComplaintsArchive = lazy(() => import("@/web-ui/screens/complaints-archive"));
 const hrRoutes = [
     {
         element: <HRRequests/>,
@@ -292,24 +300,7 @@ const mainRoutes = [
 ];
 
 const App = () => {
-    const lang = useAppSelector(langSelector);
-    const token = useAppSelector(tokenSelector);
-    const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-
-    const {error, isLoading, data} = useToken({});
-
-    useEffect(() => {
-        if (!token) navigate("/login");
-        if (!!error) dispatch(logoutHandler());
-    }, [token, error]); //todo
-
-    useEffect(() => {
-        i18n.changeLanguage(lang);
-    }, [lang]);
-
-    if (isLoading) return <Loading/>;
-
+    const {data} = useToken({enabled: false});
     return (
         <Routes>
             <Route
@@ -321,16 +312,10 @@ const App = () => {
                 path={"/login"}
             />
 
-            <Route
-                element={
-                    <Suspend>
-                        <AdminRoutes/>
-                    </Suspend>
-                }
-                path={"/"}
-            >
+            <Route element={<AdminRoutes/>} path={"/"}>
                 <Route
                     index
+                    path={"*"}
                     element={
                         <Suspend>
                             <Dashboard/>
@@ -394,7 +379,6 @@ const App = () => {
                         </Suspend>
                     }
                 />
-
                 <Route
                     path={"select-category/:childId/:subId"}
                     element={
@@ -403,7 +387,6 @@ const App = () => {
                         </Suspend>
                     }
                 />
-
                 <Route
                     path={`select-category/:childId/:subId/${routePath.checkData}`}
                     element={
@@ -412,6 +395,37 @@ const App = () => {
                         </Suspend>
                     }
                 />
+                <Route
+                    path={`success/:id`}
+                    element={
+                        <Suspend>
+                            <Success/>
+                        </Suspend>
+                    }
+                />
+                <Route
+                    path={`new-orders`}
+                    element={
+                        <Suspend>
+                            <TgNewOrders/>
+                        </Suspend>
+                    }
+                />
+                <Route
+                    path={`orders-results`}
+                    element={
+                        <Suspend>
+                            <TgOrdersResults/>
+                        </Suspend>
+                    }
+                /> <Route
+                path={`orders-archive`}
+                element={
+                    <Suspend>
+                        <TgOrdersResults/>
+                    </Suspend>
+                }
+            />
             </Route>
         </Routes>
     );

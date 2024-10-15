@@ -13,11 +13,8 @@ import {
 } from "@/store/reducers/images.ts";
 import { ModalTypes } from "@/utils/types.ts";
 import { baseURL } from "@/api/baseApi";
-import {
-  fileUploadMutation,
-  removeFileMutation,
-} from "@/hooks/mutations/files.ts";
-import Loading from "@/components/Loader";
+import { fileUploadMutation } from "@/hooks/mutations/files.ts";
+import { Image } from "antd";
 
 interface Props {
   handleModal: () => void;
@@ -30,7 +27,6 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
   const dispatch = useAppDispatch();
   const images = useAppSelector(imageSelector);
   const { mutate, isPending } = fileUploadMutation();
-  //   const { mutate: removeFile } = removeFileMutation();
   const stateKey = ModalTypes[key] as keyof FileState;
   const removeImages = (value: string) => () => {
     dispatch(removeImage({ key: stateKey, value }));
@@ -82,7 +78,7 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
           >
             <img src={cross} className={"w-3 h-3"} alt={"close"} />
           </div>
-          <img
+          <Image
             src={`${baseURL}/${item.file_name}`}
             className={"w-full h-full rounded-full"}
             alt={`${item.file_name}`}
@@ -96,7 +92,6 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
 
   return (
     <div className={"flex items-center w-full md:gap-3 gap-1 flex-wrap py-3"}>
-      {isPending && <Loading />}
       {renderImages}
       <div
         onClick={handleModal}
@@ -112,7 +107,8 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
         open={open}
         onCancel={handleModal}
         closable
-        title="upload_image"
+        loading={isPending}
+        title="Загрузить фото"
         classNames={{ content: "!p-4" }}
         className={"flex !p-0 items-center justify-center"}
       >

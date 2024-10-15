@@ -8,7 +8,6 @@ import {
   GenderType,
   ModalTypes,
   OrderStatus,
-  OrderTypeSelect,
 } from "@/utils/types";
 import { useTranslation } from "react-i18next";
 import trashIcon from "/icons/trash.svg";
@@ -17,7 +16,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "@/components/Loader";
 import dayjs from "dayjs";
 import { dateTimeFormat } from "@/utils/helper";
-import { lazy, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { baseURL } from "@/api/baseApi";
 import complaintsMutation from "@/hooks/mutations/complaints";
 import { useNavigateParams } from "@/hooks/custom/useCustomNavigate";
@@ -26,9 +25,8 @@ import Header from "@/components/Header";
 import errorToast from "@/utils/error-toast.ts";
 import successToast from "@/utils/success-toast.ts";
 import Otkchild from "./Otkchild";
-import useQueryString from "@/hooks/custom/useQueryString";
-
-// const ComplaintModals = lazy(() => import("./modals"));
+import { Flex } from "antd";
+import AddStampers from "./add-stampers";
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -39,8 +37,12 @@ const ShowComplaint = () => {
   const { t } = useTranslation();
   const { id, com_sphere } = useParams();
   const navigate = useNavigate();
-  const modal = useQueryString("modal");
   const navigateParams = useNavigateParams();
+
+  const renderStampers = useMemo(() => {
+    return <AddStampers />;
+  }, []);
+
   const { data, isLoading, refetch } = useComplaints({
     id: Number(id),
     enabled: !!id,
@@ -69,7 +71,7 @@ const ShowComplaint = () => {
     );
   };
 
-  const handleExpenceMdoal = () => {
+  const handleExpenseModal = () => {
     return order?.status === OrderStatus.received &&
       +ComplaintsSpheres[com_sphere! as any] !== ComplaintsSpheres.otk
       ? navigateParams({ modal: ModalTypes.add_expense })
@@ -100,7 +102,7 @@ const ShowComplaint = () => {
               {t("receive")}
             </MyButton>
           ) : (
-            <MyButton btnType={BtnTypes.green} onClick={handleExpenceMdoal}>
+            <MyButton btnType={BtnTypes.green} onClick={handleExpenseModal}>
               {t("to_close")}
             </MyButton>
           )}
@@ -255,7 +257,10 @@ const ShowComplaint = () => {
             </table>
           </div>
         </div>
-
+        <Flex className="w-full mt-4" gap={20} flex={"wrap"}>
+          {/* <div className=""></div> */}
+          {renderStampers}
+        </Flex>
         {com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk] && (
           <Otkchild />
         )}

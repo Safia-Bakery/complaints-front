@@ -5,6 +5,8 @@ import Loading from "@/components/Loader";
 import Button from "@/components/Button";
 import { BtnTypes } from "@/utils/types.ts";
 import TgContainer from "@/web-ui/components/tg-container";
+import { useAppSelector } from "@/store/rootConfig.ts";
+import { branchSelector } from "reducers/tg-get-titles.ts";
 
 const SelectCategory = () => {
   const { data, isLoading } = useCategories({});
@@ -14,27 +16,33 @@ const SelectCategory = () => {
   return (
     <TgContainer>
       <Flex gap={20} className={"w-full my-4 flex-wrap"}>
-        <Button
-          className={"!h-28 flex flex-1 flex-col !leading-4 !min-w-min"}
-          btnType={BtnTypes.tgPrimary}
-          icon={<img src="/icons/active-orders.svg" alt="" />}
-        >
-          Активные заявки
-        </Button>
-        <Button
-          className={"!h-28 flex flex-1 flex-col !leading-4 !min-w-min"}
-          btnType={BtnTypes.tgPrimary}
-          icon={<img src="/icons/results.svg" alt="" />}
-        >
-          Результаты
-        </Button>
-        <Button
-          className={"!h-28 flex flex-1 flex-col !leading-4 !min-w-min "}
-          btnType={BtnTypes.tgPrimary}
-          icon={<img src="/icons/archieve.svg" alt="" />}
-        >
-          Архив
-        </Button>
+        <Link to={"/tg/new-orders"} className={"flex flex-1"}>
+          <Button
+            className={"!h-28 flex flex-1 flex-col !leading-4 !min-w-min"}
+            btnType={BtnTypes.tgPrimary}
+            icon={<img src="/icons/active-orders.svg" alt="" />}
+          >
+            Активные заявки
+          </Button>
+        </Link>
+        <Link to={"/tg/orders-results"} className={"flex flex-1"}>
+          <Button
+            className={"!h-28 flex flex-1 flex-col !leading-4 !min-w-min"}
+            btnType={BtnTypes.tgSelected}
+            icon={<img src="/icons/results.svg" alt="" />}
+          >
+            Результаты
+          </Button>
+        </Link>
+        <Link to={"/tg/orders-archive"} className={"flex flex-1"}>
+          <Button
+            className={"!h-28 flex flex-1 flex-col !leading-4 !min-w-min "}
+            btnType={BtnTypes.tgBrown}
+            icon={<img src="/icons/archieve.svg" alt="" />}
+          >
+            Архив
+          </Button>
+        </Link>
       </Flex>
       <Flex vertical gap={20}>
         {data?.map((item) => (

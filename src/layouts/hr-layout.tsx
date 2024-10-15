@@ -1,11 +1,13 @@
-import { Outlet } from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import useToken from "@/hooks/useToken.ts";
 
 const HRRequestLayout = () => {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+    useToken({});
+    return (
+        <>
+            <Outlet/>
+        </>
+    );
 };
 
 export default HRRequestLayout;

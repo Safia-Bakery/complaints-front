@@ -3,6 +3,7 @@ import { RootState } from "../rootConfig";
 
 const initialState: FileState = {
   product_images: undefined,
+  user_images: undefined,
 };
 
 export const imageReducer = createSlice({
@@ -31,8 +32,11 @@ export const imageReducer = createSlice({
         state[payload.key] = filtered;
       }
     },
-    clearImages: (state) => {
-      state = initialState;
+    clearImages: (
+      state,
+      { payload }: PayloadAction<{ key: keyof FileState }>
+    ) => {
+      state[payload.key] = undefined;
     },
   },
 });

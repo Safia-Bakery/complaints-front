@@ -18,7 +18,7 @@ type Params = {
 
 export const useSubCategories = ({
   enabled = true,
-  staleTime,
+  staleTime = EPresetTimes.MINUTE * 5,
   ...params
 }: Params) => {
   const token = useAppSelector(tokenSelector);

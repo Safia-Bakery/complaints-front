@@ -2,14 +2,13 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../rootConfig";
 
 interface State {
-    branch_id?: string;
+    telegram_id?: string;
     branch_name?: string;
     headerTitle?: string
 }
 
 const initialState: State = {
-    branch_id: undefined,
-    branch_name: 'Rakat', // todo
+    telegram_id: undefined,
     headerTitle: undefined,
 };
 
@@ -18,8 +17,7 @@ export const getTitleReducer = createSlice({
     initialState,
     reducers: {
         getBranch: (state, {payload}: PayloadAction<State>) => {
-            state.branch_id = payload.branch_id;
-            state.branch_name = payload.branch_name;
+            state.telegram_id = payload.telegram_id;
         },
         getHeaderTitle: (state, action: PayloadAction<string>) => {
             state.headerTitle = action.payload;
