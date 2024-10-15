@@ -37,6 +37,12 @@ import MainTextArea from "@/components/BaseInputs/MainTextArea";
 import complaintsMutation from "@/hooks/mutations/complaintv2";
 import { baseURL } from "@/api/baseApi";
 import { statusTip } from "@/utils/complaints";
+import { OrderStatus } from "@/utils/types";
+
+const DisableAction: { [key: number]: boolean } = {
+  [OrderStatus.denied]: true,
+  [OrderStatus.done]: true,
+};
 
 const statusObj: { [key: number]: ReactNode } = {
   0: <ExclamationCircleOutlined className="text-blue-500" />,
@@ -80,18 +86,19 @@ const AddStampers = () => {
       {
         dataIndex: "action",
         width: 50,
-        render: (_, record) => (
-          <Popconfirm
-            title="Вы действительно хотите удалить этот пользователь?"
-            onConfirm={() =>
-              handleStamper({ user_id: record.user_id, is_delete: true })
-            }
-            okText={t("yes")}
-            cancelText={t("no")}
-          >
-            <DeleteOutlined color="red" />
-          </Popconfirm>
-        ),
+        render: (_, record) =>
+          !DisableAction[record?.status!] && (
+            <Popconfirm
+              title="Вы действительно хотите удалить этот пользователь?"
+              onConfirm={() =>
+                handleStamper({ user_id: record.user_id, is_delete: true })
+              }
+              okText={t("yes")}
+              cancelText={t("no")}
+            >
+              <DeleteOutlined color="red" />
+            </Popconfirm>
+          ),
       },
     ],
     []
@@ -250,9 +257,11 @@ const AddStampers = () => {
         <Flex align="center" justify="space-between" gap={40} className="w-fit">
           <Typography className="font-bold">Добавить сотрудника</Typography>
 
-          <button onClick={() => handleModal(Modals.role)}>
-            <PlusCircleOutlined />
-          </button>
+          {!DisableAction[orderNew?.status!] && (
+            <button onClick={() => handleModal(Modals.role)}>
+              <PlusCircleOutlined />
+            </button>
+          )}
           <Modal
             title={t("select_role")}
             open={modal === Modals.role}
