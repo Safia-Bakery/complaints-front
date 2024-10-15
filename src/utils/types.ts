@@ -11,10 +11,11 @@ export type UserType = {
   updated_at: string;
   username?: string;
   role?: RoleTypes;
-
+  stamp?: string;
   permissions?: { [key: number]: boolean };
   phone_number: string;
   role_id: number;
+  telegram_id?: string;
 };
 
 export enum Language {
@@ -23,7 +24,7 @@ export enum Language {
 }
 
 export enum ModalTypes {
-  image,
+  product_images,
   deny_reason,
   edit_purchase_date,
   edit_sending_date,
@@ -31,7 +32,10 @@ export enum ModalTypes {
   edit_branch,
   edit_category,
   add_expense,
+  confirm,
+  user_images,
 }
+
 export enum FileType {
   other,
   video,
@@ -71,13 +75,18 @@ export enum BtnTypes {
   brown = "brown",
   red = "red",
   darkBlue = "darkBlue",
+  tgPrimary = "tgPrimary",
+  tgBrown = "tgBrown",
+  tgSelected = "tgSelected",
 }
+
 export interface SelectValues {
   id: number;
   name_uz: string;
   name_ru: string;
   status?: number;
 }
+
 export enum HRSpheres {
   all,
   retail,
@@ -110,6 +119,7 @@ export interface CommunicationType {
   created_at: string;
   updated_at: string;
 }
+
 export interface HRRequest {
   id: number;
   complaint: string;
@@ -158,6 +168,7 @@ export interface HRQaType {
     updated_at: null | string;
   };
 }
+
 export interface ClientType {
   id: number;
   name: string;
@@ -167,6 +178,7 @@ export interface ClientType {
   created_at: string;
   updated_at: string;
 }
+
 export interface RoleTypes {
   id: number;
   name: string;
@@ -185,12 +197,13 @@ export interface RoleTypes {
       status: number;
       created_at: string;
       updated_at: string;
-    }
+    },
   ];
   status: number;
   created_at: string;
   updated_at: string;
 }
+
 export interface PermissionTypes {
   id: number;
   name: string;
@@ -202,11 +215,12 @@ export interface PermissionTypes {
       status: number;
       created_at: string;
       updated_at: string;
-    }
+    },
   ];
   created_at: string;
   updated_at: string;
 }
+
 export interface SubCategoryType {
   id: number;
   name: string;
@@ -297,6 +311,7 @@ export interface BranchType {
   created_at: string;
   updated_at: string;
 }
+
 export interface SelectValue {
   value: string;
   label: string;
@@ -325,11 +340,13 @@ export enum OrderTypeSelect {
   quality,
   service,
 }
+
 export enum GenderType {
   other,
   man,
   woman,
 }
+
 export enum Permissions {
   dashboard_stats = 1,
 

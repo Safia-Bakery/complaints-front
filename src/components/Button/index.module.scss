@@ -10,18 +10,32 @@
   -moz-user-select: none;
   user-select: none;
   border-radius: 8px;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out,
+  background-color 0.15s ease-in-out,
+  border-color 0.15s ease-in-out,
+  box-shadow 0.15s ease-in-out;
   color: #ffffff;
   min-width: 140px;
 }
 
 .black {
-  background-color: var(--mainBlack);
+  background-color: var(--mainBlack) !important;
 }
 
 .green {
-  background-color: var(--mainGreen);
+  background-color: var(--mainGreen) !important;
+}
+
+.tgPrimary {
+  background-color: var(--tgPrimary) !important;
+}
+
+.tgBrown {
+  background-color: var(--tgBrown) !important;
+}
+
+.tgSelected {
+  background-color: var(--tgSelected) !important;
 }
 
 .brown {
@@ -31,6 +45,7 @@
 .red {
   background: #f34a7c;
 }
+
 .darkBlue {
   background: #315594;
 }

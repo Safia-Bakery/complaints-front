@@ -14,6 +14,9 @@
 
   --mainBlack: #151c28;
   --mainGreen: #0da06a;
+  --tgPrimary: #dcc38b;
+  --tgBrown: #bea087;
+  --tgSelected: #AAC183
 }
 
 * {
@@ -121,6 +124,14 @@ input[type="number"] {
 
 .ant-table-header {
   overflow: visible !important;
-  // overflow-x: scroll;
-  // ;
+}
+
+.ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+  display: inline-flex !important;
+  animation: none !important;
+  flex-wrap: nowrap !important;
+  direction: ltr !important;
+  @media (max-width: 768px) {
+    display: inline-grid !important;
+  }
 }

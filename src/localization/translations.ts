@@ -138,6 +138,11 @@ const localization = {
       not_given: "Не задано",
       expenses: "Расходы",
       who_created: "Кто оформил",
+
+      upload_image: "Загрузить файлы",
+      stamps: "Штамп",
+      telegram_id: "Телеграм ID",
+      select_role: "Выбрать роль",
     },
   },
   uz: {

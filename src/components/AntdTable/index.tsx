@@ -53,10 +53,9 @@ function AntdTable<T>({
       <Table
         {...(others as any)}
         rootClassName="overflow-visible"
-        // scroll={{ y: 400 }}
         dataSource={data?.map((item, idx) => ({ ...item, key: idx }))}
         className={`common-table ${styles.table} align-center ${className}`}
-        rowClassName={`clickable-row ${handleRowStyles}`}
+        rowClassName={(item) => `clickable-row ${handleRowStyles(item)}`}
         footer={false}
         sticky
         pagination={

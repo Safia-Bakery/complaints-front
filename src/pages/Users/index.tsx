@@ -67,6 +67,7 @@ const Users = () => {
     ],
     []
   );
+
   if (isLoading) return <Loading />;
 
   return (

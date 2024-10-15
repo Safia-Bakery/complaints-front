@@ -7,7 +7,6 @@
     > thead,
     th {
       text-align: center !important;
-      // border-right: 2px solid #ffffff !important;
       background-color: #151c28 !important;
       color: white !important;
       padding: 10px !important;
@@ -45,53 +44,54 @@
     }
   }
 
-  @media (max-width: 991px) {
-    thead {
-      display: none;
-    }
-
-    tbody > tr {
-      display: block;
-      // border-bottom: 15px solid whitesmoke;
-      background-color: #fefefe;
-
-      &:not(:first-child) {
-        border-bottom: 15px solid whitesmoke;
-      }
-
-      td {
-        border-width: 1px 1px 1px 0px !important;
-        border-style: solid;
-        border-color: #f5f5f5;
-        display: block;
-        padding: 10px;
-        text-align: center !important;
-      }
-
-      td:first-child {
-        background: var(--table-header-background);
-      }
-
-      td:last-child {
-        // padding: 0px;
-
-        a {
-          float: left !important;
-          width: 100% !important;
-          background: var(--hover-color) !important;
-
-          svg {
-            margin-right: 0px;
-            background: none;
-          }
-        }
-
-        svg {
-          width: 100%;
-          background: #ff03039e;
-          border-radius: 0px;
-        }
-      }
-    }
-  }
+  //
+  //@media (max-width: 991px) {
+  //  thead {
+  //    display: none;
+  //  }
+  //
+  //  tbody > tr {
+  //    display: block;
+  //    // border-bottom: 15px solid whitesmoke;
+  //    background-color: #fefefe;
+  //
+  //    &:not(:first-child) {
+  //      border-bottom: 15px solid whitesmoke;
+  //    }
+  //
+  //    td {
+  //      border-width: 1px 1px 1px 0px !important;
+  //      border-style: solid;
+  //      border-color: #f5f5f5;
+  //      display: block;
+  //      padding: 10px;
+  //      text-align: center !important;
+  //    }
+  //
+  //    td:first-child {
+  //      background: var(--table-header-background);
+  //    }
+  //
+  //    td:last-child {
+  //      // padding: 0px;
+  //
+  //      a {
+  //        float: left !important;
+  //        width: 100% !important;
+  //        background: var(--hover-color) !important;
+  //
+  //        svg {
+  //          margin-right: 0px;
+  //          background: none;
+  //        }
+  //      }
+  //
+  //      svg {
+  //        width: 100%;
+  //        background: #ff03039e;
+  //        border-radius: 0px;
+  //      }
+  //    }
+  //  }
+  //}
 }

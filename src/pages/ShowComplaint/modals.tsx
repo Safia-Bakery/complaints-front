@@ -10,9 +10,9 @@ import useQueryString from "@/hooks/custom/useQueryString";
 import complaintsMutation, {
   ComplaintsBody,
 } from "@/hooks/mutations/complaints";
-import useComplaints from "@/hooks/useComplaints";
 import { CancelReason } from "@/utils/helper";
-import { errorToast, successToast } from "@/utils/toast";
+import errorToast from "@/utils/error-toast.ts";
+import successToast from "@/utils/success-toast.ts";
 import {
   BranchJsonVal,
   BtnTypes,
@@ -21,7 +21,7 @@ import {
 } from "@/utils/types";
 import cl from "classnames";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -30,6 +30,7 @@ import useSubCategories from "@/hooks/useSubCategories.ts";
 import MainRadioBtns from "@/components/BaseInputs/MainRadioBtns.tsx";
 import MainInput from "@/components/BaseInputs/MainInput";
 import { Footer } from "antd/es/layout/layout";
+import { useComplaintV2 } from "@/hooks/complaint";
 
 const ComplaintModals = () => {
   const { t } = useTranslation();
@@ -40,8 +41,10 @@ const ComplaintModals = () => {
   const [date_purchase, $date_purchase] = useState<Date>();
   const [date_return, $date_return] = useState<Date>();
 
-  const { refetch, data } = useComplaints({ id: Number(id), enabled: !!id });
-  const order = data?.items?.[0];
+  const { refetch, data: complaint } = useComplaintV2({
+    complaint_id: Number(id),
+    enabled: !!id,
+  });
 
   const { mutate, isPending } = complaintsMutation();
 
@@ -54,7 +57,8 @@ const ComplaintModals = () => {
 
   const { data: subCategs, isFetching: subCategFetching } = useSubCategories({
     status: 1,
-    category_id: watch("categ"),
+    enabled: modal === ModalTypes.edit_category,
+    category_id: complaint?.subcategory?.category_id?.toString(),
   });
 
   const handleExpense = (has_expense: boolean) => {
@@ -113,240 +117,22 @@ const ComplaintModals = () => {
   const handleDatePurchase = (event: Date) => $date_purchase(event);
   const handleDateReturn = (event: Date) => $date_return(event);
 
-  const renderModal = useMemo(() => {
-    if (modal === ModalTypes.deny_reason)
-      return (
-        <form
-          onSubmit={handleSubmit(
-            handleComplaint({
-              status: OrderStatus.denied,
-            })
-          )}
-          className={"w-[420px]"}
-        >
-          <Header title="deny_reason">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-          <div className="p-3">
-            <BaseInput label="select_reason">
-              <MainSelect
-                register={register("fixedReason", {
-                  required: t("required_field"),
-                })}
-              >
-                <option value={undefined} />
-
-                {Object.keys(CancelReason).map((item) => (
-                  <option key={item} value={item}>
-                    {t(CancelReason[+item])}
-                  </option>
-                ))}
-              </MainSelect>
-            </BaseInput>
-
-            {watch("fixedReason") == 4 && (
-              <BaseInput label="comments">
-                <MainTextArea register={register("cancel_reason")} />
-              </BaseInput>
-            )}
-
-            <MyButton className="w-full mt-3" type="submit">
-              {t("send")}
-            </MyButton>
-          </div>
-        </form>
-      );
-
-    if (modal === ModalTypes.edit_purchase_date)
-      return (
-        <form
-          onSubmit={handleSubmit(handleComplaint())}
-          className={"w-[420px]"}
-        >
-          <Header title="edit_purchase_date">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-          <div className="p-3">
-            <BaseInput label="date_sending_samples">
-              <MainDatePicker
-                showTimeSelect
-                dateFormat="Pp"
-                selected={
-                  !!date_purchase ? dayjs(date_purchase).toDate() : undefined
-                }
-                onChange={handleDatePurchase}
-              />
-            </BaseInput>
-
-            <MyButton className="w-full mt-3" type="submit">
-              {t("apply")}
-            </MyButton>
-          </div>
-        </form>
-      );
-
-    if (modal === ModalTypes.edit_sending_date)
-      return (
-        <form
-          onSubmit={handleSubmit(handleComplaint())}
-          className={"w-[420px]"}
-        >
-          <Header title="edit_date_return">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-          <div className="p-3">
-            <BaseInput label="date_return">
-              <MainDatePicker
-                showTimeSelect
-                dateFormat="Pp"
-                selected={
-                  !!date_return ? dayjs(date_return).toDate() : undefined
-                }
-                onChange={handleDateReturn}
-              />
-            </BaseInput>
-
-            <MyButton className="w-full mt-3" type="submit">
-              {t("apply")}
-            </MyButton>
-          </div>
-        </form>
-      );
-
-    if (modal === ModalTypes.edit_comment)
-      return (
-        <form
-          onSubmit={handleSubmit(handleComplaint())}
-          className={"w-[420px]"}
-        >
-          <Header title="edit_comment">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-          <div className="p-3">
-            <BaseInput label="comments">
-              <MainTextArea
-                className="!h-[220px]"
-                register={register("comment")}
-              />
-            </BaseInput>
-
-            <MyButton className="w-full mt-3" type="submit">
-              {t("apply")}
-            </MyButton>
-          </div>
-        </form>
-      );
-
-    if (modal === ModalTypes.edit_branch)
-      return (
-        <form
-          onSubmit={handleSubmit(handleComplaint())}
-          className={"w-[420px]"}
-        >
-          <Header title="edit_branch">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-          <div className="p-3">
-            <BaseInput label="branch" className="flex-1">
-              <BranchSelect enabled />
-            </BaseInput>
-
-            <MyButton className="w-full mt-3" type="submit">
-              {t("apply")}
-            </MyButton>
-          </div>
-        </form>
-      );
-
-    if (modal === ModalTypes.add_expense)
-      return (
-        <div className={"w-[420px]"}>
-          <Header title="add_summ_of_expense">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-          <Footer className="p-3">
-            <MainInput
-              register={register("expense")}
-              placeholder={"summ"}
-              type="number"
-              className="mb-4"
-            />
-            <MainTextArea register={register("comment")} />
-
-            <MyButton
-              btnType={BtnTypes.green}
-              className="w-full mt-3"
-              onClick={() => handleExpense(true)}
-            >
-              {t("save")}
-            </MyButton>
-            <MyButton
-              btnType={BtnTypes.brown}
-              className="w-full mt-3"
-              onClick={() => handleExpense(false)}
-            >
-              {t("close_wothout_expense")}
-            </MyButton>
-          </Footer>
-        </div>
-      );
-
-    if (modal === ModalTypes.edit_category)
-      return (
-        <form
-          onSubmit={handleSubmit(handleComplaint())}
-          className={"w-[420px]"}
-        >
-          <Header title="edit_category">
-            <button onClick={closeModal} className="close" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </Header>
-
-          <div className="p-3">
-            <BaseInput label="category" className="h-fit">
-              <MainRadioBtns
-                values={subCategs?.items}
-                className="!max-h-40 !overflow-y-auto !h-full"
-                register={register("subcategory_id")}
-              />
-            </BaseInput>
-
-            <MyButton className="w-full mt-3" type="submit">
-              {t("apply")}
-            </MyButton>
-          </div>
-        </form>
-      );
-  }, [modal, date_purchase, date_return, data, getValues, reset, subCategs]);
-
   useEffect(() => {
     reset({
       purchase_date: new Date(),
-      comment: order?.comment,
-      subcategory_id: order?.subcategory_id?.toString(),
+      comment: complaint?.comment,
+      subcategory_id: complaint?.subcategory_id?.toString(),
     });
-    if (order?.date_purchase)
-      $date_purchase(dayjs(order.date_purchase).toDate());
-    if (order?.date_return) $date_return(dayjs(order.date_return).toDate());
+    if (complaint?.date_purchase)
+      $date_purchase(dayjs(complaint.date_purchase).toDate());
+    if (complaint?.date_return)
+      $date_return(dayjs(complaint.date_return).toDate());
     // reset({ purchase_date: data?.items?.[0]?.date_purchase });
-  }, [order]);
+  }, [complaint]);
 
   return (
     <Modal
-      onClose={() => removeParams(["modal", !!photo ? "photo" : ""])}
+      onCancel={() => removeParams(["modal", !!photo ? "photo" : ""])}
       open={!!modal}
       closable={false}
       classNames={{
@@ -356,8 +142,6 @@ const ComplaintModals = () => {
       footer={false}
       className={cl("!h-[400px] !w-min p-1 overflow-y-auto")}
     >
-      {/* {renderModal} */}
-
       {modal === ModalTypes.deny_reason && (
         <form
           onSubmit={handleSubmit(
@@ -395,7 +179,7 @@ const ComplaintModals = () => {
               </BaseInput>
             )}
 
-            <MyButton className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" htmlType="submit">
               {t("send")}
             </MyButton>
           </div>
@@ -424,7 +208,7 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <MyButton className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" htmlType="submit">
               {t("apply")}
             </MyButton>
           </div>
@@ -453,7 +237,7 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <MyButton className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" htmlType="submit">
               {t("apply")}
             </MyButton>
           </div>
@@ -478,7 +262,7 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <MyButton className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" htmlType="submit">
               {t("apply")}
             </MyButton>
           </div>
@@ -500,7 +284,7 @@ const ComplaintModals = () => {
               <BranchSelect enabled />
             </BaseInput>
 
-            <MyButton className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" htmlType="submit">
               {t("apply")}
             </MyButton>
           </div>
@@ -561,7 +345,7 @@ const ComplaintModals = () => {
               />
             </BaseInput>
 
-            <MyButton className="w-full mt-3" type="submit">
+            <MyButton className="w-full mt-3" htmlType="submit">
               {t("apply")}
             </MyButton>
           </div>
