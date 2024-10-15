@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppSelector } from "@/store/rootConfig.ts";
 import { branchSelector } from "reducers/tg-get-titles.ts";
@@ -33,7 +32,7 @@ const TgHeader = () => {
           {!state?.title && <Image preview={false} src={"/icons/marker.svg"} />}
 
           <h4 className="text-center text-white font-normal text-xl">
-            {data?.branch_name}
+            {data?.branch?.name}
           </h4>
         </div>
         {state?.title && (

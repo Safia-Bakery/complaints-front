@@ -73,9 +73,19 @@ export interface ComplaintRes {
   client_name: string;
   client_number: string;
   date_purchase: string;
+  manager_phone?: string;
   date_return: string;
   comment: string;
   subcategory_id: number;
+  subcategory: {
+    id: number;
+    name: string;
+    category_id: number;
+    category: {
+      id: number;
+      name: string;
+    };
+  };
   branch_id: number;
   expense: number;
   complaint_product: {
@@ -95,8 +105,47 @@ export interface ComplaintRes {
   second_response: string;
   first_response_time: string;
   second_response_time: string;
-  certificate?: string;
   complaint_stamp: ComplaintStamp[];
+  certificate: string;
+  id: number;
+  created_at: string;
+  updated_at: string;
+
+  manager_number: string;
+  branch: {
+    id: number;
+    name: string;
+    country_id: number;
+    country: {
+      id: number;
+      name: string;
+    };
+  };
+  client: {
+    id: number;
+    status: number;
+    name: string;
+    branch: {
+      id: number;
+      name: string;
+      country_id: number;
+      country: {
+        id: number;
+        name: string;
+      };
+    };
+  };
+  status: number;
+  otk_status: number;
+  autonumber: string;
+  corrections: string;
+  deny_reason: string;
+  producer_guilty: true;
+  is_returned: true;
+  is_client: true;
+  changes: {};
+  updated_by: string;
+  is_internal: number;
 }
 
 export interface ComplaintStamp {

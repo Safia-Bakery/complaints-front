@@ -62,6 +62,7 @@ const Success = lazy(() => import("@/web-ui/screens/success"));
 const TgNewOrders = lazy(() => import("@/web-ui/screens/new-orders"));
 const TgOrdersResults = lazy(() => import("@/web-ui/screens/tg-complaints-results"));
 const ComplaintsArchive = lazy(() => import("@/web-ui/screens/complaints-archive"));
+const TgShowComplaint = lazy(() => import("@/web-ui/screens/show-complaint"));
 const hrRoutes = [
     {
         element: <HRRequests/>,
@@ -422,10 +423,18 @@ const App = () => {
                 path={`orders-archive`}
                 element={
                     <Suspend>
-                        <TgOrdersResults/>
+                        <ComplaintsArchive/>
                     </Suspend>
                 }
             />
+                <Route
+                    path={`complaint/:id`}
+                    element={
+                        <Suspend>
+                            <TgShowComplaint/>
+                        </Suspend>
+                    }
+                />
             </Route>
         </Routes>
     );

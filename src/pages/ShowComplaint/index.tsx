@@ -11,7 +11,6 @@ import {
 } from "@/utils/types";
 import { useTranslation } from "react-i18next";
 import trashIcon from "/icons/trash.svg";
-import useComplaints from "@/hooks/useComplaints";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Loading from "@/components/Loader";
 import dayjs from "dayjs";
@@ -27,6 +26,7 @@ import successToast from "@/utils/success-toast.ts";
 import Otkchild from "./Otkchild";
 import { Flex } from "antd";
 import AddStampers from "./add-stampers";
+import { useComplaintV2 } from "@/hooks/complaint";
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -43,11 +43,14 @@ const ShowComplaint = () => {
     return <AddStampers />;
   }, []);
 
-  const { data, isLoading, refetch } = useComplaints({
-    id: Number(id),
+  const {
+    data: order,
+    isLoading,
+    refetch,
+  } = useComplaintV2({
+    complaint_id: Number(id),
     enabled: !!id,
   });
-  const order = data?.items?.[0];
 
   const { mutate, isPending } = complaintsMutation();
 
@@ -159,15 +162,25 @@ const ShowComplaint = () => {
                   <th>{t("name")}</th>
                   <td>{order?.client_name}</td>
                 </tr>
+                {order?.client?.name && (
+                  <tr>
+                    <th>{t("author")}</th>
+                    <td>{order?.client?.name}</td>
+                  </tr>
+                )}
                 <tr>
                   <th>{t("phone")}</th>
                   <td>
-                    <Link
-                      to={`tel:${order?.client_number}`}
-                      className="text-blue-500"
-                    >
-                      {order?.client_number}
-                    </Link>
+                    {order?.client_number ? (
+                      <Link
+                        to={`tel:${order?.client_number}`}
+                        className="text-blue-500"
+                      >
+                        {order?.client_number}
+                      </Link>
+                    ) : (
+                      t("not_given")
+                    )}
                   </td>
                 </tr>
                 <tr>
@@ -203,16 +216,30 @@ const ShowComplaint = () => {
                     <td>{t(OrderStatus[Number(order?.otk_status)])}</td>
                   </tr>
                 )}
-                <tr>
+                {/* <tr>
                   <th>{t("gender")}</th>
-                  <td>{t(GenderType[Number(order?.client_gender)])}</td>
+                  <td>{t(GenderType[Number(order?.client)])}</td>
+                </tr> */}
+                <tr>
+                  <th>Изменил:</th>
+                  <td>{order?.updated_by || t("not_given")}</td>
+                </tr>
+                <tr>
+                  <th>Дата последнего обновления:</th>
+                  <td>
+                    {order?.updated_at
+                      ? dayjs(order?.updated_at)?.format(dateTimeFormat)
+                      : t("not_given")}
+                  </td>
                 </tr>
                 <tr>
                   <th>{t("purchase_date")}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>
-                        {dayjs(order?.date_purchase).format(dateTimeFormat)}
+                        {order?.date_purchase
+                          ? dayjs(order?.date_purchase).format(dateTimeFormat)
+                          : t("not_given")}
                       </p>
                       <TableViewBtn
                         onClick={handleModal(ModalTypes.edit_purchase_date)}
@@ -224,7 +251,11 @@ const ShowComplaint = () => {
                   <th>{t("sending_date")}</th>
                   <td>
                     <div className="flex justify-between">
-                      <p>{dayjs(order?.date_return).format(dateTimeFormat)}</p>
+                      <p>
+                        {order?.date_return
+                          ? dayjs(order?.date_return).format(dateTimeFormat)
+                          : t("not_given")}
+                      </p>
                       <TableViewBtn
                         onClick={handleModal(ModalTypes.edit_sending_date)}
                       />
@@ -236,7 +267,7 @@ const ShowComplaint = () => {
                   <td>{dayjs(order?.created_at).format(dateTimeFormat)}</td>
                 </tr>
                 <tr>
-                  <th>{t("name_table")}</th>
+                  <th>Блюдо/Продукт</th>
                   <td>
                     {!!order?.product_name
                       ? order?.product_name

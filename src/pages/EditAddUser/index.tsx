@@ -69,7 +69,7 @@ const EditAddUser = () => {
         phone_number: fixedString(phone_number),
         password,
         telegram_id,
-        stamp: user_images?.[user_images?.length - 1]?.file_name || "",
+        stamp: user_images?.[user_images?.length - 1]?.file_name,
         ...(!!id && { id: Number(id) }),
       },
       {
@@ -95,7 +95,7 @@ const EditAddUser = () => {
         dispatch(
           uploadImage({
             key: "user_images",
-            value: [{ file_name: user.stamp || "" }],
+            value: [{ file_name: user.stamp }],
           })
         );
       }

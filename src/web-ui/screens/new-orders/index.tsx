@@ -51,7 +51,7 @@ const NewOrders = () => {
     <AntdTable
       columns={columns}
       onRow={(record) => {
-        return { onClick: () => navigate(`/tg/orders/${record.id}`) };
+        return { onClick: () => navigate(`/tg/complaint/${record.id}`) };
       }}
       loading={isLoading}
       data={data?.items}

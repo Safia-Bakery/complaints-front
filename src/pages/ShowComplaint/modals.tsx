@@ -10,7 +10,6 @@ import useQueryString from "@/hooks/custom/useQueryString";
 import complaintsMutation, {
   ComplaintsBody,
 } from "@/hooks/mutations/complaints";
-import useComplaints from "@/hooks/useComplaints";
 import { CancelReason } from "@/utils/helper";
 import errorToast from "@/utils/error-toast.ts";
 import successToast from "@/utils/success-toast.ts";
@@ -22,7 +21,7 @@ import {
 } from "@/utils/types";
 import cl from "classnames";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -31,6 +30,7 @@ import useSubCategories from "@/hooks/useSubCategories.ts";
 import MainRadioBtns from "@/components/BaseInputs/MainRadioBtns.tsx";
 import MainInput from "@/components/BaseInputs/MainInput";
 import { Footer } from "antd/es/layout/layout";
+import { useComplaintV2 } from "@/hooks/complaint";
 
 const ComplaintModals = () => {
   const { t } = useTranslation();
@@ -41,19 +41,15 @@ const ComplaintModals = () => {
   const [date_purchase, $date_purchase] = useState<Date>();
   const [date_return, $date_return] = useState<Date>();
 
-  const { refetch, data } = useComplaints({ id: Number(id), enabled: !!id });
-  const order = data?.items?.[0];
+  const { refetch, data: complaint } = useComplaintV2({
+    complaint_id: Number(id),
+    enabled: !!id,
+  });
 
   const { mutate, isPending } = complaintsMutation();
 
   const branchJson = useQueryString("branch");
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
-
-  const { data: complaints } = useComplaints({
-    id: Number(id),
-    enabled: false,
-  });
-  const complaint = data?.items?.[0];
 
   const closeModal = () => removeParams(["modal"]);
 
@@ -124,14 +120,15 @@ const ComplaintModals = () => {
   useEffect(() => {
     reset({
       purchase_date: new Date(),
-      comment: order?.comment,
-      subcategory_id: order?.subcategory_id?.toString(),
+      comment: complaint?.comment,
+      subcategory_id: complaint?.subcategory_id?.toString(),
     });
-    if (order?.date_purchase)
-      $date_purchase(dayjs(order.date_purchase).toDate());
-    if (order?.date_return) $date_return(dayjs(order.date_return).toDate());
+    if (complaint?.date_purchase)
+      $date_purchase(dayjs(complaint.date_purchase).toDate());
+    if (complaint?.date_return)
+      $date_return(dayjs(complaint.date_return).toDate());
     // reset({ purchase_date: data?.items?.[0]?.date_purchase });
-  }, [order]);
+  }, [complaint]);
 
   return (
     <Modal

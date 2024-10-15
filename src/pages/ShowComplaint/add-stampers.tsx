@@ -102,7 +102,7 @@ const AddStampers = () => {
 
   const { data: orderNew, refetch } = useComplaintV2({
     complaint_id: Number(id),
-    enabled: !!id,
+    enabled: false,
   });
 
   const { data: stampers, isLoading: stamperLoading } = getStampers({
@@ -193,7 +193,7 @@ const AddStampers = () => {
 
   return (
     <>
-      <Flex flex={1}>
+      <Flex flex={1} className="h-fit">
         <table className="w-full bordered gray">
           <tbody>
             <tr>
@@ -246,7 +246,7 @@ const AddStampers = () => {
         </table>
       </Flex>
 
-      <Flex vertical gap={10} flex={1}>
+      <Flex vertical gap={10} flex={1} className="h-fit">
         <Flex align="center" justify="space-between" gap={40} className="w-fit">
           <Typography className="font-bold">Добавить сотрудника</Typography>
 
@@ -277,6 +277,7 @@ const AddStampers = () => {
           open={modal === Modals.first_res || modal === Modals.second_res}
           onOk={handleRes}
           closable
+          loading={complainPending}
           onCancel={() => handleModal()}
           okText={t("yes")}
           cancelText={t("no")}
