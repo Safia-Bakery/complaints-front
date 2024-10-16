@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../rootConfig";
-import { queryClient } from "@/utils/helper";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../rootConfig';
+import { queryClient } from '@/utils/helper';
 
 interface State {
   token: string | null;
@@ -9,11 +9,11 @@ interface State {
 
 const initialState: State = {
   token: null,
-  link: "/dashboard",
+  link: '/dashboard',
 };
 
 export const authReducer = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     logoutHandler: (state) => {
@@ -21,8 +21,8 @@ export const authReducer = createSlice({
       queryClient.clear();
 
       const { pathname, search } = window.location;
-      if (pathname.includes("login") || pathname === "/")
-        state.link = "/dashboard";
+      if (pathname.includes('login') || pathname === '/')
+        state.link = '/dashboard';
       else state.link = pathname + search;
     },
     loginHandler: (state, { payload }) => {

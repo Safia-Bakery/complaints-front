@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import { BaseItem, HRDeps, HRRequest } from "@/utils/types";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import { BaseItem, HRDeps, HRRequest } from '@/utils/types';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
 
 type Body = {
   enabled?: boolean;
@@ -16,12 +16,12 @@ type Body = {
 export const useHRRequests = ({ enabled = true, ...params }: Body) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["questions", params],
+    queryKey: ['questions', params],
     queryFn: () =>
       baseApi
         .get(
           `/hr/${
-            Number(params.hrtype) === HRDeps.qa ? "questions" : "complaints"
+            Number(params.hrtype) === HRDeps.qa ? 'questions' : 'complaints'
           }`,
           { params }
         )

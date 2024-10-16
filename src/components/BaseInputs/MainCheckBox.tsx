@@ -1,7 +1,7 @@
-import { ChangeEvent, FC } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import styles from "./index.module.scss";
-import { useTranslation } from "react-i18next";
+import { ChangeEvent, FC } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onChange?: (val: ChangeEvent<HTMLInputElement>) => void;

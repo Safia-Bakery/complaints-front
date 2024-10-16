@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import baseApi from "@/api/baseApi";
+import { useMutation } from '@tanstack/react-query';
+import baseApi from '@/api/baseApi';
 
 type Body = {
   status?: number;
@@ -10,9 +10,9 @@ type Body = {
 };
 const hrRequestMutation = () => {
   return useMutation({
-    mutationKey: ["hr_cmplaints_mutation"],
+    mutationKey: ['hr_cmplaints_mutation'],
     mutationFn: async (body: Body) => {
-      const { data } = await baseApi.put("/hr/complaints", body);
+      const { data } = await baseApi.put('/hr/complaints', body);
       return data;
     },
   });

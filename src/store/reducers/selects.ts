@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../rootConfig";
-import { Language } from "@/utils/types";
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../rootConfig';
+import { Language } from '@/utils/types';
 
 interface State {
   sidebarToggler: boolean;
@@ -13,7 +13,7 @@ const initialState: State = {
 };
 
 export const toggleReducer = createSlice({
-  name: "toggler",
+  name: 'toggler',
   initialState,
   reducers: {
     sidebarHandler: (state, { payload }: PayloadAction<boolean>) => {

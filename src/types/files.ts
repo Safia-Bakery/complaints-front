@@ -5,6 +5,6 @@ type FileUploadRes = {
 };
 
 interface FileState {
-  product_images?: FileUploadRes["files"];
-  user_images?: FileUploadRes["files"];
+  product_images?: FileUploadRes['files'];
+  user_images?: FileUploadRes['files'];
 }

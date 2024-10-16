@@ -1,21 +1,21 @@
-import Container from "@/components/Container";
-import Loading from "@/components/Loader";
-import TableViewBtn from "@/components/TableViewBtn";
-import useQueryString from "@/hooks/custom/useQueryString";
-import { handleIdx } from "@/utils/helper";
-import { BtnTypes, SubCategoryType } from "@/utils/types";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import MyButton from "@/components/Button";
-import useSubCategories from "@/hooks/useSubCategories";
-import AntdTable from "@/components/AntdTable";
-import { ColumnsType } from "antd/es/table";
+import Container from '@/components/Container';
+import Loading from '@/components/Loader';
+import TableViewBtn from '@/components/TableViewBtn';
+import useQueryString from '@/hooks/custom/useQueryString';
+import { handleIdx } from '@/utils/helper';
+import { BtnTypes, SubCategoryType } from '@/utils/types';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import MyButton from '@/components/Button';
+import useSubCategories from '@/hooks/useSubCategories';
+import AntdTable from '@/components/AntdTable';
+import { ColumnsType } from 'antd/es/table';
 
 const SubCategories = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const page = Number(useQueryString("page")) || 1;
+  const page = Number(useQueryString('page')) || 1;
   const navigate = useNavigate();
 
   const { data, isLoading } = useSubCategories({
@@ -27,27 +27,27 @@ const SubCategories = () => {
     () => [
       {
         render: (_, r, index) => handleIdx(index),
-        title: "№",
+        title: '№',
         width: 50,
       },
 
       {
-        dataIndex: "name",
-        title: t("name_table"),
+        dataIndex: 'name',
+        title: t('name_table'),
       },
 
       {
-        dataIndex: "code",
-        title: t("code"),
+        dataIndex: 'code',
+        title: t('code'),
       },
       {
-        dataIndex: "status",
-        title: t("status"),
-        render: (_, record) => (!!record?.status ? t("active") : t("inactive")),
+        dataIndex: 'status',
+        title: t('status'),
+        render: (_, record) => (!!record?.status ? t('active') : t('inactive')),
       },
       {
-        dataIndex: "action",
-        title: t(""),
+        dataIndex: 'action',
+        title: t(''),
         width: 50,
         render: (_, record) => (
           <Link className="w-18" to={`${record.id}`}>
@@ -66,8 +66,8 @@ const SubCategories = () => {
       <div className="flex justify-between items-end">
         <div />
         <div className="flex gap-2 mb-3">
-          <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
-            {t("add")}
+          <MyButton onClick={() => navigate('add')} btnType={BtnTypes.black}>
+            {t('add')}
           </MyButton>
         </div>
       </div>
@@ -75,7 +75,7 @@ const SubCategories = () => {
         columns={columns}
         data={data?.items}
         totalItems={data?.total}
-        rowClassName={"text-center"}
+        rowClassName={'text-center'}
       />
     </Container>
   );

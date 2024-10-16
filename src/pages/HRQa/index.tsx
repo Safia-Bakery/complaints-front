@@ -1,21 +1,21 @@
-import Container from "@/components/Container";
-import Loading from "@/components/Loader";
-import TableViewBtn from "@/components/TableViewBtn";
-import useQueryString from "@/hooks/custom/useQueryString";
-import { handleIdx } from "@/utils/helper";
-import { BtnTypes, HRQaType, HRSpheres } from "@/utils/types";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import useHRQa from "@/hooks/useHRQa";
-import MyButton from "@/components/Button";
-import AntdTable from "@/components/AntdTable";
-import { ColumnsType } from "antd/es/table";
+import Container from '@/components/Container';
+import Loading from '@/components/Loader';
+import TableViewBtn from '@/components/TableViewBtn';
+import useQueryString from '@/hooks/custom/useQueryString';
+import { handleIdx } from '@/utils/helper';
+import { BtnTypes, HRQaType, HRSpheres } from '@/utils/types';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import useHRQa from '@/hooks/useHRQa';
+import MyButton from '@/components/Button';
+import AntdTable from '@/components/AntdTable';
+import { ColumnsType } from 'antd/es/table';
 
 const HRQa = () => {
   const { sphere } = useParams();
   const { t } = useTranslation();
-  const page = Number(useQueryString("page")) || 1;
+  const page = Number(useQueryString('page')) || 1;
   const navigate = useNavigate();
 
   const { data, isLoading } = useHRQa({
@@ -27,33 +27,33 @@ const HRQa = () => {
     () => [
       {
         render: (_, r, index) => handleIdx(index),
-        title: "№",
+        title: '№',
         width: 50,
       },
 
       {
-        dataIndex: "question_ru",
-        title: t("question"),
+        dataIndex: 'question_ru',
+        title: t('question'),
         width: 250,
       },
 
       {
-        dataIndex: "answer_ru",
-        title: t("answer"),
+        dataIndex: 'answer_ru',
+        title: t('answer'),
       },
       {
-        dataIndex: "status",
-        title: t("status"),
+        dataIndex: 'status',
+        title: t('status'),
         width: 150,
         render: (_, record) => (
           <p className="text-center w-full">
-            {!!record?.status ? t("active") : t("inactive")}
+            {!!record?.status ? t('active') : t('inactive')}
           </p>
         ),
       },
       {
-        dataIndex: "action",
-        title: t(""),
+        dataIndex: 'action',
+        title: t(''),
         width: 50,
         render: (_, record) => (
           <Link className="w-18" to={`edit/${record.id}`}>
@@ -73,10 +73,10 @@ const HRQa = () => {
         <div />
         <div className="flex gap-2 mb-3">
           <MyButton
-            onClick={() => navigate("edit/add")}
+            onClick={() => navigate('edit/add')}
             btnType={BtnTypes.black}
           >
-            {t("add")}
+            {t('add')}
           </MyButton>
         </div>
       </div>

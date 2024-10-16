@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import baseApi from "@/api/baseApi";
+import { useQuery } from '@tanstack/react-query';
+import baseApi from '@/api/baseApi';
 
 type Params = {
   otk_status: string | number;
@@ -10,10 +10,10 @@ type Params = {
 
 export const useComplaintExcel = ({ enabled = true, ...params }: Params) => {
   return useQuery({
-    queryKey: ["complaints_excel", params],
+    queryKey: ['complaints_excel', params],
     queryFn: () =>
       baseApi
-        .get("/complaints/excell", { params })
+        .get('/complaints/excell', { params })
         .then(({ data: response }) => response as { filename: string }),
     enabled,
   });

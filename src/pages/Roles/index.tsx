@@ -1,15 +1,15 @@
-import Container from "@/components/Container";
-import Loading from "@/components/Loader";
-import TableViewBtn from "@/components/TableViewBtn";
-import { handleIdx } from "@/utils/helper";
-import { BtnTypes, RoleTypes } from "@/utils/types";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import MyButton from "@/components/Button";
-import useRoles from "@/hooks/useRoles";
-import AntdTable from "@/components/AntdTable";
-import { ColumnsType } from "antd/es/table";
+import Container from '@/components/Container';
+import Loading from '@/components/Loader';
+import TableViewBtn from '@/components/TableViewBtn';
+import { handleIdx } from '@/utils/helper';
+import { BtnTypes, RoleTypes } from '@/utils/types';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import MyButton from '@/components/Button';
+import useRoles from '@/hooks/useRoles';
+import AntdTable from '@/components/AntdTable';
+import { ColumnsType } from 'antd/es/table';
 
 const Roles = () => {
   const { t } = useTranslation();
@@ -21,13 +21,13 @@ const Roles = () => {
     () => [
       {
         render: (_, r, index) => handleIdx(index),
-        title: "№",
+        title: '№',
         width: 50,
       },
 
       {
-        dataIndex: "name",
-        title: t("name_table"),
+        dataIndex: 'name',
+        title: t('name_table'),
         render: (_, record) => (
           <Link className="w-18 text-blue-400" to={`/permissions/${record.id}`}>
             {record.name}
@@ -35,13 +35,13 @@ const Roles = () => {
         ),
       },
       {
-        dataIndex: "status",
-        title: t("status"),
-        render: (_, record) => (!!record?.status ? t("active") : t("inactive")),
+        dataIndex: 'status',
+        title: t('status'),
+        render: (_, record) => (!!record?.status ? t('active') : t('inactive')),
       },
       {
-        dataIndex: "action",
-        title: "",
+        dataIndex: 'action',
+        title: '',
         width: 50,
         render: (_, record) => (
           <Link className="w-18" to={`${record.id}`}>
@@ -61,15 +61,15 @@ const Roles = () => {
         <div />
         <div className="" />
         <div className="flex gap-2 mb-3">
-          <MyButton onClick={() => navigate("add")} btnType={BtnTypes.black}>
-            {t("add")}
+          <MyButton onClick={() => navigate('add')} btnType={BtnTypes.black}>
+            {t('add')}
           </MyButton>
         </div>
       </div>
       <AntdTable
         columns={columns}
         data={data?.items}
-        rowClassName={"text-center"}
+        rowClassName={'text-center'}
       />
     </Container>
   );

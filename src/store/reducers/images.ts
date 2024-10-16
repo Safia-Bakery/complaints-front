@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../rootConfig";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../rootConfig';
 
 const initialState: FileState = {
   product_images: undefined,
@@ -7,14 +7,17 @@ const initialState: FileState = {
 };
 
 export const imageReducer = createSlice({
-  name: "image_upload",
+  name: 'image_upload',
   initialState,
   reducers: {
     uploadImage: (
       state,
       {
         payload,
-      }: PayloadAction<{ key: keyof FileState; value: FileUploadRes["files"] }>
+      }: PayloadAction<{
+        key: keyof FileState;
+        value: FileUploadRes['files'];
+      }>
     ) => {
       if (!!state[payload.key]?.length) {
         const updated = state[payload.key];
@@ -26,7 +29,7 @@ export const imageReducer = createSlice({
       { payload }: PayloadAction<{ key: keyof FileState; value: string }>
     ) => {
       if (!!state[payload.key]?.length) {
-        const filtered: FileUploadRes["files"] = state[payload.key]!.filter(
+        const filtered: FileUploadRes['files'] = state[payload.key]!.filter(
           (item) => item.file_name !== payload.value
         );
         state[payload.key] = filtered;

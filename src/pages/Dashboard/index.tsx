@@ -1,22 +1,22 @@
-import Container from "@/components/Container";
-import ReactDatePicker from "react-datepicker";
-import { useTranslation } from "react-i18next";
-import Chart from "react-apexcharts";
-import { ApexOptions } from "apexcharts";
-import useStats from "@/hooks/useStats";
-import Loading from "@/components/Loader";
-import { useMemo, useState } from "react";
-import dayjs from "dayjs";
-import { numberWithCommas, yearMonthDate } from "@/utils/helper";
-import incrementIcon from "/icons/increment.svg";
-import decrementIcon from "/icons/decrement.svg";
-import incrementGraph from "/icons/incrementGr.svg";
-import decrementGraph from "/icons/decrementGr.svg";
-import orderQr from "/icons/orderQr.svg";
-import orderService from "/icons/orderService.svg";
-import orderShop from "/icons/orderShop.svg";
-import orderQuality from "/icons/orderQuality.svg";
-import cl from "classnames";
+import Container from '@/components/Container';
+import ReactDatePicker from 'react-datepicker';
+import { useTranslation } from 'react-i18next';
+import Chart from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
+import useStats from '@/hooks/useStats';
+import Loading from '@/components/Loader';
+import { useMemo, useState } from 'react';
+import dayjs from 'dayjs';
+import { numberWithCommas, yearMonthDate } from '@/utils/helper';
+import incrementIcon from '/icons/increment.svg';
+import decrementIcon from '/icons/decrement.svg';
+import incrementGraph from '/icons/incrementGr.svg';
+import decrementGraph from '/icons/decrementGr.svg';
+import orderQr from '/icons/orderQr.svg';
+import orderService from '/icons/orderService.svg';
+import orderShop from '/icons/orderShop.svg';
+import orderQuality from '/icons/orderQuality.svg';
+import cl from 'classnames';
 
 const date = new Date();
 const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -50,8 +50,8 @@ const Dashboard = () => {
 
   const donutOptions: ApexOptions = {
     title: {
-      text: t("with_category"),
-      align: "left",
+      text: t('with_category'),
+      align: 'left',
     },
     plotOptions: {
       pie: {
@@ -59,23 +59,23 @@ const Dashboard = () => {
           labels: {
             show: true,
             name: {
-              formatter: () => t("total"),
+              formatter: () => t('total'),
             },
             value: {
-              formatter: () => `${donutSeries?.total} ${t("complaint")}`,
+              formatter: () => `${donutSeries?.total} ${t('complaint')}`,
             },
           },
         },
       },
     },
     stroke: {
-      curve: "smooth",
+      curve: 'smooth',
     },
     legend: {
-      position: "left",
+      position: 'left',
     },
     chart: {
-      type: "donut",
+      type: 'donut',
     },
     labels: donutSeries?.labels,
 
@@ -87,7 +87,7 @@ const Dashboard = () => {
             width: 200,
           },
           legend: {
-            position: "bottom",
+            position: 'bottom',
           },
         },
       },
@@ -111,11 +111,11 @@ const Dashboard = () => {
 
   const lineSeries = [
     {
-      name: "Сервис",
+      name: 'Сервис',
       data: renderLineGraph?.service!,
     },
     {
-      name: "Качество",
+      name: 'Качество',
       data: renderLineGraph?.quality!,
     },
   ];
@@ -123,22 +123,22 @@ const Dashboard = () => {
   const LineGraphoptions: ApexOptions = {
     chart: {
       height: 350,
-      type: "line",
+      type: 'line',
       zoom: {
         enabled: false,
       },
     },
     stroke: {
-      curve: "smooth",
+      curve: 'smooth',
     },
-    legend: { position: "top" },
+    legend: { position: 'top' },
     title: {
-      text: t("complaints"),
-      align: "left",
+      text: t('complaints'),
+      align: 'left',
     },
     grid: {
       row: {
-        colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
         opacity: 0.5,
       },
     },
@@ -153,10 +153,10 @@ const Dashboard = () => {
     <Container className="!bg-transparent">
       <div className="flex gap-4 mb-6">
         <div className="text-[#585562] font-semibold text-sm">
-          {t("results")}
+          {t('results')}
         </div>
         <div className="text-[#585562] font-semibold text-sm">
-          {t("last_30_days")}
+          {t('last_30_days')}
         </div>
       </div>
 
@@ -164,7 +164,7 @@ const Dashboard = () => {
         <div className="flex flex-1 flex-col rounded bg-white p-4">
           <div className="flex items-center mb-4">
             <img src={orderQr} alt="" />
-            <h3 className="font-bold ml-3">{t("orders_by_qr")}</h3>
+            <h3 className="font-bold ml-3">{t('orders_by_qr')}</h3>
           </div>
 
           <div className="flex justify-between">
@@ -179,10 +179,10 @@ const Dashboard = () => {
                   alt=""
                 />
                 <span
-                  className={cl(" font-medium text-xs", {
-                    ["text-[#0DA06A]"]:
+                  className={cl(' font-medium text-xs', {
+                    ['text-[#0DA06A]']:
                       data?.qrcode_stats?.percentage_change! > 0,
-                    ["text-[#F34A7C]"]:
+                    ['text-[#F34A7C]']:
                       data?.qrcode_stats?.percentage_change! < 0,
                   })}
                 >
@@ -208,7 +208,7 @@ const Dashboard = () => {
         <div className="flex flex-1 flex-col rounded bg-white p-4">
           <div className="flex items-center mb-4">
             <img src={orderService} alt="" />
-            <h3 className="font-bold ml-3">{t("service")}</h3>
+            <h3 className="font-bold ml-3">{t('service')}</h3>
           </div>
 
           <div className="flex justify-between">
@@ -223,10 +223,10 @@ const Dashboard = () => {
                   alt=""
                 />
                 <span
-                  className={cl(" font-medium text-xs", {
-                    ["text-[#0DA06A]"]:
+                  className={cl(' font-medium text-xs', {
+                    ['text-[#0DA06A]']:
                       data?.complaint_service?.percentage_change! > 0,
-                    ["text-[#F34A7C]"]:
+                    ['text-[#F34A7C]']:
                       data?.complaint_service?.percentage_change! < 0,
                   })}
                 >
@@ -252,7 +252,7 @@ const Dashboard = () => {
         <div className="flex flex-1 flex-col rounded bg-white p-4">
           <div className="flex items-center mb-4">
             <img src={orderShop} alt="" />
-            <h3 className="font-bold ml-3">{t("service_shop")}</h3>
+            <h3 className="font-bold ml-3">{t('service_shop')}</h3>
           </div>
 
           <div className="flex justify-between">
@@ -267,10 +267,10 @@ const Dashboard = () => {
                   alt=""
                 />
                 <span
-                  className={cl(" font-medium text-xs", {
-                    ["text-[#0DA06A]"]:
+                  className={cl(' font-medium text-xs', {
+                    ['text-[#0DA06A]']:
                       data?.workers_comparison?.percentage_change! > 0,
-                    ["text-[#F34A7C]"]:
+                    ['text-[#F34A7C]']:
                       data?.workers_comparison?.percentage_change! < 0,
                   })}
                 >
@@ -296,7 +296,7 @@ const Dashboard = () => {
         <div className="flex flex-1 flex-col rounded bg-white p-4">
           <div className="flex items-center mb-4">
             <img src={orderQuality} alt="" />
-            <h3 className="font-bold ml-3">{t("quality")}</h3>
+            <h3 className="font-bold ml-3">{t('quality')}</h3>
           </div>
 
           <div className="flex justify-between">
@@ -311,10 +311,10 @@ const Dashboard = () => {
                   alt=""
                 />
                 <span
-                  className={cl(" font-medium text-xs", {
-                    ["text-[#0DA06A]"]:
+                  className={cl(' font-medium text-xs', {
+                    ['text-[#0DA06A]']:
                       data?.complaint_quality?.percentage_change! > 0,
-                    ["text-[#F34A7C]"]:
+                    ['text-[#F34A7C]']:
                       data?.complaint_quality?.percentage_change! < 0,
                   })}
                 >
@@ -344,7 +344,7 @@ const Dashboard = () => {
             className="!border mb-6 !border-[#0000000F] rounded-lg max-w-80 w-full text-center py-2"
             selectsRange={true}
             startDate={startDate}
-            dateFormat={"dd.MM.YYYY"}
+            dateFormat={'dd.MM.YYYY'}
             endDate={endDate}
             onChange={(update) => {
               setDateRange(update);
@@ -373,7 +373,7 @@ const Dashboard = () => {
       </div>
 
       <div>
-        <h3 className="text-[#00000080] text-sm">{t("expenses")}</h3>
+        <h3 className="text-[#00000080] text-sm">{t('expenses')}</h3>
         <div className="flex border border-[#8B8B8B] mt-2 shadow-[0px_2px_2px_0px_#00000040] rounded-md w-min">
           {Object.keys(data?.country_stats?.quality! || {}).map((country) => (
             <div
@@ -383,20 +383,20 @@ const Dashboard = () => {
               <h2 className="font-bold text-sm mb-4">{country}</h2>
 
               <div className="mt-3">
-                <h4 className="text-xs font-bold">{t("service")}</h4>
+                <h4 className="text-xs font-bold">{t('service')}</h4>
                 <p className="text-xs">
                   {numberWithCommas(
                     data?.country_stats?.service?.[country] || 0
-                  )}{" "}
+                  )}{' '}
                   сум
                 </p>
               </div>
               <div className="mt-3">
-                <h4 className="text-xs font-bold">{t("quality")}</h4>
+                <h4 className="text-xs font-bold">{t('quality')}</h4>
                 <p className="text-xs">
                   {numberWithCommas(
                     data?.country_stats?.quality?.[country] || 0
-                  )}{" "}
+                  )}{' '}
                   сум
                 </p>
               </div>

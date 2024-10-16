@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import { BaseItem, HRQaType } from "@/utils/types";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import { BaseItem, HRQaType } from '@/utils/types';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
 
 type Body = {
   enabled?: boolean;
@@ -15,10 +15,10 @@ type Body = {
 export const useHRQa = ({ enabled = true, ...params }: Body) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["qa", params],
+    queryKey: ['qa', params],
     queryFn: () =>
       baseApi
-        .get("/hr/questions", { params })
+        .get('/hr/questions', { params })
         .then(({ data: response }) => response as BaseItem<HRQaType>),
     enabled: !!token && enabled,
   });

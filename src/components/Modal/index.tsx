@@ -1,5 +1,5 @@
-import { FC, ReactNode } from "react";
-import { Modal as AntMdoal, ModalProps } from "antd";
+import { FC, ReactNode } from 'react';
+import { Modal as AntMdoal, ModalProps } from 'antd';
 
 interface Props extends ModalProps {
   children: ReactNode;

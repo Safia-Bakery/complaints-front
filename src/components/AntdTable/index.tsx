@@ -1,11 +1,11 @@
-import Table, { TableProps } from "antd/es/table";
-import styles from "./index.module.scss";
-import cl from "classnames";
-import { ReactNode, useCallback, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import useQueryString from "@/hooks/custom/useQueryString";
-import { useNavigateParams } from "@/hooks/custom/useCustomNavigate";
-import { itemsPerPage } from "@/utils/helper";
+import Table, { TableProps } from 'antd/es/table';
+import styles from './index.module.scss';
+import cl from 'classnames';
+import { ReactNode, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import useQueryString from '@/hooks/custom/useQueryString';
+import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
+import { itemsPerPage } from '@/utils/helper';
 
 type ReturnFunction<Tval> = (smt: Tval) => string;
 type RowClassName<T> = string | ReturnFunction<T>;
@@ -29,10 +29,10 @@ function AntdTable<T>({
   ...others
 }: Props<T>) {
   const { t } = useTranslation();
-  const currentPage = Number(useQueryString("page")) || 1;
+  const currentPage = Number(useQueryString('page')) || 1;
   const navigateParams = useNavigateParams();
   const handleRowStyles = (item: T) =>
-    typeof rowClassName === "function" ? rowClassName?.(item) : rowClassName;
+    typeof rowClassName === 'function' ? rowClassName?.(item) : rowClassName;
 
   const handleNavigate = useCallback(
     (page: number) => {
@@ -67,7 +67,7 @@ function AntdTable<T>({
                 pageSize: itemsPerPage,
                 onChange: handleNavigate,
                 showSizeChanger: false,
-                position: ["bottomLeft"],
+                position: ['bottomLeft'],
               }
             : false
         }
@@ -75,11 +75,11 @@ function AntdTable<T>({
         title={() =>
           totalItems && (
             <div>
-              {t("shown_items")}{" "}
+              {t('shown_items')}{' '}
               <b>
                 {indexOfFirstItem}-{indexOfLastItem === 0 ? 0 : indexOfLastItem}
-              </b>{" "}
-              {t("from")} <b>{totalItems}</b>.
+              </b>{' '}
+              {t('from')} <b>{totalItems}</b>.
             </div>
           )
         }

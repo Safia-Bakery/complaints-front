@@ -1,9 +1,9 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAppSelector } from "@/store/rootConfig.ts";
-import { branchSelector } from "reducers/tg-get-titles.ts";
-import { Flex, Image } from "antd";
-import routePath from "@/routes.ts";
-import useTgUser from "@/hooks/useTgUser.ts";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@/store/rootConfig.ts';
+import { branchSelector } from 'reducers/tg-get-titles.ts';
+import { Flex, Image } from 'antd';
+import routePath from '@/routes.ts';
+import useTgUser from '@/hooks/useTgUser.ts';
 
 const TgHeader = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const TgHeader = () => {
       )}
       <Flex align="center" justify="space-between" flex={1}>
         <div className="flex items-center">
-          {!state?.title && <Image preview={false} src={"/icons/marker.svg"} />}
+          {!state?.title && <Image preview={false} src={'/icons/marker.svg'} />}
 
           <h4 className="text-center text-white font-normal text-xl">
             {data?.branch?.name}

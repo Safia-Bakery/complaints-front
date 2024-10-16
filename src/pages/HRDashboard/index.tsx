@@ -1,16 +1,16 @@
-import Container from "@/components/Container";
-import HrSelectBtn from "./HrSelectBtn";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
-import { HRDeps, HRSpheres } from "@/utils/types";
-import { useMemo, useState } from "react";
-import { yearMonthDate } from "@/utils/helper";
-import dayjs from "dayjs";
-import useHrStats from "@/hooks/useHrStats";
-import { ApexOptions } from "apexcharts";
-import Chart from "react-apexcharts";
-import ReactDatePicker from "react-datepicker";
-import Loading from "@/components/Loader";
+import Container from '@/components/Container';
+import HrSelectBtn from './HrSelectBtn';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import { HRDeps, HRSpheres } from '@/utils/types';
+import { useMemo, useState } from 'react';
+import { yearMonthDate } from '@/utils/helper';
+import dayjs from 'dayjs';
+import useHrStats from '@/hooks/useHrStats';
+import { ApexOptions } from 'apexcharts';
+import Chart from 'react-apexcharts';
+import ReactDatePicker from 'react-datepicker';
+import Loading from '@/components/Loader';
 
 const date = new Date();
 const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -50,8 +50,8 @@ const HRDashboard = () => {
 
   const donutOptions: ApexOptions = {
     title: {
-      text: t("with_category"),
-      align: "left",
+      text: t('with_category'),
+      align: 'left',
     },
     plotOptions: {
       pie: {
@@ -59,23 +59,23 @@ const HRDashboard = () => {
           labels: {
             show: true,
             name: {
-              formatter: () => t("total"),
+              formatter: () => t('total'),
             },
             value: {
-              formatter: () => `${donutSeries?.total} ${t("complaint")}`,
+              formatter: () => `${donutSeries?.total} ${t('complaint')}`,
             },
           },
         },
       },
     },
     stroke: {
-      curve: "smooth",
+      curve: 'smooth',
     },
     legend: {
-      position: "left",
+      position: 'left',
     },
     chart: {
-      type: "donut",
+      type: 'donut',
     },
     labels: donutSeries?.labels,
 
@@ -87,7 +87,7 @@ const HRDashboard = () => {
             width: 200,
           },
           legend: {
-            position: "bottom",
+            position: 'bottom',
           },
         },
       },
@@ -101,26 +101,26 @@ const HRDashboard = () => {
     <>
       <Container className="flex gap-14">
         <HrSelectBtn onClick={handleNavigate(`${HRDeps[HRDeps.qa]}`)}>
-          {t("qa")}
+          {t('qa')}
         </HrSelectBtn>
         <HrSelectBtn onClick={handleNavigate(`${HRDeps[HRDeps.questions]}`)}>
-          {t("questions")}
+          {t('questions')}
         </HrSelectBtn>
         <div className="flex flex-col gap-2 flex-1">
           <HrSelectBtn
             onClick={handleNavigate(`${HRDeps[HRDeps.hr_complaints]}`)}
             className="min-h-24"
           >
-            {t("complaints")}
+            {t('complaints')}
           </HrSelectBtn>
           <HrSelectBtn
             onClick={handleNavigate(`${HRDeps[HRDeps.hr_categories]}`)}
           >
-            {t("categories")}
+            {t('categories')}
           </HrSelectBtn>
         </div>
         <HrSelectBtn onClick={handleNavigate(`${HRDeps[HRDeps.suggestions]}`)}>
-          {t("suggestions")}
+          {t('suggestions')}
         </HrSelectBtn>
       </Container>
       <Container className="!mt-1">
@@ -144,19 +144,19 @@ const HRDashboard = () => {
             />
 
             <div className="flex w-full flex-col">
-              <h2 className="font-bold text-sm mb-5">{t("req_stats")}</h2>
+              <h2 className="font-bold text-sm mb-5">{t('req_stats')}</h2>
 
               <div className="border flex flex-col gap-4 border-[#00000042] rounded-md py-10 px-5 max-w-80 w-full">
                 <div className="flex items-center justify-between w-full">
-                  <p>{t("questions")}</p>
+                  <p>{t('questions')}</p>
                   <p>{data?.question_count}</p>
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p>{t("complaints")}</p>
+                  <p>{t('complaints')}</p>
                   <p>{data?.complaint_count}</p>
                 </div>
                 <div className="flex items-center justify-between w-full">
-                  <p>{t("suggestions")}</p>
+                  <p>{t('suggestions')}</p>
                   <p>{data?.advice_count}</p>
                 </div>
               </div>

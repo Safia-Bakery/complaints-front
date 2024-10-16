@@ -1,6 +1,6 @@
-import MyButton from "@/components/Button";
-import Container from "@/components/Container";
-import TableViewBtn from "@/components/TableViewBtn";
+import MyButton from '@/components/Button';
+import Container from '@/components/Container';
+import TableViewBtn from '@/components/TableViewBtn';
 import {
   BtnTypes,
   ComplaintsSpheres,
@@ -8,25 +8,25 @@ import {
   GenderType,
   ModalTypes,
   OrderStatus,
-} from "@/utils/types";
-import { useTranslation } from "react-i18next";
-import trashIcon from "/icons/trash.svg";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Loading from "@/components/Loader";
-import dayjs from "dayjs";
-import { dateTimeFormat } from "@/utils/helper";
-import { useMemo, useState } from "react";
-import { baseURL } from "@/api/baseApi";
-import complaintsMutation from "@/hooks/mutations/complaints";
-import { useNavigateParams } from "@/hooks/custom/useCustomNavigate";
-import ComplaintModals from "./modals";
-import Header from "@/components/Header";
-import errorToast from "@/utils/error-toast.ts";
-import successToast from "@/utils/success-toast.ts";
-import Otkchild from "./Otkchild";
-import { Flex } from "antd";
-import AddStampers from "./add-stampers";
-import { useComplaintV2 } from "@/hooks/complaint";
+} from '@/utils/types';
+import { useTranslation } from 'react-i18next';
+import trashIcon from '/icons/trash.svg';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Loading from '@/components/Loader';
+import dayjs from 'dayjs';
+import { dateTimeFormat } from '@/utils/helper';
+import { useMemo, useState } from 'react';
+import { baseURL } from '@/api/baseApi';
+import complaintsMutation from '@/hooks/mutations/complaints';
+import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
+import ComplaintModals from './modals';
+import Header from '@/components/Header';
+import errorToast from '@/utils/error-toast.ts';
+import successToast from '@/utils/success-toast.ts';
+import Otkchild from './Otkchild';
+import { Flex } from 'antd';
+import AddStampers from './add-stampers';
+import { useComplaintV2 } from '@/hooks/complaint';
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -60,14 +60,14 @@ const ShowComplaint = () => {
     mutate(
       {
         [+ComplaintsSpheres[com_sphere! as any] === ComplaintsSpheres.otk
-          ? "otk_status"
-          : "status"]: st,
+          ? 'otk_status'
+          : 'status']: st,
         id: Number(id),
       },
       {
         onSuccess: () => {
           refetch();
-          successToast("success");
+          successToast('success');
         },
         onError: (e) => errorToast(e.message),
       }
@@ -95,18 +95,18 @@ const ShowComplaint = () => {
             btnType={BtnTypes.red}
             onClick={handleModal(ModalTypes.deny_reason)}
           >
-            {t("cancel")}
+            {t('cancel')}
           </MyButton>
           {complaint?.status === OrderStatus.new ? (
             <MyButton
               btnType={BtnTypes.darkBlue}
               onClick={() => handleStatus(OrderStatus.received)}
             >
-              {t("receive")}
+              {t('receive')}
             </MyButton>
           ) : (
             <MyButton btnType={BtnTypes.green} onClick={handleExpenseModal}>
-              {t("to_close")}
+              {t('to_close')}
             </MyButton>
           )}
         </div>
@@ -121,7 +121,7 @@ const ShowComplaint = () => {
         <ComplaintModals />
         <Header>
           <MyButton onClick={() => navigate(`/complaints/${com_sphere}`)}>
-            {t("back")}
+            {t('back')}
           </MyButton>
         </Header>
         <div className="w-full flex gap-3">
@@ -129,11 +129,11 @@ const ShowComplaint = () => {
             <table className="w-full bordered gray">
               <tbody>
                 <tr>
-                  <th className="w-60">{t("type")}</th>
+                  <th className="w-60">{t('type')}</th>
                   <td>{t(`${complaint?.subcategory?.category?.name}`)}</td>
                 </tr>
                 <tr>
-                  <th>{t("category")}</th>
+                  <th>{t('category')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>{complaint?.subcategory?.name}</p>
@@ -144,13 +144,13 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("country")}</th>
+                  <th>{t('country')}</th>
                   <td>
                     {CountrySelect[Number(complaint?.branch?.country_id)]}
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("branch")}</th>
+                  <th>{t('branch')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>{complaint?.branch?.name}</p>
@@ -161,17 +161,17 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("name")}</th>
+                  <th>{t('name')}</th>
                   <td>{complaint?.client_name}</td>
                 </tr>
                 {complaint?.client?.name && (
                   <tr>
-                    <th>{t("author")}</th>
+                    <th>{t('author')}</th>
                     <td>{complaint?.client?.name}</td>
                   </tr>
                 )}
                 <tr>
-                  <th>{t("phone")}</th>
+                  <th>{t('phone')}</th>
                   <td>
                     {complaint?.client_number ? (
                       <Link
@@ -181,17 +181,17 @@ const ShowComplaint = () => {
                         {complaint?.client_number}
                       </Link>
                     ) : (
-                      t("not_given")
+                      t('not_given')
                     )}
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("comments")}</th>
+                  <th>{t('comments')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p
                         style={{
-                          width: "90%",
+                          width: '90%',
                         }}
                       >
                         {complaint?.comment}
@@ -209,12 +209,12 @@ const ShowComplaint = () => {
             <table className="w-full bordered gray">
               <tbody>
                 <tr>
-                  <th className="w-60">{t("status")}</th>
+                  <th className="w-60">{t('status')}</th>
                   <td>{t(OrderStatus[Number(complaint?.status)])}</td>
                 </tr>
                 {com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk] && (
                   <tr>
-                    <th className="w-60">{t("otk_status")}</th>
+                    <th className="w-60">{t('otk_status')}</th>
                     <td>{t(OrderStatus[Number(complaint?.otk_status)])}</td>
                   </tr>
                 )}
@@ -224,18 +224,18 @@ const ShowComplaint = () => {
                 </tr> */}
                 <tr>
                   <th>Изменил:</th>
-                  <td>{complaint?.updated_by || t("not_given")}</td>
+                  <td>{complaint?.updated_by || t('not_given')}</td>
                 </tr>
                 <tr>
                   <th>Дата последнего обновления:</th>
                   <td>
                     {complaint?.updated_at
                       ? dayjs(complaint?.updated_at)?.format(dateTimeFormat)
-                      : t("not_given")}
+                      : t('not_given')}
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("purchase_date")}</th>
+                  <th>{t('purchase_date')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>
@@ -243,7 +243,7 @@ const ShowComplaint = () => {
                           ? dayjs(complaint?.date_purchase).format(
                               dateTimeFormat
                             )
-                          : t("not_given")}
+                          : t('not_given')}
                       </p>
                       <TableViewBtn
                         onClick={handleModal(ModalTypes.edit_purchase_date)}
@@ -252,13 +252,13 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("sending_date")}</th>
+                  <th>{t('sending_date')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>
                         {complaint?.date_return
                           ? dayjs(complaint?.date_return).format(dateTimeFormat)
-                          : t("not_given")}
+                          : t('not_given')}
                       </p>
                       <TableViewBtn
                         onClick={handleModal(ModalTypes.edit_sending_date)}
@@ -267,7 +267,7 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("created_at")}</th>
+                  <th>{t('created_at')}</th>
                   <td>{dayjs(complaint?.created_at).format(dateTimeFormat)}</td>
                 </tr>
                 <tr>
@@ -275,18 +275,18 @@ const ShowComplaint = () => {
                   <td>
                     {!!complaint?.product_name
                       ? complaint?.product_name
-                      : t("not_given")}
+                      : t('not_given')}
                   </td>
                 </tr>
                 <tr>
-                  <th>{t("expence")}</th>
+                  <th>{t('expence')}</th>
                   <td>
-                    {complaint?.expense ? complaint?.expense : t("not_given")}
+                    {complaint?.expense ? complaint?.expense : t('not_given')}
                   </td>
                 </tr>
                 {!!complaint?.deny_reason && (
                   <tr>
-                    <th>{t("deny_reason")}</th>
+                    <th>{t('deny_reason')}</th>
                     <td>{complaint?.deny_reason}</td>
                   </tr>
                 )}
@@ -294,7 +294,7 @@ const ShowComplaint = () => {
             </table>
           </div>
         </div>
-        <Flex className="w-full mt-4" gap={20} flex={"wrap"}>
+        <Flex className="w-full mt-4" gap={20} flex={'wrap'}>
           {/* <div className=""></div> */}
           {renderStampers}
         </Flex>
@@ -308,7 +308,7 @@ const ShowComplaint = () => {
       {!!complaint?.file.length && (
         <Container className="flex justify-end w-full !mt-2">
           <div className="flex flex-col ">
-            <h3 className="font-bold text-xl mb-3">{t("files")}</h3>
+            <h3 className="font-bold text-xl mb-3">{t('files')}</h3>
             <ul>
               {complaint?.file.map((item, idx) => (
                 <li key={idx}>

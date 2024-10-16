@@ -1,12 +1,12 @@
-import { FC } from "react";
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
-import cl from "classnames";
-import { UseFormRegisterReturn } from "react-hook-form";
-import styles from "./index.module.scss";
-import { ru } from "date-fns/locale";
+import { FC } from 'react';
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import cl from 'classnames';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import styles from './index.module.scss';
+import { ru } from 'date-fns/locale';
 
-registerLocale("ru", ru);
-setDefaultLocale("ru");
+registerLocale('ru', ru);
+setDefaultLocale('ru');
 
 interface Props {
   onChange?: any;
@@ -35,7 +35,7 @@ const MainDatePicker: FC<Props> = ({
   const handleClear = () => onChange(undefined);
 
   return (
-    <div className={cl(wrapperClassName, "relative h-[38px]")}>
+    <div className={cl(wrapperClassName, 'relative h-[38px]')}>
       <DatePicker
         selected={selected}
         onChange={onChange}
@@ -43,8 +43,8 @@ const MainDatePicker: FC<Props> = ({
         dateFormat={dateFormat}
         timeIntervals={10}
         showTimeSelect={showTimeSelect}
-        wrapperClassName={cl("w-full h-full !mb-0")}
-        className={cl("form-control", styles.inputBox, className)}
+        wrapperClassName={cl('w-full h-full !mb-0')}
+        className={cl('form-control', styles.inputBox, className)}
         {...register}
       />
 

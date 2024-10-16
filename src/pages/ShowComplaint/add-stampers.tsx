@@ -1,17 +1,17 @@
-import AntdTable from "@/components/AntdTable";
-import { useComplaintV2 } from "@/hooks/complaint";
+import AntdTable from '@/components/AntdTable';
+import { useComplaintV2 } from '@/hooks/complaint';
 import {
   getStamperRoles,
   getStampers,
   handleStampers,
-} from "@/hooks/complaint-stampers";
+} from '@/hooks/complaint-stampers';
 import {
   DeleteOutlined,
   ExclamationCircleOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined,
-} from "@ant-design/icons";
-import { ComplaintStamp } from "@/types/order-details";
+} from '@ant-design/icons';
+import { ComplaintStamp } from '@/types/order-details';
 import {
   Flex,
   Typography,
@@ -21,23 +21,23 @@ import {
   CollapseProps,
   Popconfirm,
   Tooltip,
-} from "antd";
-import { ColumnsType } from "antd/es/table";
-import { ReactNode, useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { PlusCircleOutlined } from "@ant-design/icons";
-import successToast from "@/utils/success-toast";
-import errorToast from "@/utils/error-toast";
-import { useTranslation } from "react-i18next";
-import dayjs from "dayjs";
-import { dateTimeFormat } from "@/utils/helper";
-import TableViewBtn from "@/components/TableViewBtn";
-import { useForm } from "react-hook-form";
-import MainTextArea from "@/components/BaseInputs/MainTextArea";
-import complaintsMutation from "@/hooks/mutations/complaintv2";
-import { baseURL } from "@/api/baseApi";
-import { statusTip } from "@/utils/complaints";
-import { OrderStatus } from "@/utils/types";
+} from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import successToast from '@/utils/success-toast';
+import errorToast from '@/utils/error-toast';
+import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
+import { dateTimeFormat } from '@/utils/helper';
+import TableViewBtn from '@/components/TableViewBtn';
+import { useForm } from 'react-hook-form';
+import MainTextArea from '@/components/BaseInputs/MainTextArea';
+import complaintsMutation from '@/hooks/mutations/complaintv2';
+import { baseURL } from '@/api/baseApi';
+import { statusTip } from '@/utils/complaints';
+import { OrderStatus } from '@/utils/types';
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -68,15 +68,15 @@ const AddStampers = () => {
   const columns = useMemo<ColumnsType<ComplaintStamp>>(
     () => [
       {
-        dataIndex: "role",
+        dataIndex: 'role',
         render: (_, record) => record?.user?.role?.name,
       },
       {
-        dataIndex: "name",
+        dataIndex: 'name',
         render: (_, record) => record?.user?.name,
       },
       {
-        dataIndex: "status",
+        dataIndex: 'status',
         render: (_, record) => (
           <Tooltip placement="topLeft" title={statusTip[Number(record.status)]}>
             {statusObj[Number(record?.status)]}
@@ -84,17 +84,20 @@ const AddStampers = () => {
         ),
       },
       {
-        dataIndex: "action",
+        dataIndex: 'action',
         width: 50,
         render: (_, record) =>
           !DisableAction[record?.status!] && (
             <Popconfirm
               title="Вы действительно хотите удалить этот пользователь?"
               onConfirm={() =>
-                handleStamper({ user_id: record.user_id, is_delete: true })
+                handleStamper({
+                  user_id: record.user_id,
+                  is_delete: true,
+                })
               }
-              okText={t("yes")}
-              cancelText={t("no")}
+              okText={t('yes')}
+              cancelText={t('no')}
             >
               <DeleteOutlined color="red" />
             </Popconfirm>
@@ -143,7 +146,7 @@ const AddStampers = () => {
         onSuccess: () => {
           refetch();
           reset({});
-          successToast("success");
+          successToast('success');
           handleModal();
         },
         onError: (e) => errorToast(e.message),
@@ -163,7 +166,7 @@ const AddStampers = () => {
       {
         onSuccess: () => {
           refetch();
-          successToast("success");
+          successToast('success');
           handleModal();
         },
         onError: (e) => errorToast(e.message),
@@ -171,7 +174,7 @@ const AddStampers = () => {
     );
   };
 
-  const items = useMemo<CollapseProps["items"]>(() => {
+  const items = useMemo<CollapseProps['items']>(() => {
     return stamperRoles?.map((item) => ({
       key: item.id,
       label: item.name,
@@ -207,21 +210,21 @@ const AddStampers = () => {
               <th className="w-60">ОТВЕТ №1</th>
               <td>
                 <Flex justify="space-between">
-                  <p>{orderNew?.first_response || t("not_given")}</p>
+                  <p>{orderNew?.first_response || t('not_given')}</p>
                   <TableViewBtn onClick={() => handleModal(Modals.first_res)} />
                 </Flex>
               </td>
               <td>
                 {orderNew?.second_response_time
                   ? dayjs(orderNew?.first_response_time).format(dateTimeFormat)
-                  : t("not_given")}
+                  : t('not_given')}
               </td>
             </tr>
             <tr>
               <th className="w-60">ОТВЕТ №2</th>
               <td>
                 <Flex justify="space-between">
-                  <p>{orderNew?.second_response || t("not_given")}</p>
+                  <p>{orderNew?.second_response || t('not_given')}</p>
                   <TableViewBtn
                     onClick={() => handleModal(Modals.second_res)}
                   />
@@ -230,7 +233,7 @@ const AddStampers = () => {
               <td>
                 {orderNew?.second_response_time
                   ? dayjs(orderNew?.second_response_time).format(dateTimeFormat)
-                  : t("not_given")}
+                  : t('not_given')}
               </td>
             </tr>
             <tr>
@@ -245,7 +248,7 @@ const AddStampers = () => {
                     file
                   </Link>
                 ) : (
-                  t("not_given")
+                  t('not_given')
                 )}
               </td>
             </tr>
@@ -263,7 +266,7 @@ const AddStampers = () => {
             </button>
           )}
           <Modal
-            title={t("select_role")}
+            title={t('select_role')}
             open={modal === Modals.role}
             onCancel={() => handleModal()}
             loading={isPending || stamperRoleLoading}
@@ -288,13 +291,13 @@ const AddStampers = () => {
           closable
           loading={complainPending}
           onCancel={() => handleModal()}
-          okText={t("yes")}
-          cancelText={t("no")}
-          title={"Введите текст для ответа"}
+          okText={t('yes')}
+          cancelText={t('no')}
+          title={'Введите текст для ответа'}
         >
           <MainTextArea
             className="mt-2"
-            register={register("response_text")}
+            register={register('response_text')}
             placeholder="Введите текст для ответа"
           />
         </Modal>

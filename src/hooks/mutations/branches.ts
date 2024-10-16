@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import baseApi from "@/api/baseApi";
+import { useMutation } from '@tanstack/react-query';
+import baseApi from '@/api/baseApi';
 
 type Body = {
   name?: string;
@@ -11,13 +11,13 @@ type Body = {
 };
 const branchMutation = () => {
   return useMutation({
-    mutationKey: ["branch_mutation"],
+    mutationKey: ['branch_mutation'],
     mutationFn: async (body: Body) => {
       if (body.id) {
-        const { data } = await baseApi.put("/branches", body);
+        const { data } = await baseApi.put('/branches', body);
         return data;
       } else {
-        const { data } = await baseApi.post("/branches", body);
+        const { data } = await baseApi.post('/branches', body);
         return data;
       }
     },

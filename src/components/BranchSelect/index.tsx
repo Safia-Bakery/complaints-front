@@ -1,11 +1,11 @@
-import { FC, FocusEventHandler, useEffect } from "react";
-import Select, { SingleValue } from "react-select";
-import { useState } from "react";
-import useDebounce from "custom/useDebounce";
-import { useNavigateParams } from "custom/useCustomNavigate";
-import useBranches from "@/hooks/useBranches";
-import { BranchJsonVal, SelectValue } from "@/utils/types";
-import useQueryString from "@/hooks/custom/useQueryString";
+import { FC, FocusEventHandler, useEffect } from 'react';
+import Select, { SingleValue } from 'react-select';
+import { useState } from 'react';
+import useDebounce from 'custom/useDebounce';
+import { useNavigateParams } from 'custom/useCustomNavigate';
+import useBranches from '@/hooks/useBranches';
+import { BranchJsonVal, SelectValue } from '@/utils/types';
+import useQueryString from '@/hooks/custom/useQueryString';
 
 interface Props {
   enabled?: boolean;
@@ -16,17 +16,21 @@ interface Props {
 
 const BranchSelect: FC<Props> = ({
   enabled = false,
-  placeholdeer = "",
+  placeholdeer = '',
   autoFocus = false,
   onFocus,
 }) => {
   const navigate = useNavigateParams();
-  const [query, $query] = useDebounce("");
-  const branchJson = useQueryString("branch");
+  const [query, $query] = useDebounce('');
+  const branchJson = useQueryString('branch');
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
 
   const initialVal: SelectValue | undefined = branch?.id
-    ? { value: branch.id, label: branch.name, country_id: +branch.country_id }
+    ? {
+        value: branch.id,
+        label: branch.name,
+        country_id: +branch.country_id,
+      }
     : undefined;
 
   const { data, isFetching, isLoading } = useBranches({

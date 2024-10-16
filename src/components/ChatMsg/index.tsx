@@ -1,10 +1,10 @@
-import { CommunicationType } from "@/utils/types";
-import { Fragment } from "react";
-import Avatar from "../Avatar";
-import dayjs from "dayjs";
-import { dateTimeFormat } from "@/utils/helper";
-import { Link } from "react-router-dom";
-import { baseURL } from "@/api/baseApi";
+import { CommunicationType } from '@/utils/types';
+import { Fragment } from 'react';
+import Avatar from '../Avatar';
+import dayjs from 'dayjs';
+import { dateTimeFormat } from '@/utils/helper';
+import { Link } from 'react-router-dom';
+import { baseURL } from '@/api/baseApi';
 
 type Props = {
   data: CommunicationType[];

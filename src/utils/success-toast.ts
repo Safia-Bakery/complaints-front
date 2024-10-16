@@ -1,4 +1,4 @@
-import { notification } from "antd";
+import { notification } from 'antd';
 
 const successToast = (message: string, description?: string) =>
   notification.success({

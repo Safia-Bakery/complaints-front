@@ -1,13 +1,13 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { Playground } from "@/components/CustomSidebar";
-import Breadcrumb from "@/components/BreadCrump";
-import { useAppDispatch, useAppSelector } from "@/store/rootConfig.ts";
-import { langSelector } from "reducers/selects.ts";
-import { logoutHandler, tokenSelector } from "reducers/auth.ts";
-import useToken from "@/hooks/useToken.ts";
-import { useEffect } from "react";
-import i18n from "@/localization";
-import Loading from "@/components/Loader";
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Playground } from '@/components/CustomSidebar';
+import Breadcrumb from '@/components/BreadCrump';
+import { useAppDispatch, useAppSelector } from '@/store/rootConfig.ts';
+import { langSelector } from 'reducers/selects.ts';
+import { logoutHandler, tokenSelector } from 'reducers/auth.ts';
+import useToken from '@/hooks/useToken.ts';
+import { useEffect } from 'react';
+import i18n from '@/localization';
+import Loading from '@/components/Loader';
 
 const AdminRoutes = () => {
   const lang = useAppSelector(langSelector);
@@ -18,7 +18,7 @@ const AdminRoutes = () => {
   const { error, isLoading, data } = useToken({});
 
   useEffect(() => {
-    if (!token) navigate("/login");
+    if (!token) navigate('/login');
     if (!!error) dispatch(logoutHandler());
   }, [token, error]); //todo
 

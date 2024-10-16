@@ -1,7 +1,7 @@
-import { ChangeEvent, FC, KeyboardEventHandler } from "react";
-import cl from "classnames";
-import styles from "./index.module.scss";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { ChangeEvent, FC, KeyboardEventHandler } from 'react';
+import cl from 'classnames';
+import styles from './index.module.scss';
+import { UseFormRegisterReturn } from 'react-hook-form';
 interface Props {
   onChange?: (val: ChangeEvent<HTMLTextAreaElement>) => void;
   className?: string;
@@ -15,7 +15,7 @@ interface Props {
 
 const MainTextArea: FC<Props> = ({
   className,
-  placeholder = "Комментарии",
+  placeholder = 'Комментарии',
   register,
   ...others
 }) => {
@@ -23,7 +23,7 @@ const MainTextArea: FC<Props> = ({
     <textarea
       className={cl(className, styles.textArea)}
       rows={4}
-      placeholder={placeholder || ""}
+      placeholder={placeholder || ''}
       {...register}
       {...others}
     />

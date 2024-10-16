@@ -1,15 +1,15 @@
-import { Link, useLocation, useParams } from "react-router-dom";
-import styles from "./index.module.scss";
-import { ChangeEvent, FC } from "react";
-import { changeLanguage, langSelector } from "reducers/selects";
-import useToken from "@/hooks/useToken";
-import profileIcon from "/icons/profleIcon.svg";
-import redDot from "/icons/redDot.svg";
+import { Link, useLocation, useParams } from 'react-router-dom';
+import styles from './index.module.scss';
+import { ChangeEvent, FC } from 'react';
+import { changeLanguage, langSelector } from 'reducers/selects';
+import useToken from '@/hooks/useToken';
+import profileIcon from '/icons/profleIcon.svg';
+import redDot from '/icons/redDot.svg';
 
-import { useTranslation } from "react-i18next";
-import { Language } from "@/utils/types";
-import { useAppDispatch, useAppSelector } from "@/store/rootConfig";
-import { logoutHandler } from "@/store/reducers/auth";
+import { useTranslation } from 'react-i18next';
+import { Language } from '@/utils/types';
+import { useAppDispatch, useAppSelector } from '@/store/rootConfig';
+import { logoutHandler } from '@/store/reducers/auth';
 
 interface Breadcrumb {
   path: string;
@@ -31,17 +31,17 @@ const Breadcrumbs: FC = () => {
   const breadcrumbs: Breadcrumb[] = [];
 
   const pathSegments = pathname
-    .split("/")
-    .filter((segment: string) => segment !== "");
+    .split('/')
+    .filter((segment: string) => segment !== '');
 
   pathSegments.reduce((prevPath: string, currentPath: string) => {
     const path = `${prevPath}/${currentPath}`;
-    const name = currentPath || currentPath.replace(/-/g, " ");
+    const name = currentPath || currentPath.replace(/-/g, ' ');
 
     breadcrumbs.push({ path, name });
 
     return path;
-  }, "");
+  }, '');
 
   return (
     <div className={styles.block}>

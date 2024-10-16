@@ -1,8 +1,8 @@
-import { FC, ReactNode } from "react";
-import cl from "classnames";
-import styles from "./index.module.scss";
-import { UseFormRegisterReturn } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { FC, ReactNode } from 'react';
+import cl from 'classnames';
+import styles from './index.module.scss';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onChange?: (val: string) => void;

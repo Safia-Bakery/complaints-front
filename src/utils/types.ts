@@ -19,8 +19,8 @@ export type UserType = {
 };
 
 export enum Language {
-  ru = "ru",
-  uz = "uz",
+  ru = 'ru',
+  uz = 'uz',
 }
 
 export enum ModalTypes {
@@ -62,22 +62,22 @@ export interface BaseItem<T> extends BasePaginatedRes {
 }
 
 export const StatusSelect = {
-  [OrderStatus.new]: "new",
-  [OrderStatus.received]: "received",
-  [OrderStatus.done]: "done",
-  [OrderStatus.denied]: "denied",
-  [OrderStatus.processed]: "processed",
+  [OrderStatus.new]: 'new',
+  [OrderStatus.received]: 'received',
+  [OrderStatus.done]: 'done',
+  [OrderStatus.denied]: 'denied',
+  [OrderStatus.processed]: 'processed',
 };
 
 export enum BtnTypes {
-  green = "green",
-  black = "black",
-  brown = "brown",
-  red = "red",
-  darkBlue = "darkBlue",
-  tgPrimary = "tgPrimary",
-  tgBrown = "tgBrown",
-  tgSelected = "tgSelected",
+  green = 'green',
+  black = 'black',
+  brown = 'brown',
+  red = 'red',
+  darkBlue = 'darkBlue',
+  tgPrimary = 'tgPrimary',
+  tgBrown = 'tgBrown',
+  tgSelected = 'tgSelected',
 }
 
 export interface SelectValues {

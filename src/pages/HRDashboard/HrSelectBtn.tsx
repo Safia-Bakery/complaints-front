@@ -1,5 +1,5 @@
-import cl from "classnames";
-import { ReactNode } from "react";
+import cl from 'classnames';
+import { ReactNode } from 'react';
 
 type Props = {
   className?: string;
@@ -13,7 +13,7 @@ const HrSelectBtn = ({ onClick, className, children }: Props) => {
       onClick={onClick}
       className={cl(
         className,
-        "flex rounded-lg flex-1 bg-mainBlack text-white font-bold justify-center items-center p-2 text-xl"
+        'flex rounded-lg flex-1 bg-mainBlack text-white font-bold justify-center items-center p-2 text-xl'
       )}
     >
       {children}

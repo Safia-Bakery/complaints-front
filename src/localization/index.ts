@@ -1,8 +1,8 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 
-import resources from "./translations";
-import { Language } from "@/utils/types";
+import resources from './translations';
+import { Language } from '@/utils/types';
 
 i18n.use(initReactI18next).init({
   resources,

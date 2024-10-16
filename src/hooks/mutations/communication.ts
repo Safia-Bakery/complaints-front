@@ -1,6 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
-import baseApi from "@/api/baseApi";
-import { imageContentType } from "@/utils/helper";
+import { useMutation } from '@tanstack/react-query';
+import baseApi from '@/api/baseApi';
+import { imageContentType } from '@/utils/helper';
 
 type Body = {
   hrcomplaint_id?: number;
@@ -9,10 +9,10 @@ type Body = {
 };
 const communicationMutation = () => {
   return useMutation({
-    mutationKey: ["communication_mutation"],
+    mutationKey: ['communication_mutation'],
     mutationFn: async (body: Body) => {
-      const { data } = await baseApi.post("/hr/communictation", body, {
-        headers: { "Content-Type": imageContentType },
+      const { data } = await baseApi.post('/hr/communictation', body, {
+        headers: { 'Content-Type': imageContentType },
       });
       return data;
     },

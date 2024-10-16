@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export interface OrderDetails {
   child_category_name: string;
@@ -180,10 +180,10 @@ export interface ComplaintParams {
 }
 
 export const StatusColors: { [key: number]: string } = {
-  1: "#FF0000",
-  2: "#FFEE5B",
-  3: "#31B602",
-  4: "#FFFFFF",
+  1: '#FF0000',
+  2: '#FFEE5B',
+  3: '#31B602',
+  4: '#FFFFFF',
 };
 
 export interface Stampers {

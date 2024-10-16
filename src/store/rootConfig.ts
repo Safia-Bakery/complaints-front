@@ -1,20 +1,20 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {persistReducer, persistStore} from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import reducer from "./reducers/reducers";
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import { configureStore } from '@reduxjs/toolkit';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import reducer from './reducers/reducers';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 const persistConfig = {
-    key: "complaints",
-    storage,
-    whitelist: ["auth", "language"],
+  key: 'complaints',
+  storage,
+  whitelist: ['auth', 'language'],
 };
 export const store = configureStore({
-    reducer: persistReducer(persistConfig, reducer),
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }),
+  reducer: persistReducer(persistConfig, reducer),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const persistor = persistStore(store);

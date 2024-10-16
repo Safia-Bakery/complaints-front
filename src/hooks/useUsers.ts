@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import { BaseItem, UserType } from "@/utils/types";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import { BaseItem, UserType } from '@/utils/types';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
 
 type Body = {
   enabled?: boolean;
@@ -17,10 +17,10 @@ type Body = {
 export const useRoles = ({ enabled = true, ...params }: Body) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["users", params],
+    queryKey: ['users', params],
     queryFn: () =>
       baseApi
-        .get("/users", { params })
+        .get('/users', { params })
         .then(({ data: response }) => response as BaseItem<UserType>),
     enabled: !!token && enabled,
   });

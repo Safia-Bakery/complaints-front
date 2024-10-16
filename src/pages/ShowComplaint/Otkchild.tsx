@@ -1,17 +1,17 @@
-import BaseInput from "@/components/BaseInputs";
-import MainInput from "@/components/BaseInputs/MainInput";
-import MainTextArea from "@/components/BaseInputs/MainTextArea";
-import MyButton from "@/components/Button";
-import Loading from "@/components/Loader";
-import complaintsMutation from "@/hooks/mutations/complaints";
-import useComplaints from "@/hooks/useComplaints";
-import errorToast from "@/utils/error-toast.ts";
-import successToast from "@/utils/success-toast.ts";
-import { BtnTypes, OrderStatus } from "@/utils/types";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
+import BaseInput from '@/components/BaseInputs';
+import MainInput from '@/components/BaseInputs/MainInput';
+import MainTextArea from '@/components/BaseInputs/MainTextArea';
+import MyButton from '@/components/Button';
+import Loading from '@/components/Loader';
+import complaintsMutation from '@/hooks/mutations/complaints';
+import useComplaints from '@/hooks/useComplaints';
+import errorToast from '@/utils/error-toast.ts';
+import successToast from '@/utils/success-toast.ts';
+import { BtnTypes, OrderStatus } from '@/utils/types';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 const Otkchild = () => {
   const { t } = useTranslation();
@@ -37,7 +37,7 @@ const Otkchild = () => {
       {
         onSuccess: () => {
           refetch();
-          successToast("success");
+          successToast('success');
         },
         onError: (e) => errorToast(e.message),
       }
@@ -46,8 +46,8 @@ const Otkchild = () => {
 
   useEffect(() => {
     reset({
-      producer_guilty: complaint?.producer_guilty ? "1" : "0",
-      is_returned: complaint?.is_returned ? "1" : "0",
+      producer_guilty: complaint?.producer_guilty ? '1' : '0',
+      is_returned: complaint?.is_returned ? '1' : '0',
       correcting_details: complaint?.corrections,
       car_number: complaint?.autonumber,
     });
@@ -61,15 +61,15 @@ const Otkchild = () => {
           <table className="w-full bordered gray rounded-xl overflow-hidden">
             <tbody>
               <tr>
-                <th className="w-60">{t("guest_or_shop")}</th>
-                <td>{complaint?.is_client ? t("guest") : t("shop")}</td>
+                <th className="w-60">{t('guest_or_shop')}</th>
+                <td>{complaint?.is_client ? t('guest') : t('shop')}</td>
               </tr>
               <tr>
-                <th className="w-60">{t("car_number")}</th>
+                <th className="w-60">{t('car_number')}</th>
                 <td>
                   <MainInput
                     className="!border-none bg-transparent"
-                    register={register("car_number")}
+                    register={register('car_number')}
                   />
                 </td>
               </tr>
@@ -77,48 +77,48 @@ const Otkchild = () => {
           </table>
 
           <div className="w-full flex justify-between items-center mt-3">
-            <div>{t("who_is_blamer")}</div>
+            <div>{t('who_is_blamer')}</div>
             <div className="rounded-xl bg-[#ECEDEE] flex py-2 px-4 gap-4">
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
-                  value={"1"}
-                  id={"1"}
-                  {...register("producer_guilty")}
+                  value={'1'}
+                  id={'1'}
+                  {...register('producer_guilty')}
                 />
-                {t("yes")}
+                {t('yes')}
               </label>
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
-                  value={"0"}
-                  id={"0"}
-                  {...register("producer_guilty")}
+                  value={'0'}
+                  id={'0'}
+                  {...register('producer_guilty')}
                 />
-                {t("no")}
+                {t('no')}
               </label>
             </div>
           </div>
           <div className="w-full flex justify-between items-center mt-1">
-            <div>{t("is_product_returned")}</div>
+            <div>{t('is_product_returned')}</div>
             <div className="rounded-xl bg-[#ECEDEE] flex py-2 px-4 gap-4">
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
-                  value={"1"}
-                  id={"1"}
-                  {...register("is_returned")}
+                  value={'1'}
+                  id={'1'}
+                  {...register('is_returned')}
                 />
-                {t("yes")}
+                {t('yes')}
               </label>
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
-                  value={"0"}
-                  id={"0"}
-                  {...register("is_returned")}
+                  value={'0'}
+                  id={'0'}
+                  {...register('is_returned')}
                 />
-                {t("no")}
+                {t('no')}
               </label>
             </div>
           </div>
@@ -127,8 +127,8 @@ const Otkchild = () => {
           <BaseInput label="correcting_actions">
             <MainTextArea
               className="!bg-[#ECEDEE]"
-              placeholder={t("correcting_actions")}
-              register={register("correcting_details")}
+              placeholder={t('correcting_actions')}
+              register={register('correcting_details')}
             />
           </BaseInput>
         </div>
@@ -141,7 +141,7 @@ const Otkchild = () => {
             disabled={isPending}
             btnType={BtnTypes.black}
           >
-            {t("to_proccess")}
+            {t('to_proccess')}
           </MyButton>
         )}
       </div>

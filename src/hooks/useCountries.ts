@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import { BaseItem, CountryType } from "@/utils/types";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
-import { EPresetTimes } from "@/utils/helper";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import { BaseItem, CountryType } from '@/utils/types';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
+import { EPresetTimes } from '@/utils/helper';
 
 type Params = {
   id?: number;
@@ -21,10 +21,10 @@ export const useCountries = ({
 }: Params) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["country", params],
+    queryKey: ['country', params],
     queryFn: () =>
       baseApi
-        .get("/country", { params })
+        .get('/country', { params })
         .then(({ data: response }) => response as BaseItem<CountryType>),
     enabled: !!token && enabled,
     staleTime,

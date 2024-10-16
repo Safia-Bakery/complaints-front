@@ -1,5 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import baseApi from "@/api/baseApi";
+import { useMutation } from '@tanstack/react-query';
+import baseApi from '@/api/baseApi';
 
 type Body = {
   name?: string;
@@ -13,13 +13,13 @@ type Body = {
 };
 const countriesMutation = () => {
   return useMutation({
-    mutationKey: ["country_mutation"],
+    mutationKey: ['country_mutation'],
     mutationFn: async (body: Body) => {
       if (body.id) {
-        const { data } = await baseApi.put("/country", body);
+        const { data } = await baseApi.put('/country', body);
         return data;
       } else {
-        const { data } = await baseApi.post("/country", body);
+        const { data } = await baseApi.post('/country', body);
         return data;
       }
     },

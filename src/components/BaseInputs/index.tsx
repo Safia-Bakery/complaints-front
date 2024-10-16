@@ -1,8 +1,8 @@
-import { FC, ReactNode } from "react";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
-import styles from "./index.module.scss";
-import cl from "classnames";
-import { useTranslation } from "react-i18next";
+import { FC, ReactNode } from 'react';
+import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import styles from './index.module.scss';
+import cl from 'classnames';
+import { useTranslation } from 'react-i18next';
 
 interface BaseProps {
   label?: string;
@@ -14,7 +14,7 @@ interface BaseProps {
 
 const BaseInput: FC<BaseProps> = ({
   label,
-  className = "",
+  className = '',
   error,
   children,
   labelClassName,

@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../rootConfig";
-import { CURRENT_VERSION } from "@/utils/version";
-import successToast from "@/utils/success-toast.ts";
+import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from '../rootConfig';
+import { CURRENT_VERSION } from '@/utils/version';
+import successToast from '@/utils/success-toast.ts';
 interface State {
   version: string | null;
 }
@@ -11,13 +11,13 @@ const initialState: State = {
 };
 
 export const versionCheckReducer = createSlice({
-  name: "version",
+  name: 'version',
   initialState,
   reducers: {
     versionHandler: (state) => {
       if (state.version !== CURRENT_VERSION) {
         state.version = CURRENT_VERSION;
-        successToast("version updated");
+        successToast('version updated');
         window.location.reload();
       }
     },

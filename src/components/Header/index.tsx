@@ -1,8 +1,8 @@
-import { FC, PropsWithChildren } from "react";
-import styles from "./index.module.scss";
-import cl from "classnames";
-import { useLocation } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { FC, PropsWithChildren } from 'react';
+import styles from './index.module.scss';
+import cl from 'classnames';
+import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface Props extends PropsWithChildren {
   title?: string;

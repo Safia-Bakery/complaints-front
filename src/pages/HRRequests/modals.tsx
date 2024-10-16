@@ -1,29 +1,29 @@
-import Loading from "@/components/Loader";
-import useQueryString from "@/hooks/custom/useQueryString";
+import Loading from '@/components/Loader';
+import useQueryString from '@/hooks/custom/useQueryString';
 
-import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import arrow from "/icons/arrow-black.svg";
-import arrowWhite from "/icons/arrow-white.svg";
-import sendIcon from "/icons/send.svg";
-import attached from "/icons/attached.svg";
-import Modal from "@/components/Modal";
+import arrow from '/icons/arrow-black.svg';
+import arrowWhite from '/icons/arrow-white.svg';
+import sendIcon from '/icons/send.svg';
+import attached from '/icons/attached.svg';
+import Modal from '@/components/Modal';
 import {
   useNavigateParams,
   useRemoveParams,
-} from "@/hooks/custom/useCustomNavigate";
-import useHRClients from "@/hooks/useHRClients";
-import Avatar from "@/components/Avatar";
-import useCommunications from "@/hooks/useCommunications";
-import MainTextArea from "@/components/BaseInputs/MainTextArea";
-import { Fragment, useEffect } from "react";
-import ChatMsg from "@/components/ChatMsg";
-import { useForm } from "react-hook-form";
-import communicationMutation from "@/hooks/mutations/communication";
+} from '@/hooks/custom/useCustomNavigate';
+import useHRClients from '@/hooks/useHRClients';
+import Avatar from '@/components/Avatar';
+import useCommunications from '@/hooks/useCommunications';
+import MainTextArea from '@/components/BaseInputs/MainTextArea';
+import { Fragment, useEffect } from 'react';
+import ChatMsg from '@/components/ChatMsg';
+import { useForm } from 'react-hook-form';
+import communicationMutation from '@/hooks/mutations/communication';
 
 const resetData = {
-  msg_text: "",
+  msg_text: '',
   msg_file: null,
 };
 
@@ -31,15 +31,15 @@ const HRRequestModals = () => {
   const { hrdep, sphere } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const page = Number(useQueryString("page")) || 1;
-  const chat_modal = Number(useQueryString("chat_modal"));
-  const chat = Number(useQueryString("chat"));
+  const page = Number(useQueryString('page')) || 1;
+  const chat_modal = Number(useQueryString('chat_modal'));
+  const chat = Number(useQueryString('chat'));
   const removeParam = useRemoveParams();
   const navigateParam = useNavigateParams();
 
   const { mutate: sendMsg, isPending } = communicationMutation();
   const { register, getValues, reset } = useForm();
-  const closeModal = () => removeParam(["chat_modal", "chat"]);
+  const closeModal = () => removeParam(['chat_modal', 'chat']);
 
   const {
     data: communication,
@@ -94,14 +94,14 @@ const HRRequestModals = () => {
       onClose={closeModal}
       loading={clientsloading || commLoading || isPending}
       classNames={{
-        content: "!p-0 !rounded-xl overflow-hidden",
+        content: '!p-0 !rounded-xl overflow-hidden',
       }}
     >
       <div className="h-full flex flex-col ">
         <div className="w-full p-3 bg-green-700 rounded-t-xl relative">
           {!chat ? (
             <div className="flex items-center justify-center h-10">
-              <h3 className="text-white">{t("chat")}</h3>
+              <h3 className="text-white">{t('chat')}</h3>
             </div>
           ) : (
             <div className="flex gap-2 items-center justify-between">
@@ -147,7 +147,7 @@ const HRRequestModals = () => {
               <div className="flex">
                 <MainTextArea
                   className="!border-none flex flex-1 overflow-scroll"
-                  register={register("msg_text")}
+                  register={register('msg_text')}
                 />
 
                 <div className="flex gap-2 pr-2 ml-2">
@@ -155,7 +155,7 @@ const HRRequestModals = () => {
                     <img src={attached} alt="send" />
                     <input
                       type="file"
-                      {...register("msg_file")}
+                      {...register('msg_file')}
                       className="opacity-0 absolute inset-0 cursor-pointer"
                     />
                   </button>

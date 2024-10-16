@@ -6,10 +6,10 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import styles from "./index.module.scss";
-import { useTranslation } from "react-i18next";
+} from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import styles from './index.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onChange?: (val: ChangeEvent<HTMLInputElement>) => void;
@@ -27,8 +27,8 @@ interface Props {
 }
 
 const MainInput: FC<Props> = ({
-  className = "",
-  placeholder = "",
+  className = '',
+  placeholder = '',
   register,
   ref,
   defaultValue,
@@ -47,7 +47,7 @@ const MainInput: FC<Props> = ({
   return (
     <input
       className={`${className} ${styles.inputBox}`}
-      placeholder={t(placeholder || "")}
+      placeholder={t(placeholder || '')}
       ref={ref}
       onFocus={handleFocus}
       // @ts-ignore

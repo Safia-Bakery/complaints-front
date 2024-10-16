@@ -1,25 +1,25 @@
-import BaseInputs from "@/components/BaseInputs";
-import MainCheckBox from "@/components/BaseInputs/MainCheckBox";
-import MainInput from "@/components/BaseInputs/MainInput";
-import MainSelect from "@/components/BaseInputs/MainSelect";
-import MyButton from "@/components/Button";
-import Container from "@/components/Container";
-import Loading from "@/components/Loader";
-import userMutation from "@/hooks/mutations/user";
-import useRoles from "@/hooks/useRoles";
-import useUsers from "@/hooks/useUsers";
-import { fixedString } from "@/utils/helper";
-import errorToast from "@/utils/error-toast.ts";
-import { DeleteOutlined } from "@ant-design/icons";
-import successToast from "@/utils/success-toast.ts";
-import { BtnTypes, ModalTypes } from "@/utils/types";
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { useNavigate, useParams } from "react-router-dom";
-import UploadImages from "@/web-ui/components/upload-images";
-import { useAppDispatch, useAppSelector } from "@/store/rootConfig.ts";
-import { clearImages, imageSelector, uploadImage } from "reducers/images.ts";
+import BaseInputs from '@/components/BaseInputs';
+import MainCheckBox from '@/components/BaseInputs/MainCheckBox';
+import MainInput from '@/components/BaseInputs/MainInput';
+import MainSelect from '@/components/BaseInputs/MainSelect';
+import MyButton from '@/components/Button';
+import Container from '@/components/Container';
+import Loading from '@/components/Loader';
+import userMutation from '@/hooks/mutations/user';
+import useRoles from '@/hooks/useRoles';
+import useUsers from '@/hooks/useUsers';
+import { fixedString } from '@/utils/helper';
+import errorToast from '@/utils/error-toast.ts';
+import { DeleteOutlined } from '@ant-design/icons';
+import successToast from '@/utils/success-toast.ts';
+import { BtnTypes, ModalTypes } from '@/utils/types';
+import { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import UploadImages from '@/web-ui/components/upload-images';
+import { useAppDispatch, useAppSelector } from '@/store/rootConfig.ts';
+import { clearImages, imageSelector, uploadImage } from 'reducers/images.ts';
 
 const EditAddUser = () => {
   const { t } = useTranslation();
@@ -75,12 +75,12 @@ const EditAddUser = () => {
       {
         onSuccess: () => {
           goBack();
-          successToast(!id ? "created" : "updated");
+          successToast(!id ? 'created' : 'updated');
           refetch();
           if (!!user_images?.length)
             dispatch(
               clearImages({
-                key: "user_images",
+                key: 'user_images',
               })
             );
         },
@@ -94,7 +94,7 @@ const EditAddUser = () => {
       if (!!user?.stamp) {
         dispatch(
           uploadImage({
-            key: "user_images",
+            key: 'user_images',
             value: [{ file_name: user.stamp }],
           })
         );
@@ -115,7 +115,7 @@ const EditAddUser = () => {
       if (!!user_images?.length) {
         dispatch(
           clearImages({
-            key: "user_images",
+            key: 'user_images',
           })
         );
       }
@@ -128,7 +128,7 @@ const EditAddUser = () => {
     <Container>
       <div className="flex justify-end">
         <MyButton onClick={() => navigate(-1)} btnType={BtnTypes.black}>
-          {t("back")}
+          {t('back')}
         </MyButton>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
@@ -136,24 +136,24 @@ const EditAddUser = () => {
           <div className="flex flex-1 flex-col gap-3">
             <BaseInputs label="name" error={errors.name}>
               <MainInput
-                register={register("name", {
-                  required: t("required_field"),
+                register={register('name', {
+                  required: t('required_field'),
                 })}
               />
             </BaseInputs>
 
             <BaseInputs label="login" error={errors.username}>
               <MainInput
-                register={register("username", {
-                  required: t("required_field"),
+                register={register('username', {
+                  required: t('required_field'),
                 })}
               />
             </BaseInputs>
 
             <BaseInputs label="password" error={errors.password}>
               <MainInput
-                register={register("password", {
-                  required: t("required_field"),
+                register={register('password', {
+                  required: t('required_field'),
                 })}
               />
             </BaseInputs>
@@ -171,28 +171,28 @@ const EditAddUser = () => {
             <BaseInputs label="role" error={errors.role_id}>
               <MainSelect
                 values={roles?.items}
-                register={register("role_id", {
-                  required: t("required_field"),
+                register={register('role_id', {
+                  required: t('required_field'),
                 })}
               />
             </BaseInputs>
             <BaseInputs label="phone_number" error={errors.phone_number}>
               <MainInput
-                register={register("phone_number", {
-                  required: t("required_field"),
+                register={register('phone_number', {
+                  required: t('required_field'),
                 })}
               />
             </BaseInputs>
             <BaseInputs label="telegram_id">
-              <MainInput register={register("telegram_id")} />
+              <MainInput register={register('telegram_id')} />
             </BaseInputs>
             <BaseInputs label="status">
-              <MainCheckBox label={"active"} register={register("status")} />
+              <MainCheckBox label={'active'} register={register('status')} />
             </BaseInputs>
           </div>
         </div>
         <MyButton htmlType="submit" btnType={BtnTypes.black}>
-          {t("save")}
+          {t('save')}
         </MyButton>
       </form>
     </Container>

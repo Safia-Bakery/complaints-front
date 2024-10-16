@@ -1,9 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import { BaseItem, CategoriesType } from "@/utils/types";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
-import { EPresetTimes } from "@/utils/helper";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import { BaseItem, CategoriesType } from '@/utils/types';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
+import { EPresetTimes } from '@/utils/helper';
 
 type Params = {
   id?: number;
@@ -19,10 +19,10 @@ export const useCategories = ({
 }: Params) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["category", params],
+    queryKey: ['category', params],
     queryFn: () =>
       baseApi
-        .get("/category", { params })
+        .get('/category', { params })
         .then(({ data: response }) => response as CategoriesType[]),
     enabled: !!token && enabled,
     staleTime,

@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
-import { ComplaintRes } from "@/types/order-details";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
+import { ComplaintRes } from '@/types/order-details';
 
 export type ComplaintsParams = {
   enabled?: boolean;
@@ -15,7 +15,7 @@ export const useComplaintV2 = ({
 }: ComplaintsParams) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["complaint", complaint_id],
+    queryKey: ['complaint', complaint_id],
     queryFn: () =>
       baseApi
         .get(`/api/v2/complaints/${complaint_id}/`)

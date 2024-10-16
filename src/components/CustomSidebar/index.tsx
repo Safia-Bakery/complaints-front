@@ -1,102 +1,102 @@
-import { FC, Fragment, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import cl from "classnames";
-import { Sidebar, Menu, MenuItem, MenuItemStyles } from "react-pro-sidebar";
-import { useTranslation } from "react-i18next";
-import styles from "./index.module.scss";
-import "./index.scss";
-import safiaLogo from "/images/safia-logo.png";
-import arrow from "/icons/whiteArrow.svg";
+import { FC, Fragment, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import cl from 'classnames';
+import { Sidebar, Menu, MenuItem, MenuItemStyles } from 'react-pro-sidebar';
+import { useTranslation } from 'react-i18next';
+import styles from './index.module.scss';
+import './index.scss';
+import safiaLogo from '/images/safia-logo.png';
+import arrow from '/icons/whiteArrow.svg';
 import {
   ComplaintsSpheres as ComSpheres,
   HRSpheres,
   Permissions,
-} from "@/utils/types";
-import useToken from "@/hooks/useToken";
+} from '@/utils/types';
+import useToken from '@/hooks/useToken';
 
 const routes = [
   {
-    name: "dashboard",
-    url: "/dashboard",
-    icon: "/icons/dashboard.svg",
-    activeIcon: "/icons/dashboard-active.svg",
+    name: 'dashboard',
+    url: '/dashboard',
+    icon: '/icons/dashboard.svg',
+    activeIcon: '/icons/dashboard-active.svg',
     screen: Permissions.dashboard_stats,
   },
   {
-    name: "complaints",
+    name: 'complaints',
     url: `/complaints/${ComSpheres[ComSpheres.is_client]}`,
-    icon: "/icons/complaints.svg",
-    activeIcon: "/icons/complaints-active.svg",
+    icon: '/icons/complaints.svg',
+    activeIcon: '/icons/complaints-active.svg',
     screen: Permissions.get_complaints,
   },
   {
-    name: "inside-cmp",
+    name: 'inside-cmp',
     url: `/complaints/${ComSpheres[ComSpheres.is_internal]}`,
-    icon: "/icons/inside-complaints.svg",
-    activeIcon: "/icons/inside-complaints-active.svg",
+    icon: '/icons/inside-complaints.svg',
+    activeIcon: '/icons/inside-complaints-active.svg',
     screen: Permissions.get_internal_complaints,
   },
   {
-    name: "comments",
-    url: "/reviews",
-    icon: "/icons/comments.svg",
-    activeIcon: "/icons/comments-active.svg",
+    name: 'comments',
+    url: '/reviews',
+    icon: '/icons/comments.svg',
+    activeIcon: '/icons/comments-active.svg',
     screen: Permissions.get_reviews,
   },
   {
-    name: "ДКК",
+    name: 'ДКК',
     url: `/complaints/${ComSpheres[ComSpheres.otk]}`,
-    icon: "/icons/okk.svg",
-    activeIcon: "/icons/okk-active.svg",
+    icon: '/icons/okk.svg',
+    activeIcon: '/icons/okk-active.svg',
     screen: Permissions.get_okk,
   },
   {
-    name: "hr-fabric",
+    name: 'hr-fabric',
     url: `/hr-dashboard/${HRSpheres[HRSpheres.fabric]}`,
-    icon: "/icons/hr.svg",
-    activeIcon: "/icons/hr-active.svg",
+    icon: '/icons/hr.svg',
+    activeIcon: '/icons/hr-active.svg',
     screen: Permissions.get_hr_fabric,
   },
   {
-    name: "hr-retail",
+    name: 'hr-retail',
     url: `/hr-dashboard/${HRSpheres[HRSpheres.retail]}`,
-    icon: "/icons/hr.svg",
-    activeIcon: "/icons/hr-active.svg",
+    icon: '/icons/hr.svg',
+    activeIcon: '/icons/hr-active.svg',
     screen: Permissions.get_hr_retail,
   },
   {
-    name: "users",
-    url: "/users",
-    icon: "/icons/users.svg",
-    activeIcon: "/icons/users-active.svg",
+    name: 'users',
+    url: '/users',
+    icon: '/icons/users.svg',
+    activeIcon: '/icons/users-active.svg',
     screen: Permissions.get_users,
   },
   {
-    name: "positions",
-    url: "/roles",
-    icon: "/icons/positions.svg",
-    activeIcon: "/icons/positions-active.svg",
+    name: 'positions',
+    url: '/roles',
+    icon: '/icons/positions.svg',
+    activeIcon: '/icons/positions-active.svg',
     screen: Permissions.get_roles,
   },
   {
-    name: "branches",
-    url: "/branches",
-    icon: "/icons/location.svg",
-    activeIcon: "/icons/location-active.svg",
+    name: 'branches',
+    url: '/branches',
+    icon: '/icons/location.svg',
+    activeIcon: '/icons/location-active.svg',
     screen: Permissions.get_branches,
   },
   {
-    name: "countries",
-    url: "/countries",
-    icon: "/icons/location.svg",
-    activeIcon: "/icons/location-active.svg",
+    name: 'countries',
+    url: '/countries',
+    icon: '/icons/location.svg',
+    activeIcon: '/icons/location-active.svg',
     screen: Permissions.get_countries,
   },
   {
-    name: "categories",
-    url: "/categories",
-    icon: "/icons/location.svg",
-    activeIcon: "/icons/location-active.svg",
+    name: 'categories',
+    url: '/categories',
+    icon: '/icons/location.svg',
+    activeIcon: '/icons/location-active.svg',
     screen: Permissions.get_categories,
   },
 ];
@@ -110,11 +110,11 @@ export const Playground: FC = () => {
 
   const menuItemStyles: MenuItemStyles = {
     root: {
-      fontSize: "13px",
+      fontSize: '13px',
       fontWeight: 400,
     },
     SubMenuExpandIcon: {
-      color: "#b6b7b9",
+      color: '#b6b7b9',
     },
     label: ({ open }) => ({
       fontWeight: open ? 600 : undefined,
@@ -135,7 +135,7 @@ export const Playground: FC = () => {
         rtl={false}
         collapsed={!collapsed}
         breakPoint="md"
-        backgroundColor={"rgba(21, 28, 40, 0.8)"}
+        backgroundColor={'rgba(21, 28, 40, 0.8)'}
       >
         <div className="flex flex-col h-full relative">
           <div className="flex-1">
@@ -145,8 +145,8 @@ export const Playground: FC = () => {
             <button
               onClick={handleSidebar}
               className={cl(
-                "rounded-full w-8 h-8 bg-black shadow-xl absolute top-16 -right-4 transition-transform delay-300",
-                { ["rotate-180"]: !collapsed }
+                'rounded-full w-8 h-8 bg-black shadow-xl absolute top-16 -right-4 transition-transform delay-300',
+                { ['rotate-180']: !collapsed }
               )}
             >
               <img src={arrow} alt="" className="m-auto" />

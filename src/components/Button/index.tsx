@@ -1,16 +1,16 @@
-import cl from "classnames";
-import styles from "./index.module.scss";
-import { ReactNode } from "react";
-import { BtnTypes } from "@/utils/types";
-import { Button, ButtonProps } from "antd";
-import { BaseButtonProps } from "antd/es/button/button";
+import cl from 'classnames';
+import styles from './index.module.scss';
+import { ReactNode } from 'react';
+import { BtnTypes } from '@/utils/types';
+import { Button, ButtonProps } from 'antd';
+import { BaseButtonProps } from 'antd/es/button/button';
 
 interface Props extends BaseButtonProps {
   green?: boolean;
   className?: string;
   children: ReactNode;
   onClick?: () => void;
-  htmlType?: "submit" | "reset" | "button";
+  htmlType?: 'submit' | 'reset' | 'button';
   btnType?: BtnTypes;
   disabled?: boolean;
 }
@@ -18,7 +18,7 @@ interface Props extends BaseButtonProps {
 const MyButton = ({
   green,
   children,
-  className = "",
+  className = '',
   htmlType,
   btnType = BtnTypes.black,
   ...others

@@ -1,13 +1,13 @@
-import { DatePicker, ConfigProvider } from "antd";
-import ruRU from "antd/lib/locale/ru_RU";
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
+import { DatePicker, ConfigProvider } from 'antd';
+import ruRU from 'antd/lib/locale/ru_RU';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
 
 // @ts-ignore
-import { SharedPickerProps } from "rc-picker/lib/interface";
-import { dateTimeFormat } from "@/utils/helper.ts";
+import { SharedPickerProps } from 'rc-picker/lib/interface';
+import { dateTimeFormat } from '@/utils/helper.ts';
 
-dayjs.locale("ru");
+dayjs.locale('ru');
 
 const TgDatepicker = (props: SharedPickerProps) => {
   return (
@@ -24,10 +24,10 @@ const TgDatepicker = (props: SharedPickerProps) => {
             cellHeight: 20,
             zIndexPopup: 9,
             withoutTimeCellHeight: 50,
-            colorPrimary: "#DCC38B",
+            colorPrimary: '#DCC38B',
           },
           Button: {
-            colorPrimary: "#DCC38B",
+            colorPrimary: '#DCC38B',
           },
         },
       }}

@@ -1,8 +1,8 @@
-import cl from "classnames";
-import styles from "./index.module.scss";
-import { FC } from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import cl from 'classnames';
+import styles from './index.module.scss';
+import { FC } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   onChange?: (val: boolean) => void;
@@ -21,7 +21,7 @@ const MainRadioBtns: FC<Props> = ({ values, register, className }) => {
       className={cl(
         styles.inputBox,
         className,
-        "bg-white !flex flex-wrap gap-4"
+        'bg-white !flex flex-wrap gap-4'
       )}
     >
       {values?.map((item) => (

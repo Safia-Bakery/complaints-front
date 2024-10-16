@@ -16,7 +16,7 @@
   --mainGreen: #0da06a;
   --tgPrimary: #dcc38b;
   --tgBrown: #bea087;
-  --tgSelected: #AAC183
+  --tgSelected: #aac183;
 }
 
 * {
@@ -114,7 +114,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 

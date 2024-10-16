@@ -1,24 +1,24 @@
-import Container from "@/components/Container";
-import Loading from "@/components/Loader";
-import TableViewBtn from "@/components/TableViewBtn";
-import useQueryString from "@/hooks/custom/useQueryString";
-import useHRRequests from "@/hooks/useHRRequests";
-import { HRStatusOBJ, handleIdx } from "@/utils/helper";
-import { BtnTypes, HRDeps, HRRequest, HRSpheres } from "@/utils/types";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import chatIcon from "/icons/chat.svg";
+import Container from '@/components/Container';
+import Loading from '@/components/Loader';
+import TableViewBtn from '@/components/TableViewBtn';
+import useQueryString from '@/hooks/custom/useQueryString';
+import useHRRequests from '@/hooks/useHRRequests';
+import { HRStatusOBJ, handleIdx } from '@/utils/helper';
+import { BtnTypes, HRDeps, HRRequest, HRSpheres } from '@/utils/types';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import chatIcon from '/icons/chat.svg';
 
-import HRRequestModals from "./modals";
-import MyButton from "@/components/Button";
-import AntdTable from "@/components/AntdTable";
-import { ColumnsType } from "antd/es/table";
+import HRRequestModals from './modals';
+import MyButton from '@/components/Button';
+import AntdTable from '@/components/AntdTable';
+import { ColumnsType } from 'antd/es/table';
 
 const HRRequests = () => {
   const { hrdep, sphere } = useParams();
   const { t } = useTranslation();
-  const page = Number(useQueryString("page")) || 1;
+  const page = Number(useQueryString('page')) || 1;
   const navigate = useNavigate();
 
   const { data, isLoading } = useHRRequests({
@@ -31,37 +31,37 @@ const HRRequests = () => {
     () => [
       {
         render: (_, r, index) => handleIdx(index),
-        title: "№",
+        title: '№',
         width: 50,
       },
 
       {
-        dataIndex: "hrclient.name",
-        title: t("user"),
+        dataIndex: 'hrclient.name',
+        title: t('user'),
 
         render: (_, record) => record.hrclient.name,
       },
 
       {
-        dataIndex: "complaint",
-        title: t("question"),
+        dataIndex: 'complaint',
+        title: t('question'),
       },
 
       {
-        dataIndex: "hrcategory.name",
-        title: t("category"),
+        dataIndex: 'hrcategory.name',
+        title: t('category'),
         render: (_, record) => record.hrcategory?.name,
       },
       {
-        dataIndex: "status",
-        title: t("status"),
+        dataIndex: 'status',
+        title: t('status'),
 
         render: (_, record) =>
           !!record?.status?.toString() && t(HRStatusOBJ[record.status]),
       },
       {
-        dataIndex: "chat",
-        title: t("chat"),
+        dataIndex: 'chat',
+        title: t('chat'),
         width: 50,
         render: (_, record) => (
           <Link
@@ -73,8 +73,8 @@ const HRRequests = () => {
         ),
       },
       {
-        dataIndex: "action",
-        title: t(""),
+        dataIndex: 'action',
+        title: t(''),
         width: 50,
         render: (_, record) => (
           <Link
@@ -101,13 +101,13 @@ const HRRequests = () => {
     <Container>
       <div className="flex justify-end mb-2 gap-2">
         <MyButton onClick={() => navigate(-1)} btnType={BtnTypes.black}>
-          {t("back")}
+          {t('back')}
         </MyButton>
       </div>
       <AntdTable
         columns={columns}
         data={data?.items}
-        rowClassName={"text-center"}
+        rowClassName={'text-center'}
       />
 
       {renderModal}

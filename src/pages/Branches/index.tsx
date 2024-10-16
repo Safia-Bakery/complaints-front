@@ -1,23 +1,23 @@
-import Container from "@/components/Container";
-import Loading from "@/components/Loader";
-import TableViewBtn from "@/components/TableViewBtn";
-import useQueryString from "@/hooks/custom/useQueryString";
-import { handleIdx } from "@/utils/helper";
-import { BranchType, BtnTypes } from "@/utils/types";
-import { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
-import MyButton from "@/components/Button";
-import useBranches from "@/hooks/useBranches";
-import AntdTable from "@/components/AntdTable";
-import Table, { ColumnsType } from "antd/es/table";
-import BranchFilter from "./filter";
+import Container from '@/components/Container';
+import Loading from '@/components/Loader';
+import TableViewBtn from '@/components/TableViewBtn';
+import useQueryString from '@/hooks/custom/useQueryString';
+import { handleIdx } from '@/utils/helper';
+import { BranchType, BtnTypes } from '@/utils/types';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+import MyButton from '@/components/Button';
+import useBranches from '@/hooks/useBranches';
+import AntdTable from '@/components/AntdTable';
+import Table, { ColumnsType } from 'antd/es/table';
+import BranchFilter from './filter';
 
 const Branches = () => {
   const { t } = useTranslation();
-  const page = Number(useQueryString("page")) || 1;
-  const name = useQueryString("name");
-  const status = useQueryString("status");
+  const page = Number(useQueryString('page')) || 1;
+  const name = useQueryString('name');
+  const status = useQueryString('status');
   const navigate = useNavigate();
 
   const { data, isLoading } = useBranches({
@@ -31,25 +31,25 @@ const Branches = () => {
     () => [
       {
         render: (_, r, index) => handleIdx(index),
-        title: "№",
+        title: '№',
         width: 50,
-        className: "!p-0",
+        className: '!p-0',
       },
 
       {
-        dataIndex: "name",
-        title: t("name_table"),
+        dataIndex: 'name',
+        title: t('name_table'),
       },
       {
-        title: t("status"),
-        dataIndex: "status",
-        render: (_, record) => (!!record.status ? t("active") : t("inactive")),
+        title: t('status'),
+        dataIndex: 'status',
+        render: (_, record) => (!!record.status ? t('active') : t('inactive')),
       },
       {
-        dataIndex: "action",
-        title: "",
+        dataIndex: 'action',
+        title: '',
         width: 50,
-        className: "!p-1",
+        className: '!p-1',
         render: (_, record) => (
           <Link className="w-18" to={`${record.id}`}>
             <TableViewBtn />
@@ -62,7 +62,7 @@ const Branches = () => {
 
   const renderFilter = useMemo(() => {
     return (
-      <Table.Summary fixed={"top"}>
+      <Table.Summary fixed={'top'}>
         <Table.Summary.Row>
           <BranchFilter />
         </Table.Summary.Row>
@@ -81,7 +81,7 @@ const Branches = () => {
             onClick={() => navigate(`add?page=${page}`)}
             btnType={BtnTypes.black}
           >
-            {t("add")}
+            {t('add')}
           </MyButton>
         </div>
       </div>
@@ -89,7 +89,7 @@ const Branches = () => {
       <AntdTable
         columns={columns}
         data={data?.items}
-        rowClassName={"text-center"}
+        rowClassName={'text-center'}
         totalItems={data?.total}
         summary={() => renderFilter}
       />

@@ -1,8 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { tokenSelector } from "reducers/auth";
-import { BaseItem, CategoriesType, HRSpheres } from "@/utils/types";
-import baseApi from "@/api/baseApi";
-import { useAppSelector } from "@/store/rootConfig";
+import { useQuery } from '@tanstack/react-query';
+import { tokenSelector } from 'reducers/auth';
+import { BaseItem, CategoriesType, HRSpheres } from '@/utils/types';
+import baseApi from '@/api/baseApi';
+import { useAppSelector } from '@/store/rootConfig';
 
 type Params = {
   id?: number;
@@ -14,10 +14,10 @@ type Params = {
 export const useHrCategories = ({ enabled = true, ...params }: Params) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ["hr-category", params],
+    queryKey: ['hr-category', params],
     queryFn: () =>
       baseApi
-        .get("/hr/category", { params })
+        .get('/hr/category', { params })
         .then(({ data: response }) => response as BaseItem<CategoriesType>),
     enabled: !!token && enabled,
   });

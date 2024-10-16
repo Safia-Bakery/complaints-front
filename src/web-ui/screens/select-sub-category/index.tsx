@@ -1,11 +1,11 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import useSubCategories from "@/hooks/useSubCategories.ts";
-import Loading from "@/components/Loader";
-import { Flex } from "antd";
-import Button from "@/components/Button";
-import { BtnTypes } from "@/utils/types.ts";
-import TgContainer from "@/web-ui/components/tg-container";
-import { useEffect } from "react";
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import useSubCategories from '@/hooks/useSubCategories.ts';
+import Loading from '@/components/Loader';
+import { Flex } from 'antd';
+import Button from '@/components/Button';
+import { BtnTypes } from '@/utils/types.ts';
+import TgContainer from '@/web-ui/components/tg-container';
+import { useEffect } from 'react';
 
 const SelectSubCategory = () => {
   const { childId } = useParams();
@@ -18,24 +18,24 @@ const SelectSubCategory = () => {
   });
 
   useEffect(() => {
-    if (!state?.title) navigate("/tg/select-category");
+    if (!state?.title) navigate('/tg/select-category');
   }, [state?.title]);
 
   if (isLoading) return <Loading />;
 
   return (
     <TgContainer>
-      <Flex gap={20} className={"w-full mt-4"} vertical>
+      <Flex gap={20} className={'w-full mt-4'} vertical>
         {data?.items?.map((item) => (
-          <Flex flex={1} key={item.id} className={"w-full"}>
+          <Flex flex={1} key={item.id} className={'w-full'}>
             <Link
               to={`${item.id}`}
-              className={"w-full"}
+              className={'w-full'}
               state={{ title: item.name }}
             >
               <Button
                 btnType={BtnTypes.tgPrimary}
-                className={"w-full !p-4 !h-max"}
+                className={'w-full !p-4 !h-max'}
               >
                 {item.name}
               </Button>

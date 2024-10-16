@@ -1,7 +1,7 @@
-import { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import { useTranslation } from "react-i18next";
-import dragimg from "/icons/add-folder.svg";
+import { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
+import dragimg from '/icons/add-folder.svg';
 
 interface Props {
   forwardedRef?: any;
@@ -14,7 +14,9 @@ const MainDropZone = ({ forwardedRef }: Props) => {
     forwardedRef?.current?.push(...acceptedFiles);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+  });
 
   return (
     <div
@@ -34,8 +36,8 @@ const MainDropZone = ({ forwardedRef }: Props) => {
       ) : (
         <div className="flex h-full w-full justify-center items-center border border-borderColor text-[#00000063]">
           {!!forwardedRef?.current?.length
-            ? `${t("selected_files")} ${forwardedRef?.current?.length}`
-            : t("drag_files")}
+            ? `${t('selected_files')} ${forwardedRef?.current?.length}`
+            : t('drag_files')}
         </div>
       )}
     </div>
