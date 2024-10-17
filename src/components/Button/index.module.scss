@@ -29,14 +29,23 @@
 
 .tgPrimary {
   background-color: var(--tgPrimary) !important;
+  color: #382e66;
+  border-radius: 20px;
+}
+
+.tgLighBrown {
+  background-color: var(--tgLighBrown) !important;
+  border-radius: 20px;
 }
 
 .tgBrown {
   background-color: var(--tgBrown) !important;
+  border-radius: 20px;
 }
 
 .tgSelected {
   background-color: var(--tgSelected) !important;
+  border-radius: 20px;
 }
 
 .brown {

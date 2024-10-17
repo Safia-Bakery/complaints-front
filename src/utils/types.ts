@@ -77,6 +77,7 @@ export enum BtnTypes {
   darkBlue = 'darkBlue',
   tgPrimary = 'tgPrimary',
   tgBrown = 'tgBrown',
+  tgLighBrown = 'tgLighBrown',
   tgSelected = 'tgSelected',
 }
 

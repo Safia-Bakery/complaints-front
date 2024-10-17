@@ -8,6 +8,7 @@ import TgHeader from '@/web-ui/components/header';
 import useTgUser from '@/hooks/useTgUser.ts';
 import Loading from '@/components/Loader';
 import { TelegramApp } from '@/web-ui/utils/helper';
+import '@/web-ui/styles/index.scss';
 
 const TgLayout = () => {
   const tokenKey = useQueryString('token');
