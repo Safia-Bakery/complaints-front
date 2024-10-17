@@ -23,13 +23,6 @@ const TgLayout = () => {
   }, [tokenKey, telegram_id]);
 
   useEffect(() => {
-    setTimeout(() => {
-      TelegramApp?.expand();
-      TelegramApp?.confirmClose();
-    }, 400);
-  }, []);
-
-  useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://telegram.org/js/telegram-web-app.js';
     script.async = true;
@@ -39,6 +32,13 @@ const TgLayout = () => {
     return () => {
       document.body.removeChild(script);
     };
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      TelegramApp?.expand();
+      TelegramApp?.confirmClose();
+    }, 400);
   }, []);
 
   if (isLoading || !token) return <Loading />;

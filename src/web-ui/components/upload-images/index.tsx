@@ -115,14 +115,15 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
         className={'flex !p-0 items-center justify-center'}
       >
         <div className={'relative w-full flex flex-1'}>
-          <div
+          <label
             {...getRootProps()}
             className="flex h-full w-full flex-1 bg-white rounded-xl border border-borderColor p-4 items-center justify-center relative"
           >
             <input
-              onChange={onDrop}
-              {...getInputProps()}
+              onChange={(e) => onDrop(e.target.files)}
+              // {...getInputProps()}
               accept="image/*"
+              type="file"
               className="h-full w-full !flex opacity-0 absolute inset-0"
             />
             {isDragActive ? (
@@ -134,7 +135,7 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
                 {t('drag_files')}
               </div>
             )}
-          </div>
+          </label>
         </div>
       </Modal>
     </div>
