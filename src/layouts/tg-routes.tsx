@@ -50,7 +50,7 @@ const TgLayout = () => {
     }, 400);
   }, []);
 
-  if (isLoading || !token) return <Loading />;
+  if (isLoading) return <Loading />;
 
   return (
     <>

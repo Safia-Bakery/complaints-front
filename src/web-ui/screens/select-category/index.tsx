@@ -1,13 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useCategories from '@/hooks/useCategories.ts';
 import { Flex } from 'antd';
 import Loading from '@/components/Loader';
 import Button from '@/components/Button';
 import { BtnTypes } from '@/utils/types.ts';
 import TgContainer from '@/web-ui/components/tg-container';
+import { useEffect } from 'react';
 
 const SelectCategory = () => {
-  const { data, isLoading } = useCategories({ status: 1 });
+  const navigate = useNavigate();
+  const { data, isLoading, isError } = useCategories({ status: 1 });
+
+  useEffect(() => {
+    if (isError) navigate('/tg/unauthorized');
+  }, [isError]);
 
   if (isLoading) return <Loading />;
 
