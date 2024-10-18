@@ -7,7 +7,7 @@ import { BtnTypes } from '@/utils/types.ts';
 import TgContainer from '@/web-ui/components/tg-container';
 
 const SelectCategory = () => {
-  const { data, isLoading } = useCategories({});
+  const { data, isLoading } = useCategories({ status: 1 });
 
   if (isLoading) return <Loading />;
 
@@ -58,7 +58,12 @@ const SelectCategory = () => {
                 'w-full !p-5 !h-full !text-start justify-start items-center !font-bold'
               }
             >
-              {item.name}
+              <Flex vertical>
+                <span>{item?.name}</span>
+                <span className={'font-normal mt-2 text-xs'}>
+                  {item?.description}
+                </span>
+              </Flex>
             </Button>
           </Link>
         ))}

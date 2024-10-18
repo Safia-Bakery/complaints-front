@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Permissions } from './utils/types';
 import routePath from './routes.ts';
 import AdminRoutes from '@/layouts/admin-routes.tsx';
+import UnAuthorized from 'src/web-ui/screens/unauthorized';
 
 const Login = lazy(() => import('@/pages/Login'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
@@ -63,6 +64,7 @@ const ComplaintsArchive = lazy(
   () => import('@/web-ui/screens/complaints-archive')
 );
 const TgShowComplaint = lazy(() => import('@/web-ui/screens/show-complaint'));
+const TgUnAuthorized = lazy(() => import('@/web-ui/screens/unauthorized'));
 const hrRoutes = [
   {
     element: <HRRequests />,
@@ -437,6 +439,22 @@ const App = () => {
           element={
             <Suspend>
               <TgShowComplaint />
+            </Suspend>
+          }
+        />
+        <Route
+          path={`unauthorized`}
+          element={
+            <Suspend>
+              <TgUnAuthorized />
+            </Suspend>
+          }
+        />
+        <Route
+          path={`*`}
+          element={
+            <Suspend>
+              <TgUnAuthorized />
             </Suspend>
           }
         />

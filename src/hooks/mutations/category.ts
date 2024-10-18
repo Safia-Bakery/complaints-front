@@ -4,7 +4,7 @@ import baseApi from '@/api/baseApi';
 type Body = {
   name?: string;
   status?: number;
-
+  description?: string;
   id?: number;
 };
 const categoryMutation = () => {

@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import useQueryString from 'custom/useQueryString.ts';
 import { useAppDispatch, useAppSelector } from '@/store/rootConfig';
 import { useEffect } from 'react';
@@ -15,8 +15,16 @@ const TgLayout = () => {
   const telegram_id = useQueryString('telegram_id');
   const dispatch = useAppDispatch();
   const token = useAppSelector(tokenSelector);
+  const navigate = useNavigate();
 
-  const { isLoading } = useTgUser({ telegram_id, enabled: !!telegram_id });
+  const { isLoading, isError } = useTgUser({
+    telegram_id,
+    enabled: !!telegram_id,
+  });
+
+  useEffect(() => {
+    if (isError) navigate('/tg/unauthorized');
+  }, [isError]);
 
   useEffect(() => {
     if (!!tokenKey) dispatch(loginHandler(tokenKey));

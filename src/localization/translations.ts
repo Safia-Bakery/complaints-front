@@ -143,6 +143,7 @@ const localization = {
       stamps: 'Штамп',
       telegram_id: 'Телеграм ID',
       select_role: 'Выбрать роль',
+      description: 'Описание',
     },
   },
   uz: {

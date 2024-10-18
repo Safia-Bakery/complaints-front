@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
+import MainTextArea from '@/components/BaseInputs/MainTextArea.tsx';
 
 const EditAddCategories = () => {
   const { t } = useTranslation();
@@ -57,6 +58,7 @@ const EditAddCategories = () => {
     if (category)
       reset({
         status: category.status,
+        description: category.description,
         name: category.name,
       });
   }, [category]);
@@ -82,7 +84,12 @@ const EditAddCategories = () => {
         <BaseInputs label="status">
           <MainCheckBox label={'active'} register={register('status')} />
         </BaseInputs>
-
+        <BaseInputs label="description" error={errors.name}>
+          <MainTextArea
+            placeholder={t('description')}
+            register={register('description')}
+          />
+        </BaseInputs>
         <MyButton htmlType="submit" btnType={BtnTypes.black}>
           {t('save')}
         </MyButton>
