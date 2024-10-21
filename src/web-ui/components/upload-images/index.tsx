@@ -98,7 +98,7 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
       <div
         onClick={handleModal}
         className={
-          'w-14 h-14 leading-7 rounded-full overflow-hidden cursor-pointer text-3xl font-bold flex justify-center items-center bg-tgPrimary'
+          'w-14 h-14 leading-7 rounded-full overflow-hidden cursor-pointer text-3xl font-bold flex justify-center items-center bg-tgLighBrown'
         }
       >
         <PlusOutlined color={'white'} className={'text-white'} />
@@ -132,7 +132,7 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
               </div>
             ) : (
               <div className="flex h-full w-full justify-center items-center border border-borderColor text-[#00000063]">
-                {t('drag_files')}
+                {'Добавить фото'}
               </div>
             )}
           </label>

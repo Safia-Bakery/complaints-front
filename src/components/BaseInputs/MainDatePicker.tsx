@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useRef, useState } from 'react';
 import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
 import cl from 'classnames';
 import { UseFormRegisterReturn } from 'react-hook-form';
@@ -32,16 +32,30 @@ const MainDatePicker: FC<Props> = ({
   iconClassName,
   dateFormat, //"Pp"
 }) => {
+  const dateRef = useRef<DatePicker>();
+  const [open, $open] = useState(false);
   const handleClear = () => onChange(undefined);
+
+  const toggleModal = () => $open((prev) => !prev);
+
+  const handleChange = (date: Date) => {
+    onChange?.(date);
+    toggleModal();
+  };
 
   return (
     <div className={cl(wrapperClassName, 'relative h-[38px]')}>
       <DatePicker
         selected={selected}
-        onChange={onChange}
+        onChange={handleChange as any}
         timeCaption="Время"
+        onClickOutside={toggleModal}
         dateFormat={dateFormat}
         timeIntervals={10}
+        readOnly
+        shouldCloseOnSelect
+        onFocus={toggleModal}
+        open={open}
         showTimeSelect={showTimeSelect}
         wrapperClassName={cl('w-full h-full !mb-0')}
         className={cl('form-control', styles.inputBox, className)}

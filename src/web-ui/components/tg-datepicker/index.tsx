@@ -17,9 +17,9 @@ const TgDatepicker = (props: SharedPickerProps) => {
         components: {
           DatePicker: {
             cellWidth: 25,
-            padding: 10,
-            paddingBlock: 2,
-            timeColumnWidth: 40,
+            padding: 12,
+            paddingBlock: 3,
+            timeColumnWidth: 50,
             timeColumnHeight: 100,
             cellHeight: 20,
             zIndexPopup: 9,
@@ -33,7 +33,7 @@ const TgDatepicker = (props: SharedPickerProps) => {
       }}
       locale={ruRU}
     >
-      <DatePicker {...props} />
+      <DatePicker onOk={() => null} {...props} />
     </ConfigProvider>
   );
 };
