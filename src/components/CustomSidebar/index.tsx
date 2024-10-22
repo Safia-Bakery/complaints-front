@@ -99,6 +99,13 @@ const routes = [
     activeIcon: '/icons/location-active.svg',
     screen: Permissions.get_categories,
   },
+  {
+    name: 'products',
+    url: '/products',
+    icon: '/icons/location.svg',
+    activeIcon: '/icons/location-active.svg',
+    screen: Permissions.get_categories,
+  },
 ];
 
 export const Playground: FC = () => {

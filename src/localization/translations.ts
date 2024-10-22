@@ -144,6 +144,7 @@ const localization = {
       telegram_id: 'Телеграм ID',
       select_role: 'Выбрать роль',
       description: 'Описание',
+      products: 'Продукты',
     },
   },
   uz: {

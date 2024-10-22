@@ -393,6 +393,9 @@ export enum Permissions {
   get_categories = 30,
   edit_categories = 31,
   add_categories = 32,
+
+  get_products = 30,
+  edit_products = 30,
 }
 
 export interface CountsStats {

@@ -10,7 +10,6 @@ import useRoles from '@/hooks/useRoles';
 import useUsers from '@/hooks/useUsers';
 import { fixedString } from '@/utils/helper';
 import errorToast from '@/utils/error-toast.ts';
-import { DeleteOutlined } from '@ant-design/icons';
 import successToast from '@/utils/success-toast.ts';
 import { BtnTypes, ModalTypes } from '@/utils/types';
 import { useEffect, useRef, useState } from 'react';

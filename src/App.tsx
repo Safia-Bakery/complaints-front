@@ -8,7 +8,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Permissions } from './utils/types';
 import routePath from './routes.ts';
 import AdminRoutes from '@/layouts/admin-routes.tsx';
-import UnAuthorized from 'src/web-ui/screens/unauthorized';
 
 const Login = lazy(() => import('@/pages/Login'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
@@ -43,6 +42,8 @@ const EditAddUsers = lazy(() => import('@/pages/EditAddUser'));
 
 const EditPermission = lazy(() => import('@/pages/EditPermission'));
 const Reviews = lazy(() => import('@/pages/Reviews'));
+const Products = lazy(() => import('@/pages/Products'));
+const EditProduct = lazy(() => import('@/pages/EditProduct'));
 
 const HRCategories = lazy(() => import('@/pages/HRCategories'));
 const EditAddHRCategory = lazy(() => import('@/pages/EditAddHRCategory'));
@@ -143,6 +144,16 @@ const hrRoutes = [
 ];
 
 const mainRoutes = [
+  {
+    element: <Products />,
+    path: 'products',
+    screen: Permissions.get_products,
+  },
+  {
+    element: <EditProduct />,
+    path: 'products/:id',
+    screen: Permissions.edit_products,
+  },
   {
     element: <Dashboard />,
     path: 'dashboard',

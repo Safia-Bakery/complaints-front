@@ -18,7 +18,7 @@ const ShowComplaint = () => {
         Детали заказа
       </Typography>
       <span>
-        <span className={'font-bold'}>№: </span> {data?.id}w
+        <span className={'font-bold'}>№: </span> {data?.id}
       </span>{' '}
       <span>
         <span className={'font-bold'}>{t('status')}:</span>{' '}
