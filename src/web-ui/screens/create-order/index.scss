@@ -3,3 +3,11 @@
     padding: 0 !important;
   }
 }
+
+.hide-ok-btn .ant-picker-ok {
+  display: none !important;
+}
+
+.ant-picker-time-panel-column {
+  overflow-y: auto !important;
+}

@@ -31,10 +31,6 @@ import warnToast from '@/utils/warn-toast.ts';
 import useTgUser from '@/hooks/useTgUser.ts';
 import { branchSelector } from 'reducers/tg-get-titles.ts';
 import errorToast from '@/utils/error-toast.ts';
-import MainDatePicker from '@/components/BaseInputs/MainDatePicker.tsx';
-import BaseInput from '@/components/BaseInputs';
-
-const defaultValue = dayjs('2024-01-01');
 
 interface LocalFolderType {
   name: string;
@@ -47,13 +43,12 @@ const CreateOrderScreen = () => {
   const { state } = useLocation();
   const [search, $search] = useState('');
   const [selectedProd, $selectedProd] = useState<Product>();
-  const [received_at, $received_at] = useState<Date>();
-  const [selling_at, $selling_at] = useState<Date>();
+  const [received_at, $received_at] = useState<dayjs.Dayjs>();
+  const [selling_at, $selling_at] = useState<dayjs.Dayjs>();
   const [folderStack, $folderStack] = useState<LocalFolderType[]>([]);
   const images = useAppSelector(imageSelector);
   const { telegram_id } = useAppSelector(branchSelector);
   const [modal, $modal] = useState<ModalTypes>();
-
   const { data: user } = useTgUser({ telegram_id, enabled: false });
 
   const { mutate, isPending } = complaintsMutation();
@@ -64,11 +59,7 @@ const CreateOrderScreen = () => {
     );
   }, [modal]);
 
-  const {
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm();
+  const { register, getValues } = useForm();
 
   const { data: searchedItems, isLoading } = useTgProducts({
     enabled: quealityKeys[+childId!],
@@ -93,8 +84,7 @@ const CreateOrderScreen = () => {
           (fixedString(client_phone)?.length < 10 && 'Номер клиента неверный')
         }`
       );
-    console.log(fixedString(manager_phone).length, 'length');
-    // else $modal(ModalTypes.confirm);
+    else $modal(ModalTypes.confirm);
   };
   const onSearch = () => $search(getValues('search'));
 
@@ -137,7 +127,7 @@ const CreateOrderScreen = () => {
             icon={<FolderOutlined />}
             btnType={BtnTypes.tgBrown}
             onClick={() => handleFolder(record)}
-            className={'w-full !p-2 !h-max justify-start mt-2'}
+            className={'w-full !p-2 !h-max justify-start mb-2'}
           >
             {record.name}
           </Button>
@@ -155,7 +145,7 @@ const CreateOrderScreen = () => {
           <Button
             btnType={BtnTypes.tgLighBrown}
             onClick={() => $selectedProd(record)}
-            className={'w-full !p-2 !h-max justify-start mt-2'}
+            className={'w-full !p-2 !h-max justify-start mb-2'}
           >
             {record.name}
           </Button>
@@ -175,7 +165,7 @@ const CreateOrderScreen = () => {
               className="tg-table pt-3"
               loading={isLoading}
               scroll={{ y: 250 }}
-              rowClassName={'!bg-transparent pt-2'}
+              rowClassName={'!bg-transparent'}
               columns={folderColumns}
               data={searchedItems?.folders}
               locale={{ emptyText: '' }}
@@ -266,11 +256,11 @@ const CreateOrderScreen = () => {
 
           <span>
             <span className={'font-bold'}>Дата поступления товара:</span>{' '}
-            {dayjs(received_at)?.format(dateTimeFormat)}
+            {received_at?.format(dateTimeFormat)}
           </span>
           <span>
             <span className={'font-bold'}>Дата продажи товара:</span>{' '}
-            {dayjs(selling_at)?.format(dateTimeFormat)}
+            {selling_at?.format(dateTimeFormat)}
           </span>
 
           <span>
@@ -328,7 +318,7 @@ const CreateOrderScreen = () => {
       <TgContainer>
         <Flex vertical gap={5}>
           <Typography>Категория</Typography>
-          <Button btnType={BtnTypes.tgPrimary}>{state?.title}</Button>
+          <Button btnType={BtnTypes.tgLighBrown}>{state?.title}</Button>
         </Flex>
       </TgContainer>
       {quealityKeys[+childId!] && <Divider className="bg-black" />}
@@ -362,6 +352,7 @@ const CreateOrderScreen = () => {
                   disabled={!!selectedProd?.id}
                   placeholder={'Поиск'}
                   onKeyDown={(e) => e.key === 'Enter' && onSearch()}
+                  // onChange={(e) => onSearch(e.target.value)}
                   className={
                     'w-full h-full outline-none border-none pr-10 !bg-transparent'
                   }
@@ -382,6 +373,7 @@ const CreateOrderScreen = () => {
         )}
 
         <Divider />
+
         <Flex justify="space-between" align="center" className="mt-3">
           <Typography className="font-bold">Дата поступления товара</Typography>
 
@@ -401,15 +393,13 @@ const CreateOrderScreen = () => {
             </button>
           </Tooltip>
         </Flex>
-        <BaseInput>
-          <MainDatePicker
-            className="w-full h-12 bg-transparent"
-            selected={received_at}
-            dateFormat="dd.MM.YYYY, h:mm"
-            showTimeSelect
-            onChange={(date: Date) => $received_at(date)}
-          />
-        </BaseInput>
+        <TgDatepicker
+          className="w-full h-12 bg-transparent mt-3"
+          showTime
+          placeholder="Дата поступления"
+          format="YYYY-MM-DD HH:mm"
+          onChange={(date: dayjs.Dayjs) => $received_at(date)}
+        />
 
         <Flex justify="space-between" align="center" className="mt-6">
           <Typography className="font-bold">Дата продажи товара</Typography>
@@ -430,36 +420,32 @@ const CreateOrderScreen = () => {
             </button>
           </Tooltip>
         </Flex>
-        <BaseInput>
-          <MainDatePicker
-            className="w-full h-12 bg-transparent"
-            dateFormat="dd.MM.YYYY, h:mm"
-            showTimeSelect
-            selected={selling_at}
-            onChange={(date: Date) => $selling_at(date)}
-          />
-        </BaseInput>
+        <TgDatepicker
+          className="w-full h-12 bg-transparent mt-3"
+          showTime
+          format="YYYY-MM-DD HH:mm"
+          placeholder="Дата продажи товара"
+          onChange={(date: dayjs.Dayjs) => $selling_at(date)}
+        />
 
         <Typography className="font-bold mt-4">
           Укажите номер управляющего филиала
         </Typography>
-        <BaseInput error={errors.manager_phone}>
-          <MaskedInput
-            register={register('manager_phone')}
-            placeholder={'Номер управляющего филиала'}
-            className={'mt-2 bg-transparent !border-[#d9d9d9]'}
-          />
-        </BaseInput>
+
+        <MaskedInput
+          register={register('manager_phone')}
+          placeholder={'Номер управляющего филиала'}
+          className={'mt-2 bg-transparent !border-[#d9d9d9]'}
+        />
+
         <Typography className="font-bold mt-4">
-          Укажите номер управляющего филиала
+          Укажите номер клиента
         </Typography>
-        <BaseInput error={errors.client_phone}>
-          <MaskedInput
-            placeholder={'Номер клиента'}
-            register={register('client_phone', { minLength: 8 })}
-            className={'mt-2 bg-transparent !border-[#d9d9d9]'}
-          />
-        </BaseInput>
+        <MaskedInput
+          placeholder={'Номер клиента'}
+          register={register('client_phone')}
+          className={'mt-2 bg-transparent !border-[#d9d9d9]'}
+        />
 
         <Typography className={'mt-4 mb-1'}>Описание жалобы</Typography>
         <MainTextArea register={register('description')} />

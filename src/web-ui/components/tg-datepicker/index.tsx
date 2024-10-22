@@ -5,7 +5,6 @@ import 'dayjs/locale/ru';
 
 // @ts-ignore
 import { SharedPickerProps } from 'rc-picker/lib/interface';
-import { dateTimeFormat } from '@/utils/helper.ts';
 
 dayjs.locale('ru');
 
@@ -33,7 +32,7 @@ const TgDatepicker = (props: SharedPickerProps) => {
       }}
       locale={ruRU}
     >
-      <DatePicker onOk={() => null} {...props} />
+      <DatePicker inputReadOnly {...props} />
     </ConfigProvider>
   );
 };
