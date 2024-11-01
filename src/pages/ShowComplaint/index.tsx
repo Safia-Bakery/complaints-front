@@ -24,7 +24,7 @@ import Header from '@/components/Header';
 import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
 import Otkchild from './Otkchild';
-import { Flex } from 'antd';
+import { Flex, Image } from 'antd';
 import AddStampers from './add-stampers';
 import { useComplaintV2 } from '@/hooks/complaint';
 
@@ -312,12 +312,12 @@ const ShowComplaint = () => {
             <ul>
               {complaint?.file.map((item, idx) => (
                 <li key={idx}>
-                  <Link
-                    className="flex items-center p-1 gap-2"
-                    to={`${baseURL}/${item.url}`}
-                    target="_blank"
-                  >
-                    <span>image</span>
+                  <div className="flex items-center p-1 gap-2">
+                    <Image
+                      height={30}
+                      width={40}
+                      src={`${baseURL}/${item.url}`}
+                    />
                     <button>
                       <img
                         height={30}
@@ -326,7 +326,7 @@ const ShowComplaint = () => {
                         alt="delete"
                       />
                     </button>
-                  </Link>
+                  </div>
                 </li>
               ))}
             </ul>
