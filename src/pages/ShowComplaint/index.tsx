@@ -5,7 +5,6 @@ import {
   BtnTypes,
   ComplaintsSpheres,
   CountrySelect,
-  GenderType,
   ModalTypes,
   OrderStatus,
 } from '@/utils/types';
@@ -15,9 +14,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loading from '@/components/Loader';
 import dayjs from 'dayjs';
 import { dateTimeFormat } from '@/utils/helper';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { baseURL } from '@/api/baseApi';
-import complaintsMutation from '@/hooks/mutations/complaints';
 import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
 import ComplaintModals from './modals';
 import Header from '@/components/Header';
@@ -27,6 +25,7 @@ import Otkchild from './Otkchild';
 import { Flex, Image } from 'antd';
 import AddStampers from './add-stampers';
 import { useComplaintV2 } from '@/hooks/complaint';
+import complaintsMutation from '@/hooks/mutations/complaintv2';
 
 const DisableAction: { [key: number]: boolean } = {
   [OrderStatus.denied]: true,
@@ -295,7 +294,6 @@ const ShowComplaint = () => {
           </div>
         </div>
         <Flex className="w-full mt-4" gap={20} flex={'wrap'}>
-          {/* <div className=""></div> */}
           {renderStampers}
         </Flex>
         {com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk] && (
@@ -305,7 +303,7 @@ const ShowComplaint = () => {
         {renderBtns}
       </Container>
 
-      {!!complaint?.file.length && (
+      {!!complaint?.file?.length && (
         <Container className="flex justify-end w-full !mt-2">
           <div className="flex flex-col ">
             <h3 className="font-bold text-xl mb-3">{t('files')}</h3>

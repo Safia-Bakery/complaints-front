@@ -7,9 +7,7 @@ import Header from '@/components/Header';
 import Modal from '@/components/Modal';
 import { useRemoveParams } from '@/hooks/custom/useCustomNavigate';
 import useQueryString from '@/hooks/custom/useQueryString';
-import complaintsMutation, {
-  ComplaintsBody,
-} from '@/hooks/mutations/complaints';
+import { ComplaintsBody } from '@/hooks/mutations/complaints';
 import { CancelReason } from '@/utils/helper';
 import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
@@ -31,6 +29,7 @@ import MainRadioBtns from '@/components/BaseInputs/MainRadioBtns.tsx';
 import MainInput from '@/components/BaseInputs/MainInput';
 import { Footer } from 'antd/es/layout/layout';
 import { useComplaintV2 } from '@/hooks/complaint';
+import complaintsMutation from '@/hooks/mutations/complaintv2';
 
 const ComplaintModals = () => {
   const { t } = useTranslation();

@@ -114,7 +114,7 @@ const Complaints = () => {
         title: t('expence'),
       },
       {
-        dataIndex: 'author',
+        dataIndex: 'updated_by',
         title: t('author'),
       },
       {

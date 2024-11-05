@@ -278,7 +278,7 @@ const CreateOrderScreen = () => {
           </span>
 
           <span>
-            <span className={'font-bold'}>Фото:</span> {client_phone}
+            <span className={'font-bold'}>Фото:</span>
           </span>
           <Flex gap={10} className="p-2" flex={'wrap'}>
             {images['product_images']?.map((item) => (

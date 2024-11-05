@@ -3,7 +3,9 @@ import MainInput from '@/components/BaseInputs/MainInput';
 import MainTextArea from '@/components/BaseInputs/MainTextArea';
 import MyButton from '@/components/Button';
 import Loading from '@/components/Loader';
-import complaintsMutation from '@/hooks/mutations/complaints';
+import { useComplaintV2 } from '@/hooks/complaint';
+import complaintsMutation from '@/hooks/mutations/complaintv2';
+
 import useComplaints from '@/hooks/useComplaints';
 import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
@@ -18,13 +20,21 @@ const Otkchild = () => {
   const { register, reset, getValues } = useForm();
   const { mutate, isPending } = complaintsMutation();
   const { id } = useParams();
-  const { data, refetch } = useComplaints({ id: Number(id), enabled: !!id });
+  const { data: complaint, refetch } = useComplaintV2({
+    complaint_id: Number(id),
+    enabled: !!id,
+  });
 
-  const complaint = data?.items?.[0];
+  // const complaint = data?.items?.[0];
 
   const handleSubmit = () => {
-    const { producer_guilty, is_returned, correcting_details, car_number } =
-      getValues();
+    const {
+      producer_guilty,
+      is_returned,
+      correcting_details,
+      car_number,
+      match_standard,
+    } = getValues();
     mutate(
       {
         id: Number(id),
@@ -33,6 +43,7 @@ const Otkchild = () => {
         corrections: correcting_details,
         autonumber: car_number,
         otk_status: OrderStatus.done,
+        match_standard,
       },
       {
         onSuccess: () => {
@@ -44,14 +55,33 @@ const Otkchild = () => {
     );
   };
 
+  const handleSaveComment = () => {
+    const { correcting_details } = getValues();
+    if (correcting_details !== complaint?.corrections)
+      mutate(
+        {
+          id: Number(id),
+          corrections: correcting_details,
+        },
+        {
+          onSuccess: () => {
+            refetch();
+            successToast('success');
+          },
+          onError: (e) => errorToast(e.message),
+        }
+      );
+  };
+
   useEffect(() => {
     reset({
       producer_guilty: complaint?.producer_guilty ? '1' : '0',
       is_returned: complaint?.is_returned ? '1' : '0',
+      match_standard: !!complaint?.match_standard ? '1' : '0',
       correcting_details: complaint?.corrections,
       car_number: complaint?.autonumber,
     });
-  }, [data]);
+  }, [complaint]);
 
   return (
     <>
@@ -122,6 +152,29 @@ const Otkchild = () => {
               </label>
             </div>
           </div>
+          <div className="w-full flex justify-between items-center mt-1">
+            <div>{t('is_match_standard')}</div>
+            <div className="rounded-xl bg-[#ECEDEE] flex py-2 px-4 gap-4">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value={'1'}
+                  id={'1'}
+                  {...register('match_standard')}
+                />
+                {t('yes')}
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  value={'0'}
+                  id={'0'}
+                  {...register('match_standard')}
+                />
+                {t('no')}
+              </label>
+            </div>
+          </div>
         </div>
         <div className="w-full">
           <BaseInput label="correcting_actions">
@@ -131,6 +184,14 @@ const Otkchild = () => {
               register={register('correcting_details')}
             />
           </BaseInput>
+
+          <MyButton
+            className="float-end"
+            onClick={handleSaveComment}
+            btnType={BtnTypes.darkBlue}
+          >
+            {t('save')}
+          </MyButton>
         </div>
       </div>
       <div className="flex justify-end">

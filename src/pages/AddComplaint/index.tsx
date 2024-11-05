@@ -7,7 +7,6 @@ import BranchSelect from '@/components/BranchSelect';
 import MyButton from '@/components/Button';
 import Container from '@/components/Container';
 import MaskedInput from '@/components/MaskedInput';
-import MainDropZone from '@/components/MainDropZone';
 import { GenderTypeSelect, fixedString } from '@/utils/helper';
 import { useForm } from 'react-hook-form';
 import { useRef, useState } from 'react';
@@ -17,19 +16,21 @@ import useSubCategories from '@/hooks/useSubCategories';
 import MainSelect from '@/components/BaseInputs/MainSelect';
 import useCountries from '@/hooks/useCountries';
 import useQueryString from '@/hooks/custom/useQueryString';
-import complaintsMutation from '@/hooks/mutations/complaints';
+
 import { BranchJsonVal } from '@/utils/types';
 import Loading from '@/components/Loader';
 import { useNavigate, useParams } from 'react-router-dom';
 import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
+import complaintsMutation from '@/hooks/mutations/complaintv2';
+import MainDropZone from '@/components/MainAntDropZone';
 
 const AddComplaint = () => {
-  const inputFileRef = useRef<any>([]);
   const navigate = useNavigate();
   const [date_purchase, $date_purchase] = useState<Date>();
   const [date_return, $date_return] = useState<Date>();
   const { com_sphere } = useParams();
+  const [files, $files] = useState<string[]>([]);
 
   const { t } = useTranslation();
   const { register, getValues, handleSubmit, watch } = useForm();
@@ -75,7 +76,7 @@ const AddComplaint = () => {
         date_purchase: date_purchase?.toISOString(),
         date_return: date_return?.toISOString(),
         comment,
-        files: inputFileRef?.current,
+        files,
       },
       {
         onSuccess: () => {
@@ -166,8 +167,8 @@ const AddComplaint = () => {
             />
           </BaseInput>
 
-          <BaseInput label="files" className="flex-1 flex flex-col">
-            <MainDropZone forwardedRef={inputFileRef} />
+          <BaseInput label="files" className="flex-1 flex flex-col ">
+            <MainDropZone onChange={$files} />
           </BaseInput>
         </div>
 

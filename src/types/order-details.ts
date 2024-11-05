@@ -41,6 +41,7 @@ export type ComplaintsBody = {
 
   first_response?: string;
   second_response?: string;
+  match_standard?: boolean;
 };
 
 export interface ComplaintsResponse {
@@ -146,6 +147,7 @@ export interface ComplaintRes {
   changes: {};
   updated_by: string;
   is_internal: number;
+  match_standard?: number;
 }
 
 export interface ComplaintStamp {

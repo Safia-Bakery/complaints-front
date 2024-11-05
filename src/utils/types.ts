@@ -249,6 +249,7 @@ export interface ComplaintType {
   is_client: boolean;
   corrections: string;
   autonumber: string;
+  match_standard: number;
   subcategory_id: number;
   branch_id: number;
   subcategory: SubCategoryType;

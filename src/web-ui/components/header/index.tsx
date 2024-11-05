@@ -10,12 +10,15 @@ const TgHeader = () => {
   const { pathname, state } = useLocation();
   const { telegram_id } = useAppSelector(branchSelector);
 
+  const isFirstPage =
+    pathname !== `${routePath.mainTgRoute}/${routePath.tgSelectCategory}`;
+  const goback = () => isFirstPage && navigate(-1);
   const { data } = useTgUser({ telegram_id, enabled: false });
 
   return (
     <header className="py-4 px-3 flex items-center w-full bg-tgHeader sticky top-0 z-10">
-      {pathname !== `${routePath.mainTgRoute}/${routePath.tgSelectCategory}` ? (
-        <button onClick={() => navigate(-1)}>
+      {isFirstPage ? (
+        <button onClick={goback}>
           <img
             src="/icons/arrow.svg"
             className="-rotate-90"
@@ -30,10 +33,11 @@ const TgHeader = () => {
       <Flex align="center" justify="space-between" flex={1}>
         <div className="flex items-center">
           {!state?.title && <Image preview={false} src={'/icons/marker.svg'} />}
-
-          <h4 className="text-center text-white font-normal text-xl">
-            {data?.branch?.name}
-          </h4>
+          <button onClick={goback}>
+            <h4 className="text-center text-white font-normal text-xl">
+              {data?.branch?.name}
+            </h4>
+          </button>
         </div>
         {state?.title && (
           <div className="h-full w-full text-xl text-white max-w-[60vw] text-end text-nowrap overflow-ellipsis truncate">

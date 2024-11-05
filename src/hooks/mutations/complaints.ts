@@ -27,6 +27,7 @@ export type ComplaintsBody = {
   producer_guilty?: boolean;
   is_returned?: boolean;
   expense?: number;
+  match_standard?: number;
 };
 
 const complaintsMutation = () => {

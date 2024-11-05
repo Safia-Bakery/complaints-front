@@ -15,6 +15,7 @@ const SelectSubCategory = () => {
   const { data, isLoading } = useSubCategories({
     category_id: childId,
     enabled: !!childId,
+    status: 1,
   });
 
   useEffect(() => {

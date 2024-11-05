@@ -1,8 +1,8 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import useQueryString from 'custom/useQueryString.ts';
-import { useAppDispatch, useAppSelector } from '@/store/rootConfig';
+import { useAppDispatch } from '@/store/rootConfig';
 import { useEffect } from 'react';
-import { loginHandler, tokenSelector } from 'reducers/auth.ts';
+import { loginHandler } from 'reducers/auth.ts';
 import { getBranch } from 'reducers/tg-get-titles.ts';
 import TgHeader from '@/web-ui/components/header';
 import useTgUser from '@/hooks/useTgUser.ts';
@@ -14,7 +14,6 @@ const TgLayout = () => {
   const tokenKey = useQueryString('token');
   const telegram_id = useQueryString('telegram_id');
   const dispatch = useAppDispatch();
-  const token = useAppSelector(tokenSelector);
   const navigate = useNavigate();
 
   const { isLoading, isError } = useTgUser({

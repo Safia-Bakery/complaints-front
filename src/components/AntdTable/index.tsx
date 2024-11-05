@@ -57,6 +57,7 @@ function AntdTable<T>({
         className={`common-table ${styles.table} align-center ${className}`}
         rowClassName={(item) => `clickable-row ${handleRowStyles(item)}`}
         footer={false}
+        // locale={{ emptyText: t('empty_list') }}
         sticky
         pagination={
           totalItems
