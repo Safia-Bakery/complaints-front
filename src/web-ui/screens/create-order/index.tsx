@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import useTgProducts from '@/hooks/useTgProducts.ts';
-import { quealityKeys } from '@/utils/keys.ts';
+import { qualityCategs, qualityKeys } from '@/utils/keys.ts';
 import TgDatepicker from '@/web-ui/components/tg-datepicker';
 import MaskedInput from '@/components/MaskedInput';
 import { useForm } from 'react-hook-form';
@@ -24,13 +24,14 @@ import './index.scss';
 import Modal from '@/components/Modal';
 import { dateTimeFormat, fixedString } from '@/utils/helper';
 import { baseURL } from '@/api/baseApi';
-import { imageSelector } from '@/store/reducers/images';
-import { useAppSelector } from '@/store/rootConfig';
+import { clearImages, imageSelector } from '@/store/reducers/images';
+import { useAppDispatch, useAppSelector } from '@/store/rootConfig';
 import complaintsMutation from '@/hooks/mutations/complaintv2';
 import warnToast from '@/utils/warn-toast.ts';
 import useTgUser from '@/hooks/useTgUser.ts';
 import { branchSelector } from 'reducers/tg-get-titles.ts';
 import errorToast from '@/utils/error-toast.ts';
+import MainInput from '@/components/BaseInputs/MainInput';
 
 interface LocalFolderType {
   name: string;
@@ -40,10 +41,13 @@ interface LocalFolderType {
 const CreateOrderScreen = () => {
   const { childId, subId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { state } = useLocation();
   const [search, $search] = useState('');
   const [selectedProd, $selectedProd] = useState<Product>();
   const [received_at, $received_at] = useState<dayjs.Dayjs>();
+  const [date_clients_complaint, $date_clients_complaint] =
+    useState<dayjs.Dayjs>();
   const [selling_at, $selling_at] = useState<dayjs.Dayjs>();
   const [folderStack, $folderStack] = useState<LocalFolderType[]>([]);
   const images = useAppSelector(imageSelector);
@@ -62,7 +66,7 @@ const CreateOrderScreen = () => {
   const { register, getValues } = useForm();
 
   const { data: searchedItems, isLoading } = useTgProducts({
-    enabled: quealityKeys[+childId!],
+    enabled: qualityKeys[+childId!],
     parent_id: folderStack?.at(-1)?.id,
     ...(!!search && { name: search }),
   });
@@ -70,18 +74,19 @@ const CreateOrderScreen = () => {
   const handleNavigate = () => {
     const { manager_phone, client_phone } = getValues();
     if (
-      (quealityKeys[+childId!] && !selectedProd?.id) ||
+      (qualityKeys[+childId!] && !selectedProd?.id) ||
       fixedString(manager_phone)?.length < 10 ||
-      fixedString(client_phone)?.length < 10
+      (qualityCategs.shop !== Number(childId) &&
+        fixedString(client_phone)?.length < 10)
     )
       warnToast(
         `${
-          (quealityKeys[+childId!] &&
-            !selectedProd?.id &&
-            'Выберите продукт') ||
+          (qualityKeys[+childId!] && !selectedProd?.id && 'Выберите продукт') ||
           (fixedString(manager_phone)?.length < 10 &&
             'Номер управляющего филиала неверный') ||
-          (fixedString(client_phone)?.length < 10 && 'Номер клиента неверный')
+          (fixedString(client_phone)?.length < 10 &&
+            qualityCategs.shop !== Number(childId) &&
+            'Номер клиента неверный')
         }`
       );
     else $modal(ModalTypes.confirm);
@@ -89,7 +94,8 @@ const CreateOrderScreen = () => {
   const onSearch = () => $search(getValues('search'));
 
   const handleSubmit = () => {
-    const { manager_phone, client_phone, description } = getValues();
+    const { manager_phone, client_phone, description, client_name } =
+      getValues();
     mutate(
       {
         ...(selectedProd?.id && { products: [selectedProd?.id] }),
@@ -98,14 +104,17 @@ const CreateOrderScreen = () => {
         subcategory_id: Number(subId),
         date_purchase: selling_at?.toISOString(),
         date_return: received_at?.toISOString(),
+        date_clients_complaint: date_clients_complaint?.toISOString(),
         manager_phone: fixedString(manager_phone),
         client_number: fixedString(client_phone),
         comment: description,
         files: images['product_images']?.map((item) => item.file_name),
+        client_name,
       },
       {
         onSuccess: (data) => {
           navigate(`/tg/success/${data.id}`);
+          dispatch(clearImages({ key: 'product_images' }));
         },
         onError: (e) => errorToast(e.message),
       }
@@ -186,22 +195,24 @@ const CreateOrderScreen = () => {
                 )
               }
             />
-            <AntdTable
-              className="tg-table pt-3"
-              loading={isLoading}
-              scroll={{ y: 250 }}
-              rowClassName={'!bg-transparent pt-2'}
-              columns={prodsColumns}
-              data={searchedItems?.products}
-              showHeader={false}
-              locale={{
-                emptyText: () => (
-                  <>
-                    <Empty className={'p-2'} description={'Список пуст'} />
-                  </>
-                ),
-              }}
-            />
+            {!selectedProd?.id && (
+              <AntdTable
+                className="tg-table pt-3"
+                loading={isLoading}
+                scroll={{ y: 250 }}
+                rowClassName={'!bg-transparent pt-2'}
+                columns={prodsColumns}
+                data={searchedItems?.products}
+                showHeader={false}
+                locale={{
+                  emptyText: () => (
+                    <>
+                      <Empty className={'p-2'} description={'Список пуст'} />
+                    </>
+                  ),
+                }}
+              />
+            )}
           </>
         ) : (
           <Flex justify={'center'} className="mt-4">
@@ -221,7 +232,8 @@ const CreateOrderScreen = () => {
   }, [searchedItems, folderStack, isLoading, selectedProd]);
 
   const renderModal = useMemo(() => {
-    const { manager_phone, client_phone, description } = getValues();
+    const { manager_phone, client_phone, description, client_name } =
+      getValues();
     return (
       <Modal
         loading={isPending}
@@ -247,31 +259,55 @@ const CreateOrderScreen = () => {
 
           <span>
             <span className={'font-bold'}>Категория заявки:</span>{' '}
-            {state?.title}
+            {state?.sub_category}
           </span>
 
-          <span>
-            <span className={'font-bold'}>Блюдо:</span> {selectedProd?.name}
-          </span>
+          {selectedProd?.id && (
+            <span>
+              <span className={'font-bold'}>Блюдо:</span> {selectedProd?.name}
+            </span>
+          )}
 
-          <span>
-            <span className={'font-bold'}>Дата поступления товара:</span>{' '}
-            {received_at?.format(dateTimeFormat)}
-          </span>
-          <span>
-            <span className={'font-bold'}>Дата продажи товара:</span>{' '}
-            {selling_at?.format(dateTimeFormat)}
-          </span>
+          {qualityKeys[+childId!] && (
+            <span>
+              <span className={'font-bold'}>Дата поступления товара:</span>{' '}
+              {received_at?.format(dateTimeFormat)}
+            </span>
+          )}
+          {qualityCategs.client === Number(childId) && (
+            <span>
+              <span className={'font-bold'}>Дата продажи товара:</span>{' '}
+              {selling_at?.format(dateTimeFormat)}
+            </span>
+          )}
+          {!qualityKeys[+childId!] && (
+            <span>
+              <span className={'font-bold'}>
+                Дата поступления жалобы со стороны клиента:
+              </span>{' '}
+              {date_clients_complaint?.format(dateTimeFormat)}
+            </span>
+          )}
 
           <span>
             <span className={'font-bold'}>Номер управляющего:</span>{' '}
             {manager_phone || 'Не задано'}
           </span>
 
-          <span>
-            <span className={'font-bold'}>Номер клиента:</span>{' '}
-            {client_phone || 'Не задано'}
-          </span>
+          {(qualityCategs.client === Number(childId) ||
+            !qualityKeys[+childId!]) && (
+            <span>
+              <span className={'font-bold'}>Номер клиента:</span>{' '}
+              {client_phone || 'Не задано'}
+            </span>
+          )}
+
+          {!qualityKeys[+childId!] && (
+            <span>
+              <span className={'font-bold'}>Имя клиента:</span>{' '}
+              {client_name || 'Не задано'}
+            </span>
+          )}
           <span>
             <span className={'font-bold'}>Описание:</span>{' '}
             {description || 'Не задано'}
@@ -290,6 +326,8 @@ const CreateOrderScreen = () => {
                   src={`${baseURL}/${item.file_name}`}
                   className={'rounded-full shadow-md'}
                   alt={`${item.file_name}`}
+                  height={50}
+                  width={50}
                 />
               </div>
             ))}
@@ -318,16 +356,16 @@ const CreateOrderScreen = () => {
       <TgContainer>
         <Flex vertical gap={5}>
           <Typography>Категория</Typography>
-          <Button btnType={BtnTypes.tgLighBrown}>{state?.title}</Button>
+          <Button btnType={BtnTypes.tgLighBrown}>{state?.sub_category}</Button>
         </Flex>
       </TgContainer>
-      {quealityKeys[+childId!] && <Divider className="bg-black" />}
+      {qualityKeys[+childId!] && <Divider className="bg-black" />}
       <TgContainer className="overflow-y-auto h-full">
-        {quealityKeys[+childId!] && (
+        {qualityKeys[+childId!] && (
           <>
             <Flex align="center" justify="space-between">
               <Flex align={'center'} gap={10}>
-                {!!folderStack.length && (
+                {!!folderStack.length && !selectedProd?.id && (
                   <Button
                     className={'!min-w-9'}
                     onClick={handleBack}
@@ -374,59 +412,119 @@ const CreateOrderScreen = () => {
 
         <Divider />
 
-        <Flex justify="space-between" align="center" className="mt-3">
-          <Typography className="font-bold">Дата поступления товара</Typography>
+        {qualityKeys[+childId!] && (
+          <>
+            <Flex justify="space-between" align="center" className="mt-3">
+              <Typography className="font-bold">
+                Дата поступления товара
+              </Typography>
 
-          <Tooltip
-            color="white"
-            placement="bottomRight"
-            zIndex={9}
-            title={
-              <div className="text-xs text-black">
-                <p className="font-bold inline">Дата поступления товара - </p>
-                дата когда товар поступил на склад магазина (время прихода)
-              </div>
-            }
-          >
-            <button className="w-8">
-              <InfoCircleOutlined />
-            </button>
-          </Tooltip>
-        </Flex>
-        <TgDatepicker
-          className="w-full h-12 bg-transparent mt-3"
-          showTime
-          placeholder="Дата поступления"
-          format="YYYY-MM-DD HH:mm"
-          onChange={(date: dayjs.Dayjs) => $received_at(date)}
-        />
+              <Tooltip
+                color="white"
+                placement="bottomRight"
+                zIndex={9}
+                title={
+                  <div className="text-xs text-black">
+                    <p className="font-bold inline">
+                      Дата поступления товара -{' '}
+                    </p>
+                    дата когда товар поступил на склад магазина (время прихода)
+                  </div>
+                }
+              >
+                <button className="w-8">
+                  <InfoCircleOutlined />
+                </button>
+              </Tooltip>
+            </Flex>
+            <TgDatepicker
+              className="w-full h-12 bg-transparent mt-3"
+              showTime
+              placeholder="Дата поступления"
+              format="YYYY-MM-DD HH:mm"
+              onChange={(date: dayjs.Dayjs) => $received_at(date)}
+            />
+          </>
+        )}
 
-        <Flex justify="space-between" align="center" className="mt-6">
-          <Typography className="font-bold">Дата продажи товара</Typography>
+        {qualityCategs.client === Number(childId) && (
+          <>
+            <Flex justify="space-between" align="center" className="mt-6">
+              <Typography className="font-bold">Дата продажи товара</Typography>
 
-          <Tooltip
-            color="white"
-            zIndex={9}
-            placement="bottomRight"
-            title={
-              <div className="text-xs text-black">
-                <p className="font-bold inline">Дата продажи товара - </p>
-                дата когда вы покупали товар из магазина
-              </div>
-            }
-          >
-            <button className="w-8">
-              <InfoCircleOutlined />
-            </button>
-          </Tooltip>
-        </Flex>
-        <TgDatepicker
-          className="w-full h-12 bg-transparent mt-3"
-          showTime
-          format="YYYY-MM-DD HH:mm"
-          placeholder="Дата продажи товара"
-          onChange={(date: dayjs.Dayjs) => $selling_at(date)}
-        />
+              <Tooltip
+                color="white"
+                zIndex={9}
+                placement="bottomRight"
+                title={
+                  <div className="text-xs text-black">
+                    <p className="font-bold inline">Дата продажи товара - </p>
+                    дата когда вы покупали товар из магазина
+                  </div>
+                }
+              >
+                <button className="w-8">
+                  <InfoCircleOutlined />
+                </button>
+              </Tooltip>
+            </Flex>
+            <TgDatepicker
+              className="w-full h-12 bg-transparent mt-3"
+              showTime
+              format="YYYY-MM-DD HH:mm"
+              placeholder="Дата продажи товара"
+              onChange={(date: dayjs.Dayjs) => $selling_at(date)}
+            />
+          </>
+        )}
+        {!qualityKeys[+childId!] && (
+          <>
+            <Flex justify="space-between" align="center" className="mt-6">
+              <Typography className="font-bold">
+                Дата поступления жалобы со стороны клиента
+              </Typography>
+
+              <Tooltip
+                color="white"
+                zIndex={9}
+                placement="bottomRight"
+                title={
+                  <div className="text-xs text-black">
+                    <p className="font-bold inline">
+                      Дата поступления жалобы со стороны клиента -{' '}
+                    </p>
+                    дата когда гость оставил жалобу
+                  </div>
+                }
+              >
+                <button className="w-8">
+                  <InfoCircleOutlined />
+                </button>
+              </Tooltip>
+            </Flex>
+            <TgDatepicker
+              className="w-full h-12 bg-transparent mt-3"
+              showTime
+              format="YYYY-MM-DD HH:mm"
+              placeholder="Дата поступления жалобы"
+              onChange={(date: dayjs.Dayjs) => $date_clients_complaint(date)}
+            />
+          </>
+        )}
+
+        {!qualityKeys[+childId!] && (
+          <>
+            <Typography className="font-bold mt-4">
+              Укажите имя клиента
+            </Typography>
+
+            <MainInput
+              register={register('client_name')}
+              placeholder={'Имя клиента'}
+              className={'mt-2 bg-transparent !border-[#d9d9d9]'}
+            />
+          </>
+        )}
 
         <Typography className="font-bold mt-4">
           Укажите номер управляющего филиала
@@ -438,19 +536,28 @@ const CreateOrderScreen = () => {
           className={'mt-2 bg-transparent !border-[#d9d9d9]'}
         />
 
-        <Typography className="font-bold mt-4">
-          Укажите номер клиента
-        </Typography>
-        <MaskedInput
-          placeholder={'Номер клиента'}
-          register={register('client_phone')}
-          className={'mt-2 bg-transparent !border-[#d9d9d9]'}
-        />
+        {(qualityCategs.client === Number(childId) ||
+          !qualityKeys[+childId!]) && (
+          <>
+            <Typography className="font-bold mt-4">
+              Укажите номер клиента
+            </Typography>
+            <MaskedInput
+              placeholder={'Номер клиента'}
+              register={register('client_phone')}
+              className={'mt-2 bg-transparent !border-[#d9d9d9]'}
+            />
+          </>
+        )}
 
-        <Typography className={'mt-4 mb-1'}>Описание жалобы</Typography>
+        <Typography className={'mt-4 mb-1 font-bold'}>
+          Описание жалобы
+        </Typography>
         <MainTextArea register={register('description')} />
 
-        <Typography className={'mt-4'}>Фото</Typography>
+        <Typography className={'mt-4'}>
+          <span className="font-bold">Фото</span> (если есть)
+        </Typography>
         {renderUploadImage}
 
         <Button

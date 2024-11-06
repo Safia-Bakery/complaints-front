@@ -82,6 +82,8 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
             src={`${baseURL}/${item.file_name}`}
             className={'w-full h-full rounded-full'}
             alt={`${item.file_name}`}
+            height={56}
+            width={56}
           />
         </div>
       ))
@@ -111,7 +113,7 @@ const UploadImages = ({ handleModal, keyObj: key, open }: Props) => {
         closable
         loading={isPending}
         title="Загрузить фото"
-        classNames={{ content: '!p-4' }}
+        classNames={{ content: '!p-4 min-w-48' }}
         className={'flex !p-0 items-center justify-center'}
       >
         <div className={'relative w-full flex flex-1'}>

@@ -19,6 +19,7 @@ export type ComplaintsBody = {
   client_number?: string; // phone number
   client_gender?: string;
   date_purchase?: string;
+  date_clients_complaint?: string;
   date_return?: string;
   comment?: string;
   autonumber?: string;

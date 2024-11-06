@@ -32,7 +32,7 @@ const SelectSubCategory = () => {
             <Link
               to={`${item.id}`}
               className={'w-full'}
-              state={{ title: item.name }}
+              state={{ title: state.title, sub_category: item.name }}
             >
               <Button
                 btnType={BtnTypes.tgPrimary}
