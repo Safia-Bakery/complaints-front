@@ -46,7 +46,7 @@ const MainDropZone = ({ onChange, className }: Props) => {
   };
   return (
     <Dragger {...props} className={className}>
-      <p className="ant-upload-drag-icon !mb-2">
+      <p className="ant-upload-drag-icon">
         <InboxOutlined />
       </p>
       <p className="ant-upload-text">{t('upload_files')}</p>

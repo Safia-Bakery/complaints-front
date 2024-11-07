@@ -24,6 +24,7 @@ import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
 import complaintsMutation from '@/hooks/mutations/complaintv2';
 import MainDropZone from '@/components/MainAntDropZone';
+import { Col, Flex, Row } from 'antd';
 
 const AddComplaint = () => {
   const navigate = useNavigate();
@@ -138,39 +139,41 @@ const AddComplaint = () => {
             />
           </BaseInput>
         </div>
+        <Flex gap={16} flex={1} className="md:flex-row flex-col mt-3">
+          <Col md={16} sm={24}>
+            <Row className="flex gap-4">
+              <BaseInput label="purchase_date" className="flex-1">
+                <MainDatePicker
+                  dateFormat="dd.MM.YYYY, h:mm"
+                  showTimeSelect
+                  onChange={handleDatePurchase}
+                  selected={date_purchase}
+                />
+              </BaseInput>
+              <BaseInput label="date_sending_samples" className="flex-1">
+                <MainDatePicker
+                  dateFormat="dd.MM.YYYY, h:mm"
+                  showTimeSelect
+                  onChange={handleDateReturn}
+                  selected={date_return}
+                />
+              </BaseInput>
+            </Row>
 
-        <div className="flex gap-4 mt-3">
-          <BaseInput label="purchase_date" className="flex-1">
-            <MainDatePicker
-              dateFormat="dd.MM.YYYY, h:mm"
-              showTimeSelect
-              onChange={handleDatePurchase}
-              selected={date_purchase}
-            />
-          </BaseInput>
-          <BaseInput label="date_sending_samples" className="flex-1">
-            <MainDatePicker
-              dateFormat="dd.MM.YYYY, h:mm"
-              showTimeSelect
-              onChange={handleDateReturn}
-              selected={date_return}
-            />
-          </BaseInput>
-          <div className="flex flex-1" />
-        </div>
-
-        <div className="flex gap-4 mt-3">
-          <BaseInput label="comments" className="flex-[2] !mb-0">
-            <MainTextArea
-              className="!h-[220px]"
-              register={register('comment')}
-            />
-          </BaseInput>
+            {/* <div className="flex gap-4"> */}
+            <BaseInput label="comments" className="flex-1 !mb-0">
+              <MainTextArea
+                className="!max-h-full"
+                register={register('comment')}
+              />
+            </BaseInput>
+            {/* </div> */}
+          </Col>
 
           <BaseInput label="files" className="flex-1 flex flex-col ">
             <MainDropZone onChange={$files} />
           </BaseInput>
-        </div>
+        </Flex>
 
         <MyButton className="float-end mt-2 w-52" htmlType="submit">
           {t('create')}
