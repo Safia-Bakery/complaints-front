@@ -7,12 +7,17 @@ import { useEffect } from 'react';
 import TgContainer from '@/web-ui/components/tg-container';
 import useCategories from '@/hooks/useCategories.ts';
 import Loading from '@/components/Loader';
+import useTgUser from '@/hooks/useTgUser';
+import { branchSelector } from '@/store/reducers/tg-get-titles';
+import { useAppSelector } from '@/store/rootConfig';
 
 const CheckOrderDetails = () => {
   const location = useLocation();
   const { childId } = useParams();
   const navigate = useNavigate();
   const state = location?.state as OrderDetails;
+  const { telegram_id } = useAppSelector(branchSelector);
+  const { data: user } = useTgUser({ telegram_id, enabled: false });
   const { data, isLoading } = useCategories({
     id: Number(childId),
     enabled: !!childId,
@@ -29,7 +34,8 @@ const CheckOrderDetails = () => {
     <TgContainer>
       <Flex vertical className={'h-svh overflow-y-auto'}>
         <span>
-          <span className={'font-bold'}>Филиал:</span> Ракат
+          <span className={'font-bold'}>Филиал:</span>{' '}
+          {user?.branch?.id?.toString()}
         </span>
 
         <span>

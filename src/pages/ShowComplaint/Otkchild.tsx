@@ -6,7 +6,6 @@ import Loading from '@/components/Loader';
 import { useComplaintV2 } from '@/hooks/complaint';
 import complaintsMutation from '@/hooks/mutations/complaintv2';
 
-import useComplaints from '@/hooks/useComplaints';
 import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
 import { BtnTypes, OrderStatus } from '@/utils/types';
@@ -91,11 +90,11 @@ const Otkchild = () => {
           <table className="w-full bordered gray rounded-xl overflow-hidden">
             <tbody>
               <tr>
-                <th className="w-60">{t('guest_or_shop')}</th>
+                <th className="w-60 text-left">{t('guest_or_shop')}</th>
                 <td>{complaint?.is_client ? t('guest') : t('shop')}</td>
               </tr>
               <tr>
-                <th className="w-60">{t('car_number')}</th>
+                <th className="w-60 text-left">{t('car_number')}</th>
                 <td>
                   <MainInput
                     className="!border-none bg-transparent"
@@ -111,6 +110,7 @@ const Otkchild = () => {
             <div className="rounded-xl bg-[#ECEDEE] flex py-2 px-4 gap-4">
               <label className="flex items-center gap-2">
                 <input
+                  disabled={!!complaint?.certificate}
                   type="radio"
                   value={'1'}
                   id={'1'}
@@ -120,6 +120,7 @@ const Otkchild = () => {
               </label>
               <label className="flex items-center gap-2">
                 <input
+                  disabled={!!complaint?.certificate}
                   type="radio"
                   value={'0'}
                   id={'0'}
@@ -134,6 +135,7 @@ const Otkchild = () => {
             <div className="rounded-xl bg-[#ECEDEE] flex py-2 px-4 gap-4">
               <label className="flex items-center gap-2">
                 <input
+                  disabled={!!complaint?.certificate}
                   type="radio"
                   value={'1'}
                   id={'1'}
@@ -143,6 +145,7 @@ const Otkchild = () => {
               </label>
               <label className="flex items-center gap-2">
                 <input
+                  disabled={!!complaint?.certificate}
                   type="radio"
                   value={'0'}
                   id={'0'}
@@ -157,6 +160,7 @@ const Otkchild = () => {
             <div className="rounded-xl bg-[#ECEDEE] flex py-2 px-4 gap-4">
               <label className="flex items-center gap-2">
                 <input
+                  disabled={!!complaint?.certificate}
                   type="radio"
                   value={'1'}
                   id={'1'}
@@ -166,6 +170,7 @@ const Otkchild = () => {
               </label>
               <label className="flex items-center gap-2">
                 <input
+                  disabled={!!complaint?.certificate}
                   type="radio"
                   value={'0'}
                   id={'0'}

@@ -185,7 +185,7 @@ const ComplaintModals = () => {
         </form>
       )}
 
-      {modal === ModalTypes.edit_purchase_date && (
+      {modal === ModalTypes.edit_purchase_date && !complaint?.certificate && (
         <form
           onSubmit={handleSubmit(handleComplaint())}
           className={'w-[420px]'}
@@ -214,7 +214,7 @@ const ComplaintModals = () => {
         </form>
       )}
 
-      {modal === ModalTypes.edit_sending_date && (
+      {modal === ModalTypes.edit_sending_date && !complaint?.certificate && (
         <form
           onSubmit={handleSubmit(handleComplaint())}
           className={'w-[420px]'}
@@ -243,7 +243,7 @@ const ComplaintModals = () => {
         </form>
       )}
 
-      {modal === ModalTypes.edit_comment && (
+      {modal === ModalTypes.edit_comment && !complaint?.certificate && (
         <form
           onSubmit={handleSubmit(handleComplaint())}
           className={'w-[420px]'}
@@ -268,7 +268,7 @@ const ComplaintModals = () => {
         </form>
       )}
 
-      {modal === ModalTypes.edit_branch && (
+      {modal === ModalTypes.edit_branch && !complaint?.certificate && (
         <form
           onSubmit={handleSubmit(handleComplaint())}
           className={'w-[420px]'}
@@ -290,7 +290,7 @@ const ComplaintModals = () => {
         </form>
       )}
 
-      {modal === ModalTypes.add_expense && (
+      {modal === ModalTypes.add_expense && !complaint?.certificate && (
         <div className={'w-[420px]'}>
           <Header title="add_summ_of_expense">
             <button onClick={closeModal} className="close" type="button">
@@ -324,7 +324,7 @@ const ComplaintModals = () => {
         </div>
       )}
 
-      {modal === ModalTypes.edit_category && (
+      {modal === ModalTypes.edit_category && !complaint?.certificate && (
         <form
           onSubmit={handleSubmit(handleComplaint())}
           className={'w-[420px]'}

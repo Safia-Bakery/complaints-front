@@ -13,7 +13,7 @@ import trashIcon from '/icons/trash.svg';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Loading from '@/components/Loader';
 import dayjs from 'dayjs';
-import { dateTimeFormat } from '@/utils/helper';
+import { dateTimeFormat, numberWithCommas } from '@/utils/helper';
 import { useMemo } from 'react';
 import { baseURL } from '@/api/baseApi';
 import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
@@ -53,7 +53,9 @@ const ShowComplaint = () => {
 
   const { mutate, isPending } = complaintsMutation();
 
-  const handleModal = (modal: ModalTypes) => () => navigateParams({ modal });
+  const handleModal = (modal: ModalTypes) => () => {
+    if (!complaint?.certificate) navigateParams({ modal });
+  };
 
   const handleStatus = (st: OrderStatus) => {
     mutate(
@@ -128,49 +130,53 @@ const ShowComplaint = () => {
             <table className="w-full bordered gray">
               <tbody>
                 <tr>
-                  <th className="w-60">{t('type')}</th>
+                  <th className="w-60 text-left">{t('type')}</th>
                   <td>{t(`${complaint?.subcategory?.category?.name}`)}</td>
                 </tr>
                 <tr>
-                  <th>{t('category')}</th>
+                  <th className="text-left">{t('category')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>{complaint?.subcategory?.name}</p>
-                      <TableViewBtn
-                        onClick={handleModal(ModalTypes.edit_category)}
-                      />
+                      {!complaint?.certificate && (
+                        <TableViewBtn
+                          onClick={handleModal(ModalTypes.edit_category)}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('country')}</th>
+                  <th className="text-left">{t('country')}</th>
                   <td>
                     {CountrySelect[Number(complaint?.branch?.country_id)]}
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('branch')}</th>
+                  <th className="text-left">{t('branch')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>{complaint?.branch?.name}</p>
-                      <TableViewBtn
-                        onClick={handleModal(ModalTypes.edit_branch)}
-                      />
+                      {!complaint?.certificate && (
+                        <TableViewBtn
+                          onClick={handleModal(ModalTypes.edit_branch)}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('name')}</th>
+                  <th className="text-left">{t('name')}</th>
                   <td>{complaint?.client_name}</td>
                 </tr>
                 {complaint?.client?.name && (
                   <tr>
-                    <th>{t('author')}</th>
+                    <th className="text-left">{t('author')}</th>
                     <td>{complaint?.client?.name}</td>
                   </tr>
                 )}
                 <tr>
-                  <th>{t('phone')}</th>
+                  <th className="text-left">{t('phone')}</th>
                   <td>
                     {complaint?.client_number ? (
                       <Link
@@ -185,7 +191,7 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('comments')}</th>
+                  <th className="text-left">{t('comments')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p
@@ -195,9 +201,11 @@ const ShowComplaint = () => {
                       >
                         {complaint?.comment}
                       </p>
-                      <TableViewBtn
-                        onClick={handleModal(ModalTypes.edit_comment)}
-                      />
+                      {!complaint?.certificate && (
+                        <TableViewBtn
+                          onClick={handleModal(ModalTypes.edit_comment)}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -208,12 +216,12 @@ const ShowComplaint = () => {
             <table className="w-full bordered gray">
               <tbody>
                 <tr>
-                  <th className="w-60">{t('status')}</th>
+                  <th className="w-60 text-left">{t('status')}</th>
                   <td>{t(OrderStatus[Number(complaint?.status)])}</td>
                 </tr>
                 {com_sphere === ComplaintsSpheres[ComplaintsSpheres.otk] && (
                   <tr>
-                    <th className="w-60">{t('otk_status')}</th>
+                    <th className="w-60 text-left">{t('otk_status')}</th>
                     <td>{t(OrderStatus[Number(complaint?.otk_status)])}</td>
                   </tr>
                 )}
@@ -222,11 +230,11 @@ const ShowComplaint = () => {
                   <td>{t(GenderType[Number(order?.client)])}</td>
                 </tr> */}
                 <tr>
-                  <th>Изменил:</th>
+                  <th className="text-left">Изменил:</th>
                   <td>{complaint?.updated_by || t('not_given')}</td>
                 </tr>
                 <tr>
-                  <th>Дата последнего обновления:</th>
+                  <th className="text-left">Дата последнего обновления:</th>
                   <td>
                     {complaint?.updated_at
                       ? dayjs(complaint?.updated_at)?.format(dateTimeFormat)
@@ -234,7 +242,7 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('purchase_date')}</th>
+                  <th className="text-left">{t('purchase_date')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>
@@ -244,14 +252,16 @@ const ShowComplaint = () => {
                             )
                           : t('not_given')}
                       </p>
-                      <TableViewBtn
-                        onClick={handleModal(ModalTypes.edit_purchase_date)}
-                      />
+                      {!complaint?.certificate && (
+                        <TableViewBtn
+                          onClick={handleModal(ModalTypes.edit_purchase_date)}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('sending_date')}</th>
+                  <th className="text-left">{t('sending_date')}</th>
                   <td>
                     <div className="flex justify-between">
                       <p>
@@ -259,18 +269,20 @@ const ShowComplaint = () => {
                           ? dayjs(complaint?.date_return).format(dateTimeFormat)
                           : t('not_given')}
                       </p>
-                      <TableViewBtn
-                        onClick={handleModal(ModalTypes.edit_sending_date)}
-                      />
+                      {!complaint?.certificate && (
+                        <TableViewBtn
+                          onClick={handleModal(ModalTypes.edit_sending_date)}
+                        />
+                      )}
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('created_at')}</th>
+                  <th className="text-left">{t('created_at')}</th>
                   <td>{dayjs(complaint?.created_at).format(dateTimeFormat)}</td>
                 </tr>
                 <tr>
-                  <th>Блюдо/Продукт</th>
+                  <th className="text-left">Блюдо/Продукт</th>
                   <td>
                     {!!complaint?.product_name
                       ? complaint?.product_name
@@ -278,14 +290,16 @@ const ShowComplaint = () => {
                   </td>
                 </tr>
                 <tr>
-                  <th>{t('expence')}</th>
+                  <th className="text-left">{t('expence')}</th>
                   <td>
-                    {complaint?.expense ? complaint?.expense : t('not_given')}
+                    {complaint?.expense
+                      ? numberWithCommas(complaint?.expense)
+                      : t('not_given')}
                   </td>
                 </tr>
                 {!!complaint?.deny_reason && (
                   <tr>
-                    <th>{t('deny_reason')}</th>
+                    <th className="text-left">{t('deny_reason')}</th>
                     <td>{complaint?.deny_reason}</td>
                   </tr>
                 )}

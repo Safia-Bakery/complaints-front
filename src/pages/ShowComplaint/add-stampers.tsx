@@ -10,6 +10,7 @@ import {
   ExclamationCircleOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined,
+  FileTextOutlined,
 } from '@ant-design/icons';
 import { ComplaintStamp } from '@/types/order-details';
 import {
@@ -45,9 +46,9 @@ const DisableAction: { [key: number]: boolean } = {
 };
 
 const statusObj: { [key: number]: ReactNode } = {
-  0: <ExclamationCircleOutlined className="text-blue-500" />,
-  1: <CheckCircleOutlined className="bg-green-500" />,
-  2: <CloseCircleOutlined className="bg-red-400" />,
+  0: <ExclamationCircleOutlined className="text-blue-500 text-xl" />,
+  1: <CheckCircleOutlined className="text-green-500 text-xl" />,
+  2: <CloseCircleOutlined className="text-red-400 text-xl" />,
 };
 
 enum Modals {
@@ -64,6 +65,11 @@ const AddStampers = () => {
   const [activeRoleId, setActiveRoleId] = useState<number>();
   const { mutate: complaint, isPending: complainPending } =
     complaintsMutation();
+
+  const { data: orderNew, refetch } = useComplaintV2({
+    complaint_id: Number(id),
+    enabled: false,
+  });
 
   const columns = useMemo<ColumnsType<ComplaintStamp>>(
     () => [
@@ -87,7 +93,8 @@ const AddStampers = () => {
         dataIndex: 'action',
         width: 50,
         render: (_, record) =>
-          !DisableAction[record?.status!] && (
+          !DisableAction[record?.status!] &&
+          !orderNew?.certificate && (
             <Popconfirm
               title="Вы действительно хотите удалить этот пользователь?"
               onConfirm={() =>
@@ -99,7 +106,7 @@ const AddStampers = () => {
               okText={t('yes')}
               cancelText={t('no')}
             >
-              <DeleteOutlined color="red" />
+              <DeleteOutlined className="text-xl text-red-600" />
             </Popconfirm>
           ),
       },
@@ -109,11 +116,6 @@ const AddStampers = () => {
 
   const { mutate, isPending } = handleStampers();
   const { register, getValues, reset } = useForm();
-
-  const { data: orderNew, refetch } = useComplaintV2({
-    complaint_id: Number(id),
-    enabled: false,
-  });
 
   const { data: stampers, isLoading: stamperLoading } = getStampers({
     id: activeRoleId,
@@ -207,11 +209,15 @@ const AddStampers = () => {
         <table className="w-full bordered gray">
           <tbody>
             <tr>
-              <th className="w-60">ОТВЕТ №1</th>
+              <th className="w-60 text-left">ОТВЕТ №1</th>
               <td>
                 <Flex justify="space-between">
                   <p>{orderNew?.first_response || t('not_given')}</p>
-                  <TableViewBtn onClick={() => handleModal(Modals.first_res)} />
+                  {!orderNew?.certificate && (
+                    <TableViewBtn
+                      onClick={() => handleModal(Modals.first_res)}
+                    />
+                  )}
                 </Flex>
               </td>
               <td>
@@ -221,13 +227,19 @@ const AddStampers = () => {
               </td>
             </tr>
             <tr>
-              <th className="w-60">ОТВЕТ №2</th>
+              <th className="w-60 text-left">Текст заключения</th>
               <td>
                 <Flex justify="space-between">
-                  <p>{orderNew?.second_response || t('not_given')}</p>
-                  <TableViewBtn
-                    onClick={() => handleModal(Modals.second_res)}
-                  />
+                  <p className="max-w-[95%] w-full">
+                    {orderNew?.second_response || t('not_given')}
+                  </p>
+                  <div className="">
+                    {!orderNew?.certificate && (
+                      <TableViewBtn
+                        onClick={() => handleModal(Modals.second_res)}
+                      />
+                    )}
+                  </div>
                 </Flex>
               </td>
               <td>
@@ -237,7 +249,7 @@ const AddStampers = () => {
               </td>
             </tr>
             <tr>
-              <th className="w-60">Файл заключения</th>
+              <th className="w-60 text-left">Файл заключения</th>
               <td colSpan={2}>
                 {!!orderNew?.certificate ? (
                   <Link
@@ -245,7 +257,7 @@ const AddStampers = () => {
                     to={`${baseURL}/${orderNew?.certificate}`}
                     target="_blank"
                   >
-                    file
+                    <FileTextOutlined className="text-blue-500 text-2xl" />
                   </Link>
                 ) : (
                   t('not_given')

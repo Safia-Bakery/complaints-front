@@ -6,7 +6,7 @@ interface Props {
 
 const TableViewBtn: FC<Props> = ({ onClick }) => {
   return (
-    <div onClick={onClick} id="edit_item">
+    <div onClick={onClick} id="edit_item" className="h-5 w-5">
       <img
         className={'h-5 w-5 cursor-pointer'}
         src="/icons/edit.svg"
