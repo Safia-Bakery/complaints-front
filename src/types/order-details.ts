@@ -50,6 +50,8 @@ export interface ComplaintsResponse {
   client_name: string;
   client_number: string;
   date_purchase: string;
+  first_response: string;
+  second_response: string;
   date_return: string;
   status: number;
   id: number;
@@ -181,13 +183,6 @@ export interface ComplaintParams {
   complaint_id?: number;
   enabled?: boolean;
 }
-
-export const StatusColors: { [key: number]: string } = {
-  1: '#FF0000',
-  2: '#FFEE5B',
-  3: '#31B602',
-  4: '#FFFFFF',
-};
 
 export interface Stampers {
   id: number;

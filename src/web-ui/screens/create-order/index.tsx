@@ -108,7 +108,7 @@ const CreateOrderScreen = () => {
         manager_phone: fixedString(manager_phone),
         client_number: fixedString(client_phone),
         comment: description,
-        files: images['product_images']?.map((item) => item.file_name),
+        files: images?.['product_images']?.map((item) => item?.file_name),
         client_name,
       },
       {

@@ -110,6 +110,11 @@ const Complaints = () => {
         render: (_, record) => dayjs(record?.created_at).format(dateTimeFormat),
       },
       {
+        dataIndex: 'product_name',
+        title: 'Продукт',
+        render: (_, record) => record?.product_name || t('not_given'),
+      },
+      {
         dataIndex: 'expence',
         title: t('expence'),
       },

@@ -284,9 +284,15 @@ const ShowComplaint = () => {
                 <tr>
                   <th className="text-left">Блюдо/Продукт</th>
                   <td>
-                    {!!complaint?.product_name
-                      ? complaint?.product_name
-                      : t('not_given')}
+                    {complaint?.product_name || (
+                      <Flex vertical>
+                        {complaint?.complaint_product?.map((item) => (
+                          <span key={item?.product_id}>
+                            {item?.product?.name}
+                          </span>
+                        ))}
+                      </Flex>
+                    )}
                   </td>
                 </tr>
                 <tr>

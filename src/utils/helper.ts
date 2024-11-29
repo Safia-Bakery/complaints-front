@@ -18,8 +18,8 @@ export const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       gcTime: EPresetTimes.MINUTE * 5,
       staleTime: EPresetTimes.SECOND * 10,
-      refetchOnReconnect: true,
-      refetchOnMount: true,
+      // refetchOnReconnect: true,
+      // refetchOnMount: true,
     },
   },
 });
@@ -62,11 +62,11 @@ export const imageContentType = 'multipart/form-data';
 
 export const fixedString = (value: string) => {
   return value
-    .split('')
-    .filter((item) => {
-      return [' ', '-', '(', ')', '_', '+'].indexOf(item) === -1;
+    ?.split('')
+    ?.filter((item) => {
+      return [' ', '-', '(', ')', '_', '+']?.indexOf(item) === -1;
     })
-    .join('');
+    ?.join('');
 };
 
 type CancelReasonType = {

@@ -3,6 +3,7 @@ import { tokenSelector } from 'reducers/auth';
 import baseApi from '@/api/baseApi';
 import { useAppSelector } from '@/store/rootConfig';
 import { ComplaintRes } from '@/types/order-details';
+import { EPresetTimes } from '@/utils/helper';
 
 export type ComplaintsParams = {
   enabled?: boolean;
@@ -21,5 +22,6 @@ export const useComplaintV2 = ({
         .get(`/api/v2/complaints/${complaint_id}/`)
         .then(({ data: response }) => response as ComplaintRes),
     enabled: !!token && enabled,
+    staleTime: EPresetTimes.MINUTE * 4,
   });
 };

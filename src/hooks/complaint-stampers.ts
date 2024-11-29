@@ -60,6 +60,6 @@ export const getStampers = ({
         })
         .then(({ data: response }) => response as Stampers[]),
     enabled: !!token && enabled,
-    staleTime: EPresetTimes.MINUTE * 5,
+    staleTime: EPresetTimes.MINUTE * 4,
   });
 };

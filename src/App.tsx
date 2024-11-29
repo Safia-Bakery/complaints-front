@@ -53,16 +53,9 @@ const SelectSubCategory = lazy(
   () => import('@/web-ui/screens/select-sub-category')
 );
 const CreateOrderScreen = lazy(() => import('@/web-ui/screens/create-order'));
-const CheckOrderDetails = lazy(
-  () => import('@/web-ui/screens/check-order-details')
-);
 const Success = lazy(() => import('@/web-ui/screens/success'));
-const TgNewOrders = lazy(() => import('@/web-ui/screens/new-orders'));
-const TgOrdersResults = lazy(
-  () => import('@/web-ui/screens/tg-complaints-results')
-);
-const ComplaintsArchive = lazy(
-  () => import('@/web-ui/screens/complaints-archive')
+const TgComplaints = lazy(
+  () => import('@/web-ui/screens/tg-complaints/index.tsx')
 );
 const TgShowComplaint = lazy(() => import('@/web-ui/screens/show-complaint'));
 const TgUnAuthorized = lazy(() => import('@/web-ui/screens/unauthorized'));
@@ -406,14 +399,6 @@ const App = () => {
           }
         />
         <Route
-          path={`select-category/:childId/:subId/${routePath.checkData}`}
-          element={
-            <Suspend>
-              <CheckOrderDetails />
-            </Suspend>
-          }
-        />
-        <Route
           path={`success/:id`}
           element={
             <Suspend>
@@ -425,7 +410,7 @@ const App = () => {
           path={`new-orders`}
           element={
             <Suspend>
-              <TgNewOrders />
+              <TgComplaints complaintParam={{ in_process: true }} />
             </Suspend>
           }
         />
@@ -433,7 +418,7 @@ const App = () => {
           path={`orders-results`}
           element={
             <Suspend>
-              <TgOrdersResults />
+              <TgComplaints complaintParam={{ results: true }} />
             </Suspend>
           }
         />
@@ -441,7 +426,7 @@ const App = () => {
           path={`orders-archive`}
           element={
             <Suspend>
-              <ComplaintsArchive />
+              <TgComplaints complaintParam={{ archived: true }} />
             </Suspend>
           }
         />

@@ -2,18 +2,30 @@ import { Flex, Image, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { dateTimeFormat } from '@/utils/helper.ts';
 import { useComplaintV2 } from '@/hooks/complaint.ts';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { baseURL } from '@/api/baseApi.ts';
 import { useTranslation } from 'react-i18next';
 import { OrderStatus } from '@/utils/types';
 import { formatString } from '@/utils/string-formatter';
+import Loading from '@/components/Loader';
+import { FileTextOutlined } from '@ant-design/icons';
+import { bgColor } from '@/web-ui/utils/status-colors';
 
 const ShowComplaint = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const { data, isLoading } = useComplaintV2({ complaint_id: Number(id) });
+
+  if (isLoading) return <Loading />;
+
   return (
-    <Flex vertical className={'overflow-y-auto'}>
+    <Flex vertical className={'overflow-y-auto relative pt-2'}>
+      <div
+        className={`h-5 w-5 rounded-full m-auto absolute top-2 right-2`}
+        style={{
+          backgroundColor: bgColor(data as any),
+        }}
+      />
       <Typography className={'w-full font-bold text-center mb-2'}>
         Детали заказа
       </Typography>
@@ -75,12 +87,44 @@ const ShowComplaint = () => {
         <span className={'font-bold'}>Описание:</span>{' '}
         {data?.comment || 'Не задано'}
       </span>
+      <span>
+        <span className={'font-bold'}>ОТВЕТ №1:</span>{' '}
+        {data?.first_response || 'Не задано'}
+      </span>
+      <span>
+        <span className={'font-bold'}>Текст заключения:</span>{' '}
+        {data?.second_response || 'Не задано'}
+      </span>
       {!!data?.deny_reason && (
         <span>
           <span className={'font-bold'}>{t('deny_reason')}:</span>{' '}
           {data?.deny_reason}
         </span>
       )}
+      <span>
+        <span className={'font-bold'}>Подтвердившие пользователи:</span>{' '}
+        <Flex vertical>
+          {data?.complaint_stamp?.map((item, idx) => (
+            <span key={item?.user_id}>
+              {idx + 1}. {item?.user?.name}
+            </span>
+          ))}
+        </Flex>
+      </span>
+      <span>
+        <span className={'font-bold'}>Файл заключения:</span>{' '}
+        {!!data?.certificate ? (
+          <Link
+            className="flex items-center p-1 gap-2 "
+            to={`${baseURL}/${data?.certificate}`}
+            target="_blank"
+          >
+            <FileTextOutlined className="text-blue-500 text-2xl" />
+          </Link>
+        ) : (
+          t('not_given')
+        )}
+      </span>
       <span>
         <span className={'font-bold'}>Фото:</span>
       </span>

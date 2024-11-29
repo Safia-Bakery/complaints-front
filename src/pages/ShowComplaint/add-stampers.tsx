@@ -188,6 +188,7 @@ const AddStampers = () => {
               ?.map((stamper) => (
                 <button
                   key={stamper.id}
+                  className="flex p-1 rounded-md shadow-sm w-full"
                   onClick={() => handleStamper({ user_id: stamper.id })}
                 >
                   {stamper.name}
@@ -272,7 +273,7 @@ const AddStampers = () => {
         <Flex align="center" justify="space-between" gap={40} className="w-fit">
           <Typography className="font-bold">Добавить сотрудника</Typography>
 
-          {!DisableAction[orderNew?.status!] && (
+          {!DisableAction[orderNew?.status!] && !orderNew?.certificate && (
             <button onClick={() => handleModal(Modals.role)}>
               <PlusCircleOutlined />
             </button>

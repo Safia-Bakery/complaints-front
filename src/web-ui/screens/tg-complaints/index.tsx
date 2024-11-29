@@ -4,19 +4,28 @@ import { useMemo } from 'react';
 import { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { dateTimeFormat } from '@/utils/helper.ts';
-import { ComplaintsResponse, StatusColors } from '@/types/order-details.ts';
+import { ComplaintsResponse } from '@/types/order-details.ts';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/store/rootConfig.ts';
 import { branchSelector } from 'reducers/tg-get-titles.ts';
-import { statusTip } from '@/utils/complaints';
 import { Tooltip } from 'antd';
+import { statusTip } from '@/utils/complaints';
+import { bgColor } from '@/web-ui/utils/status-colors';
 
-const NewOrders = () => {
+interface Props {
+  complaintParam?: {
+    results?: boolean;
+    in_process?: boolean;
+    archived?: boolean;
+  };
+}
+
+const TgComplaints = ({ complaintParam }: Props) => {
   const navigate = useNavigate();
   const { telegram_id } = useAppSelector(branchSelector);
   const { data, isLoading } = useTgComplaints({
     client_id: Number(telegram_id),
-    in_process: true,
+    ...complaintParam,
   });
 
   const columns = useMemo<ColumnsType<ComplaintsResponse>>(
@@ -24,6 +33,10 @@ const NewOrders = () => {
       {
         render: (_, r, index) => index + 1,
         title: '№Документа',
+      },
+      {
+        dataIndex: 'id',
+        title: 'ID',
       },
       {
         dataIndex: 'created_at',
@@ -39,7 +52,7 @@ const NewOrders = () => {
             <div
               className={`h-5 w-5 rounded-full m-auto`}
               style={{
-                backgroundColor: StatusColors[record.status || 2],
+                backgroundColor: bgColor(record),
               }}
             />
           </Tooltip>
@@ -63,4 +76,4 @@ const NewOrders = () => {
   );
 };
 
-export default NewOrders;
+export default TgComplaints;
