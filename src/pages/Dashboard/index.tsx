@@ -172,7 +172,7 @@ const Dashboard = () => {
               <span className="flex items-center gap-2">
                 <img
                   src={
-                    data?.qrcode_stats?.percentage_change! < 0
+                    data?.qrcode_stats?.percentage_change! > 0
                       ? decrementIcon
                       : incrementIcon
                   }
@@ -181,9 +181,9 @@ const Dashboard = () => {
                 <span
                   className={cl(' font-medium text-xs', {
                     ['text-[#0DA06A]']:
-                      data?.qrcode_stats?.percentage_change! > 0,
-                    ['text-[#F34A7C]']:
                       data?.qrcode_stats?.percentage_change! < 0,
+                    ['text-[#F34A7C]']:
+                      data?.qrcode_stats?.percentage_change! > 0,
                   })}
                 >
                   {data?.qrcode_stats?.percentage_change.toFixed(2)}%
@@ -191,7 +191,7 @@ const Dashboard = () => {
               </span>
               <img
                 src={
-                  data?.qrcode_stats?.percentage_change! < 0
+                  data?.qrcode_stats?.percentage_change! > 0
                     ? decrementGraph
                     : incrementGraph
                 }
@@ -216,7 +216,7 @@ const Dashboard = () => {
               <span className="flex items-center gap-2">
                 <img
                   src={
-                    data?.complaint_service?.percentage_change! < 0
+                    data?.complaint_service?.percentage_change! > 0
                       ? decrementIcon
                       : incrementIcon
                   }
@@ -225,9 +225,9 @@ const Dashboard = () => {
                 <span
                   className={cl(' font-medium text-xs', {
                     ['text-[#0DA06A]']:
-                      data?.complaint_service?.percentage_change! > 0,
-                    ['text-[#F34A7C]']:
                       data?.complaint_service?.percentage_change! < 0,
+                    ['text-[#F34A7C]']:
+                      data?.complaint_service?.percentage_change! > 0,
                   })}
                 >
                   {data?.complaint_service?.percentage_change.toFixed(2)}%
@@ -235,7 +235,7 @@ const Dashboard = () => {
               </span>
               <img
                 src={
-                  data?.complaint_service?.percentage_change! < 0
+                  data?.complaint_service?.percentage_change! > 0
                     ? decrementGraph
                     : incrementGraph
                 }
@@ -260,7 +260,7 @@ const Dashboard = () => {
               <span className="flex items-center gap-2">
                 <img
                   src={
-                    data?.workers_comparison?.percentage_change! < 0
+                    data?.workers_comparison?.percentage_change! > 0
                       ? decrementIcon
                       : incrementIcon
                   }
@@ -269,9 +269,9 @@ const Dashboard = () => {
                 <span
                   className={cl(' font-medium text-xs', {
                     ['text-[#0DA06A]']:
-                      data?.workers_comparison?.percentage_change! > 0,
-                    ['text-[#F34A7C]']:
                       data?.workers_comparison?.percentage_change! < 0,
+                    ['text-[#F34A7C]']:
+                      data?.workers_comparison?.percentage_change! > 0,
                   })}
                 >
                   {data?.workers_comparison?.percentage_change.toFixed(2)}%
@@ -279,7 +279,7 @@ const Dashboard = () => {
               </span>
               <img
                 src={
-                  data?.workers_comparison?.percentage_change! < 0
+                  data?.workers_comparison?.percentage_change! > 0
                     ? decrementGraph
                     : incrementGraph
                 }
@@ -304,7 +304,7 @@ const Dashboard = () => {
               <span className="flex items-center gap-2">
                 <img
                   src={
-                    data?.complaint_quality?.percentage_change! < 0
+                    data?.complaint_quality?.percentage_change! > 0
                       ? decrementIcon
                       : incrementIcon
                   }
@@ -313,9 +313,9 @@ const Dashboard = () => {
                 <span
                   className={cl(' font-medium text-xs', {
                     ['text-[#0DA06A]']:
-                      data?.complaint_quality?.percentage_change! > 0,
-                    ['text-[#F34A7C]']:
                       data?.complaint_quality?.percentage_change! < 0,
+                    ['text-[#F34A7C]']:
+                      data?.complaint_quality?.percentage_change! > 0,
                   })}
                 >
                   {data?.complaint_quality?.percentage_change.toFixed(2)}%
@@ -323,7 +323,7 @@ const Dashboard = () => {
               </span>
               <img
                 src={
-                  data?.complaint_quality?.percentage_change! < 0
+                  data?.complaint_quality?.percentage_change! > 0
                     ? decrementGraph
                     : incrementGraph
                 }
