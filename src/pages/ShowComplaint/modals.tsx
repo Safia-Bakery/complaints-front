@@ -139,7 +139,7 @@ const ComplaintModals = () => {
       }}
       loading={isPending}
       footer={false}
-      className={cl('!h-[400px] !w-min p-1 overflow-y-auto')}
+      className={cl('!min-h-[400px] h-full !w-min p-1 overflow-y-auto')}
     >
       {modal === ModalTypes.deny_reason && (
         <form
@@ -188,7 +188,7 @@ const ComplaintModals = () => {
       {modal === ModalTypes.edit_purchase_date && !complaint?.certificate && (
         <form
           onSubmit={handleSubmit(handleComplaint())}
-          className={'w-[420px]'}
+          className={'min-w-[420px]'}
         >
           <Header title="edit_purchase_date">
             <button onClick={closeModal} className="close" type="button">
@@ -198,7 +198,7 @@ const ComplaintModals = () => {
           <div className="p-3">
             <BaseInput label="date_sending_samples">
               <MainDatePicker
-                showTimeSelect
+                showTimeInput
                 dateFormat="Pp"
                 selected={
                   !!date_purchase ? dayjs(date_purchase).toDate() : undefined
@@ -227,7 +227,7 @@ const ComplaintModals = () => {
           <div className="p-3">
             <BaseInput label="date_return">
               <MainDatePicker
-                showTimeSelect
+                showTimeInput
                 dateFormat="Pp"
                 selected={
                   !!date_return ? dayjs(date_return).toDate() : undefined

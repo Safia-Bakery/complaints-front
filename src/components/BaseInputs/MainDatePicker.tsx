@@ -20,6 +20,7 @@ interface Props {
   showTimeSelect?: boolean;
   iconClassName?: string;
   dateFormat?: string;
+  showTimeInput?: boolean;
 }
 
 const MainDatePicker: FC<Props> = ({
@@ -30,9 +31,9 @@ const MainDatePicker: FC<Props> = ({
   wrapperClassName,
   showTimeSelect,
   iconClassName,
+  showTimeInput = false,
   dateFormat, //"Pp"
 }) => {
-  const dateRef = useRef<DatePicker>();
   const [open, $open] = useState(false);
   const handleClear = () => onChange(undefined);
 
@@ -52,6 +53,7 @@ const MainDatePicker: FC<Props> = ({
         onClickOutside={toggleModal}
         dateFormat={dateFormat}
         timeIntervals={10}
+        showTimeInput={showTimeInput}
         readOnly
         shouldCloseOnSelect
         onFocus={toggleModal}
