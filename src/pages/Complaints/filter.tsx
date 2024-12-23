@@ -13,7 +13,7 @@ import useCountries from '@/hooks/useCountries';
 import useSubCategories from '@/hooks/useSubCategories';
 import MainSelect from '@/components/BaseInputs/MainSelect';
 import dayjs from 'dayjs';
-import { EPresetTimes } from '@/utils/helper';
+import { EPresetTimes, yearMonthDate } from '@/utils/helper';
 
 const ComplaintsFilter: FC = () => {
   const navigate = useNavigateParams();
@@ -30,10 +30,11 @@ const ComplaintsFilter: FC = () => {
   const expense = useQueryString('expense');
   const updated_by = useQueryString('updated_by');
   const category_id = useQueryString('category_id');
+  const product = useQueryString('product');
 
   const handleCreated = (start: Date | null) => {
     if (start === undefined) deleteParam(['created_at']);
-    if (!!start) navigate({ created_at: start.toISOString() });
+    if (!!start) navigate({ created_at: dayjs(start).format(yearMonthDate) });
   };
 
   const { data: categs, refetch: categoryRefech } = useCategories({
@@ -64,6 +65,7 @@ const ComplaintsFilter: FC = () => {
       phone_number,
       expense,
       updated_by,
+      product,
     });
   }, []);
 
@@ -147,8 +149,7 @@ const ComplaintsFilter: FC = () => {
       <td>
         <BaseInput className="!m-1">
           <MainInput
-            register={register('expense')}
-            type="number"
+            register={register('product')}
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
         </BaseInput>
@@ -156,7 +157,8 @@ const ComplaintsFilter: FC = () => {
       <td>
         <BaseInput className="!m-1">
           <MainInput
-            register={register('updated_by')}
+            register={register('expense')}
+            type="number"
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
         </BaseInput>

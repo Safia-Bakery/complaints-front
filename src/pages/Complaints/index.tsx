@@ -36,6 +36,7 @@ const Complaints = () => {
   const updated_by = useQueryString('updated_by');
   const status = Number(useQueryString('status'));
   const created_at = useQueryString('created_at');
+  const product = useQueryString('product');
   const branchJson = useQueryString('branch');
   const page = Number(useQueryString('page')) || 1;
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
@@ -49,6 +50,7 @@ const Complaints = () => {
     ...(!!phone_number && { phone_number }),
     ...(!!expense && { expense }),
     ...(!!updated_by && { updated_by }),
+    ...(!!product && { product }),
     ...(!!created_at && { created_at }),
     ...(!!branch?.id && { branch_id: branch.id }),
     ...((!!status || status === 0) && { status: +status }),
@@ -99,10 +101,12 @@ const Complaints = () => {
       {
         dataIndex: 'client_name',
         title: t('name'),
+        render: (_, record) => record?.client_name || t('not_given'),
       },
       {
         dataIndex: 'client_number',
         title: t('phone'),
+        render: (_, record) => record?.client_number || t('not_given'),
       },
       {
         dataIndex: 'created_at',
@@ -117,10 +121,7 @@ const Complaints = () => {
       {
         dataIndex: 'expence',
         title: t('expence'),
-      },
-      {
-        dataIndex: 'updated_by',
-        title: t('author'),
+        render: (_, record) => record?.expense || t('not_given'),
       },
       {
         dataIndex: 'status',

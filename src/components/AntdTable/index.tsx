@@ -60,7 +60,7 @@ function AntdTable<T>({
         // locale={{ emptyText: t('empty_list') }}
         sticky
         pagination={
-          totalItems
+          !!totalItems
             ? {
                 total: totalItems,
                 hideOnSinglePage: false,
@@ -74,7 +74,7 @@ function AntdTable<T>({
         }
         columns={columns}
         title={() =>
-          totalItems && (
+          !!totalItems && (
             <div>
               {t('shown_items')}{' '}
               <b>
