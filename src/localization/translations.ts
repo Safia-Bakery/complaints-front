@@ -145,6 +145,8 @@ const localization = {
       select_role: 'Выбрать роль',
       description: 'Описание',
       products: 'Продукты',
+      product: 'Продукт',
+      edit_product: 'Изменить продукт',
       is_match_standard:
         'Соответствует ли образец стандартам компании или нет?',
       upload_files: 'Загрузить файлы',

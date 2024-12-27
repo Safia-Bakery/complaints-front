@@ -34,6 +34,7 @@ export enum ModalTypes {
   add_expense,
   confirm,
   user_images,
+  edit_product,
 }
 
 export enum FileType {

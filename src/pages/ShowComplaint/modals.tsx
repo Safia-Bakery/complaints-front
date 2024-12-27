@@ -85,7 +85,8 @@ const ComplaintModals = () => {
 
   const subcategory_id = watch('subcategory_id');
   const handleComplaint = (body?: ComplaintsBody) => () => {
-    const { fixedReason, cancel_reason, comment, expense } = getValues();
+    const { fixedReason, cancel_reason, comment, expense, product_name } =
+      getValues();
 
     mutate(
       {
@@ -99,6 +100,7 @@ const ComplaintModals = () => {
 
         ...(!!branch?.id && { branch_id: branch.id }),
         ...(subcategory_id && { subcategory_id }),
+        ...(product_name && { product_name }),
         ...(expense && { expense: +expense }),
         ...(comment && comment !== '' && { comment }),
         ...body,
@@ -120,6 +122,7 @@ const ComplaintModals = () => {
     reset({
       purchase_date: new Date(),
       comment: complaint?.comment,
+      product_name: complaint?.product_name,
       subcategory_id: complaint?.subcategory_id?.toString(),
     });
     if (complaint?.date_purchase)
@@ -281,6 +284,32 @@ const ComplaintModals = () => {
           <div className="p-3">
             <BaseInput label="branch" className="flex-1">
               <BranchSelect enabled />
+            </BaseInput>
+
+            <MyButton className="w-full mt-3" htmlType="submit">
+              {t('apply')}
+            </MyButton>
+          </div>
+        </form>
+      )}
+
+      {modal === ModalTypes.edit_product && !complaint?.certificate && (
+        <form
+          onSubmit={handleSubmit(handleComplaint())}
+          className={'w-[420px]'}
+        >
+          <Header title="edit_product">
+            <button onClick={closeModal} className="close" type="button">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </Header>
+          <div className="p-3">
+            <BaseInput label="product">
+              <MainTextArea
+                className="!h-[220px]"
+                placeholder={t('edit_product')}
+                register={register('product_name')}
+              />
             </BaseInput>
 
             <MyButton className="w-full mt-3" htmlType="submit">

@@ -284,15 +284,24 @@ const ShowComplaint = () => {
                 <tr>
                   <th className="text-left">Блюдо/Продукт</th>
                   <td>
-                    {complaint?.product_name || (
-                      <Flex vertical>
-                        {complaint?.complaint_product?.map((item) => (
-                          <span key={item?.product_id}>
-                            {item?.product?.name}
-                          </span>
-                        ))}
-                      </Flex>
-                    )}
+                    <Flex className="w-full" justify="space-between">
+                      {complaint?.product_name || (
+                        <Flex vertical>
+                          {complaint?.complaint_product?.map((item) => (
+                            <span key={item?.product_id}>
+                              {item?.product?.name}
+                            </span>
+                          ))}
+                        </Flex>
+                      )}
+                      {(!!complaint?.product_name ||
+                        !!complaint?.complaint_product?.length) &&
+                        !complaint?.certificate && (
+                          <TableViewBtn
+                            onClick={handleModal(ModalTypes.edit_product)}
+                          />
+                        )}
+                    </Flex>
                   </td>
                 </tr>
                 <tr>
