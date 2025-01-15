@@ -106,6 +106,7 @@ const HRRequests = () => {
       </div>
       <AntdTable
         columns={columns}
+        totalItems={data?.total}
         data={data?.items}
         rowClassName={'text-center'}
       />

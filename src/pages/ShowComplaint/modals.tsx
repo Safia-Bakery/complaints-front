@@ -129,7 +129,6 @@ const ComplaintModals = () => {
       $date_purchase(dayjs(complaint.date_purchase).toDate());
     if (complaint?.date_return)
       $date_return(dayjs(complaint.date_return).toDate());
-    // reset({ purchase_date: data?.items?.[0]?.date_purchase });
   }, [complaint]);
 
   return (

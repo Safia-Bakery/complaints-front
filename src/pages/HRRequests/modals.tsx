@@ -1,11 +1,7 @@
-import Loading from '@/components/Loader';
 import useQueryString from '@/hooks/custom/useQueryString';
-
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import arrow from '/icons/arrow-black.svg';
-import arrowWhite from '/icons/arrow-white.svg';
 import sendIcon from '/icons/send.svg';
 import attached from '/icons/attached.svg';
 import Modal from '@/components/Modal';
@@ -17,10 +13,11 @@ import useHRClients from '@/hooks/useHRClients';
 import Avatar from '@/components/Avatar';
 import useCommunications from '@/hooks/useCommunications';
 import MainTextArea from '@/components/BaseInputs/MainTextArea';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import ChatMsg from '@/components/ChatMsg';
 import { useForm } from 'react-hook-form';
 import communicationMutation from '@/hooks/mutations/communication';
+import { templateMsg } from '@/utils/hr-template-msg';
 
 const resetData = {
   msg_text: '',
@@ -28,17 +25,15 @@ const resetData = {
 };
 
 const HRRequestModals = () => {
-  const { hrdep, sphere } = useParams();
-  const navigate = useNavigate();
+  const { hrdep } = useParams();
   const { t } = useTranslation();
-  const page = Number(useQueryString('page')) || 1;
   const chat_modal = Number(useQueryString('chat_modal'));
   const chat = Number(useQueryString('chat'));
   const removeParam = useRemoveParams();
   const navigateParam = useNavigateParams();
 
   const { mutate: sendMsg, isPending } = communicationMutation();
-  const { register, getValues, reset } = useForm();
+  const { register, getValues, reset, setValue } = useForm();
   const closeModal = () => removeParam(['chat_modal', 'chat']);
 
   const {
@@ -46,7 +41,6 @@ const HRRequestModals = () => {
     isLoading: commLoading,
     refetch,
   } = useCommunications({
-    // hrcomplaint_id: chat_modal,
     hrclient_id: chat,
     enabled: !!chat && !!chat_modal,
   });
@@ -55,6 +49,10 @@ const HRRequestModals = () => {
     enabled: !!chat_modal || !!chat,
     ...(!!chat && { id: chat }),
   });
+
+  const handleTemplateMsg = (text: string) => {
+    setValue('msg_text', text);
+  };
 
   const handleMsgSend = () => {
     const { msg_text, msg_file } = getValues();
@@ -91,7 +89,7 @@ const HRRequestModals = () => {
       centered={false}
       maskClosable
       className="left-[30%] !w-96"
-      onClose={closeModal}
+      onCancel={closeModal}
       loading={clientsloading || commLoading || isPending}
       classNames={{
         content: '!p-0 !rounded-xl overflow-hidden',
@@ -110,7 +108,7 @@ const HRRequestModals = () => {
                 <h3 className="text-white font-bold">{privateClient?.name}</h3>
               </div>
               <button onClick={closeModal}>
-                <span className="flex text-xl">&times;</span>
+                <span className="flex text-xl text-white">&times;</span>
               </button>
             </div>
           )}
@@ -143,10 +141,21 @@ const HRRequestModals = () => {
               )}
             </div>
 
-            <div className="absolute right-0 bottom-0 left-0 border-t border-borderColor">
-              <div className="flex">
+            <div className="absolute right-0 bottom-0 left-0 border-t border-borderColor h-24">
+              <div className="flex relative h-full">
+                <div className="flex overflow-x-auto w-full absolute bottom-0 left-0 right-0 bg-white gap-2 p-1">
+                  {templateMsg[hrdep!]?.map((msg, idx) => (
+                    <span
+                      onClick={() => handleTemplateMsg(msg)}
+                      key={idx}
+                      className="text-[10px] w-40 rounded-full p-1 text-nowrap overflow-ellipsis truncate bg-mainGray"
+                    >
+                      {msg}
+                    </span>
+                  ))}
+                </div>
                 <MainTextArea
-                  className="!border-none flex flex-1 overflow-scroll"
+                  className="!border-none flex flex-1 overflow-scroll !pb-10"
                   register={register('msg_text')}
                 />
 
