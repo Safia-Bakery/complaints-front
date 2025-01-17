@@ -88,11 +88,11 @@ const HRRequestModals = () => {
       closable={false}
       centered={false}
       maskClosable
-      className="left-[30%] !w-96"
+      className="left-[30%] !w-96 min-h-[580px] h-[580px] "
       onCancel={closeModal}
       loading={clientsloading || commLoading || isPending}
       classNames={{
-        content: '!p-0 !rounded-xl overflow-hidden',
+        content: '!p-0 !rounded-xl overflow-hidden h-[580px]',
       }}
     >
       <div className="h-full flex flex-col ">
@@ -148,14 +148,14 @@ const HRRequestModals = () => {
                     <span
                       onClick={() => handleTemplateMsg(msg)}
                       key={idx}
-                      className="text-[10px] w-40 rounded-full p-1 text-nowrap overflow-ellipsis truncate bg-mainGray"
+                      className="text-[10px] w-40 cursor-pointer rounded-full p-1 text-nowrap overflow-ellipsis truncate bg-mainGray"
                     >
                       {msg}
                     </span>
                   ))}
                 </div>
                 <MainTextArea
-                  className="!border-none flex flex-1 overflow-scroll !pb-10"
+                  className="!border-none flex flex-1 overflow-scroll !pb-10 !text-sm"
                   register={register('msg_text')}
                 />
 

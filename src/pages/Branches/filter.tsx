@@ -1,10 +1,7 @@
 import BaseInput from '@/components/BaseInputs';
 import MainInput from '@/components/BaseInputs/MainInput';
 import MainSelect from '@/components/BaseInputs/MainSelect';
-import {
-  useNavigateParams,
-  useRemoveParams,
-} from '@/hooks/custom/useCustomNavigate';
+import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
 import useQueryString from '@/hooks/custom/useQueryString';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -16,12 +13,10 @@ const Status = [
 
 const BranchFilter = () => {
   const navigate = useNavigateParams();
-  const deleteParam = useRemoveParams();
   const status = useQueryString('status');
   const name = useQueryString('name');
 
   const { register, reset, getValues } = useForm();
-  const handleSubmit = () => navigate({ ...getValues() });
 
   useEffect(() => {
     reset({ name, status });
@@ -33,7 +28,9 @@ const BranchFilter = () => {
         <BaseInput className="!m-1">
           <MainInput
             register={register('name')}
-            onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+            onKeyDown={(e) =>
+              e.key === 'Enter' && navigate({ name: getValues('name') })
+            }
           />
         </BaseInput>
       </td>
