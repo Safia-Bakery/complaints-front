@@ -6,39 +6,27 @@ import Container from '@/components/Container';
 import Header from '@/components/Header';
 import Loading from '@/components/Loader';
 import Modal from '@/components/Modal';
-import {
-  useNavigateParams,
-  useRemoveParams,
-} from '@/hooks/custom/useCustomNavigate';
-import useQueryString from '@/hooks/custom/useQueryString';
 import hrRequestMutation from '@/hooks/mutations/hrRequest';
 import useHRRequests from '@/hooks/useHRRequests';
 import { CancelReason, HRStatusOBJ, dateTimeFormat } from '@/utils/helper';
 import errorToast from '@/utils/error-toast.ts';
 import successToast from '@/utils/success-toast.ts';
-import {
-  BtnTypes,
-  HRDeps,
-  HRSpheres,
-  ModalTypes,
-  OrderStatus,
-} from '@/utils/types';
+import { BtnTypes, HRDeps, HRSpheres, OrderStatus } from '@/utils/types';
 import cl from 'classnames';
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 const ShowHRRequest = () => {
   const { t } = useTranslation();
   const { hrdep, id } = useParams();
   const navigate = useNavigate();
-  const modal = useQueryString('modal');
+  const [modal, $modal] = useState(false);
   const { register, handleSubmit, watch, getValues } = useForm();
-  const removeParams = useRemoveParams();
-  const navigateParams = useNavigateParams();
 
-  const closeModal = () => removeParams(['modal']);
+  const toggleModal = () => $modal((prev) => !prev);
 
   const { mutate, isPending } = hrRequestMutation();
 
@@ -63,7 +51,7 @@ const ShowHRRequest = () => {
         onSuccess: () => {
           successToast('success');
           refetch();
-          closeModal();
+          if (modal) toggleModal();
         },
         onError: (e) => errorToast(e.message),
       }
@@ -119,14 +107,7 @@ const ShowHRRequest = () => {
             >
               {t('answered')}
             </MyButton>
-            <MyButton
-              onClick={() =>
-                navigateParams({
-                  modal: ModalTypes.deny_reason,
-                })
-              }
-              btnType={BtnTypes.red}
-            >
+            <MyButton onClick={toggleModal} btnType={BtnTypes.red}>
               {t('deny')}
             </MyButton>
           </>
@@ -134,9 +115,10 @@ const ShowHRRequest = () => {
       </div>
 
       <Modal
-        onClose={closeModal}
-        open={!!modal}
+        onCancel={toggleModal}
+        open={modal}
         closable={false}
+        loading={isPending}
         maskClosable
         classNames={{
           content: '!p-0',
@@ -149,7 +131,7 @@ const ShowHRRequest = () => {
           className={'w-[420px]'}
         >
           <Header title="deny_reason">
-            <button onClick={closeModal} className="close" type="button">
+            <button onClick={toggleModal} className="close" type="button">
               <span aria-hidden="true">&times;</span>
             </button>
           </Header>

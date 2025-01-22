@@ -7,19 +7,22 @@ import { HRStatusOBJ, handleIdx } from '@/utils/helper';
 import { BtnTypes, HRDeps, HRRequest, HRSpheres } from '@/utils/types';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import chatIcon from '/icons/chat.svg';
 
 import HRRequestModals from './modals';
 import MyButton from '@/components/Button';
 import AntdTable from '@/components/AntdTable';
 import { ColumnsType } from 'antd/es/table';
+import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
 
 const HRRequests = () => {
   const { hrdep, sphere } = useParams();
+  const { search } = useLocation();
   const { t } = useTranslation();
   const page = Number(useQueryString('page')) || 1;
   const navigate = useNavigate();
+  const navigateParams = useNavigateParams();
 
   const { data, isLoading } = useHRRequests({
     hrtype: HRDeps[hrdep! as unknown as HRDeps],
@@ -64,12 +67,18 @@ const HRRequests = () => {
         title: t('chat'),
         width: 50,
         render: (_, record) => (
-          <Link
-            to={`?chat_modal=${record?.id}&chat=${record?.hrclient_id}`}
-            className="w-full"
+          <div
+            onClick={() =>
+              navigateParams({
+                chat_modal: record.id,
+                chat: record?.hrclient_id,
+              })
+            }
+            // to={`?chat_modal=${record?.id}&chat=${record?.hrclient_id}`}
+            className="w-full cursor-pointer"
           >
             <img src={chatIcon} alt="chat" className="mx-auto" />
-          </Link>
+          </div>
         ),
       },
       {
@@ -88,7 +97,7 @@ const HRRequests = () => {
         ),
       },
     ],
-    []
+    [search]
   );
 
   const renderModal = useMemo(() => {
