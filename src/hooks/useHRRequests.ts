@@ -9,6 +9,10 @@ type Body = {
   id?: number | string;
   hrtype?: string;
   sphere_id?: string;
+  client_name?: string;
+  complaint?: string;
+  category_id?: number;
+  status?: string;
   page?: number;
   size?: number;
 };

@@ -13,14 +13,19 @@ import chatIcon from '/icons/chat.svg';
 import HRRequestModals from './modals';
 import MyButton from '@/components/Button';
 import AntdTable from '@/components/AntdTable';
-import { ColumnsType } from 'antd/es/table';
+import Table, { ColumnsType } from 'antd/es/table';
 import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
+import HRComplaintsFilter from './filter';
 
 const HRRequests = () => {
   const { hrdep, sphere } = useParams();
   const { search } = useLocation();
   const { t } = useTranslation();
   const page = Number(useQueryString('page')) || 1;
+  const category_id = Number(useQueryString('category_id'));
+  const status = useQueryString('status');
+  const client_name = useQueryString('client_name');
+  const complaint = useQueryString('complaint');
   const navigate = useNavigate();
   const navigateParams = useNavigateParams();
 
@@ -28,7 +33,21 @@ const HRRequests = () => {
     hrtype: HRDeps[hrdep! as unknown as HRDeps],
     sphere_id: HRSpheres[sphere! as unknown as HRSpheres],
     page,
+    ...(category_id && { category_id }),
+    ...(status && { status }),
+    ...(client_name && { client_name }),
+    ...(complaint && { complaint }),
   });
+
+  const renderFilter = useMemo(() => {
+    return (
+      <Table.Summary fixed={'top'}>
+        <Table.Summary.Row>
+          <HRComplaintsFilter />
+        </Table.Summary.Row>
+      </Table.Summary>
+    );
+  }, []);
 
   const columns = useMemo<ColumnsType<HRRequest>>(
     () => [
@@ -56,7 +75,7 @@ const HRRequests = () => {
         render: (_, record) => record.hrcategory?.name,
       },
       {
-        dataIndex: 'status',
+        dataIndex: 'client_name',
         title: t('status'),
 
         render: (_, record) =>
@@ -118,6 +137,7 @@ const HRRequests = () => {
         totalItems={data?.total}
         data={data?.items}
         rowClassName={'text-center'}
+        summary={() => renderFilter}
       />
 
       {renderModal}

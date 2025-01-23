@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import useQueryString from '@/hooks/custom/useQueryString';
 import { useNavigateParams } from '@/hooks/custom/useCustomNavigate';
 import { itemsPerPage } from '@/utils/helper';
+import Pagination from '../Pagination';
 
 type ReturnFunction<Tval> = (smt: Tval) => string;
 type RowClassName<T> = string | ReturnFunction<T>;
@@ -59,19 +60,7 @@ function AntdTable<T>({
         footer={false}
         // locale={{ emptyText: t('empty_list') }}
         sticky
-        pagination={
-          !!totalItems
-            ? {
-                total: totalItems,
-                hideOnSinglePage: false,
-                current: currentPage,
-                pageSize: itemsPerPage,
-                onChange: handleNavigate,
-                showSizeChanger: false,
-                position: ['bottomLeft'],
-              }
-            : false
-        }
+        pagination={false}
         columns={columns}
         title={() =>
           !!totalItems && (
@@ -85,6 +74,10 @@ function AntdTable<T>({
           )
         }
       />
+
+      {!!totalItems && (
+        <Pagination totalPages={Math.ceil(totalItems / itemsPerPage)} />
+      )}
     </div>
   );
 }
