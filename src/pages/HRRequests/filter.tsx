@@ -5,9 +5,9 @@ import { useNavigateParams } from 'custom/useCustomNavigate';
 import { useForm } from 'react-hook-form';
 import useQueryString from '@/hooks/custom/useQueryString';
 import { OrderStatus } from '@/utils/types';
-import useSubCategories from '@/hooks/useSubCategories';
 import MainSelect from '@/components/BaseInputs/MainSelect';
 import { EPresetTimes } from '@/utils/helper';
+import useHrCategories from '@/hooks/useHrCategories';
 
 const StatusSelect = [
   { id: OrderStatus.new, name: 'new' },
@@ -23,7 +23,7 @@ const HRComplaintsFilter: FC = () => {
   const client_name = useQueryString('client_name');
   const complaint = useQueryString('complaint');
 
-  const { data: subCategs, refetch: subcategsRefech } = useSubCategories({
+  const { data: subCategs, refetch: subcategsRefech } = useHrCategories({
     status: 1,
     enabled: false,
     staleTime: EPresetTimes.MINUTE * 10,
