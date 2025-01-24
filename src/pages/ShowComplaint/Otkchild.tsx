@@ -14,35 +14,67 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+interface ChangeTypes {
+  producer_guilty?: string;
+  is_returned?: string;
+  match_standard?: string;
+}
+
 const Otkchild = () => {
   const { t } = useTranslation();
-  const { register, reset, getValues } = useForm();
+  const { register, reset, getValues, watch } = useForm();
   const { mutate, isPending } = complaintsMutation();
   const { id } = useParams();
   const { data: complaint, refetch } = useComplaintV2({
     complaint_id: Number(id),
     enabled: !!id,
   });
+  const { producer_guilty, is_returned, match_standard } = watch();
 
-  // const complaint = data?.items?.[0];
+  const handleChange = ({
+    producer_guilty,
+    is_returned,
+    match_standard,
+  }: ChangeTypes) => {
+    mutate(
+      {
+        id: Number(id),
+        ...(producer_guilty && { producer_guilty: producer_guilty }),
+        ...(is_returned && { is_returned: is_returned }),
+        ...(match_standard && { match_standard: match_standard }),
+      },
+      {
+        onSuccess: () => {
+          refetch();
+          successToast('success');
+        },
+        onError: (e) => errorToast(e.message),
+      }
+    );
+    console.log({
+      producer_guilty,
+      is_returned,
+      match_standard,
+    });
+  };
 
   const handleSubmit = () => {
     const {
-      producer_guilty,
-      is_returned,
+      // producer_guilty,
+      // is_returned,
       correcting_details,
       car_number,
-      match_standard,
+      // match_standard,
     } = getValues();
     mutate(
       {
         id: Number(id),
-        producer_guilty,
-        is_returned,
+        // producer_guilty,
+        // is_returned,
         corrections: correcting_details,
         autonumber: car_number,
         otk_status: OrderStatus.done,
-        match_standard,
+        // match_standard,
       },
       {
         onSuccess: () => {
@@ -82,6 +114,8 @@ const Otkchild = () => {
     });
   }, [complaint]);
 
+  useEffect(() => {}, [producer_guilty, is_returned, match_standard]);
+
   return (
     <>
       {isPending && <Loading />}
@@ -112,9 +146,13 @@ const Otkchild = () => {
                 <input
                   disabled={!!complaint?.certificate}
                   type="radio"
+                  checked={!!Number(complaint?.producer_guilty)}
+                  onChange={(e) =>
+                    handleChange({ producer_guilty: e.target.value })
+                  }
                   value={'1'}
                   id={'1'}
-                  {...register('producer_guilty')}
+                  // {...register('producer_guilty')}
                 />
                 {t('yes')}
               </label>
@@ -124,7 +162,11 @@ const Otkchild = () => {
                   type="radio"
                   value={'0'}
                   id={'0'}
-                  {...register('producer_guilty')}
+                  checked={!Number(complaint?.producer_guilty)}
+                  onChange={(e) =>
+                    handleChange({ producer_guilty: e.target.value })
+                  }
+                  // {...register('producer_guilty')}
                 />
                 {t('no')}
               </label>
@@ -139,7 +181,11 @@ const Otkchild = () => {
                   type="radio"
                   value={'1'}
                   id={'1'}
-                  {...register('is_returned')}
+                  checked={!!Number(complaint?.is_returned)}
+                  onChange={(e) =>
+                    handleChange({ is_returned: e.target.value })
+                  }
+                  // {...register('is_returned')}
                 />
                 {t('yes')}
               </label>
@@ -148,8 +194,12 @@ const Otkchild = () => {
                   disabled={!!complaint?.certificate}
                   type="radio"
                   value={'0'}
+                  checked={!complaint?.is_returned}
+                  onChange={(e) =>
+                    handleChange({ is_returned: e.target.value })
+                  }
                   id={'0'}
-                  {...register('is_returned')}
+                  // {...register('is_returned')}
                 />
                 {t('no')}
               </label>
@@ -164,7 +214,10 @@ const Otkchild = () => {
                   type="radio"
                   value={'1'}
                   id={'1'}
-                  {...register('match_standard')}
+                  checked={!!Number(complaint?.match_standard)}
+                  onChange={(e) =>
+                    handleChange({ match_standard: e.target.value })
+                  }
                 />
                 {t('yes')}
               </label>
@@ -174,7 +227,10 @@ const Otkchild = () => {
                   type="radio"
                   value={'0'}
                   id={'0'}
-                  {...register('match_standard')}
+                  checked={!Number(complaint?.match_standard)}
+                  onChange={(e) =>
+                    handleChange({ match_standard: e.target.value })
+                  }
                 />
                 {t('no')}
               </label>

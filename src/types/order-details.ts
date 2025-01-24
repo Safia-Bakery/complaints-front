@@ -32,8 +32,8 @@ export type ComplaintsBody = {
   corrections?: string;
 
   is_client?: boolean;
-  producer_guilty?: boolean;
-  is_returned?: boolean;
+  producer_guilty?: string;
+  is_returned?: string;
   expense?: number;
 
   products?: string[];
@@ -42,7 +42,7 @@ export type ComplaintsBody = {
 
   first_response?: string;
   second_response?: string;
-  match_standard?: boolean;
+  match_standard?: string;
 };
 
 export interface ComplaintsResponse {
