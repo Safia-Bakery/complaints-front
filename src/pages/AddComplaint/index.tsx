@@ -98,13 +98,18 @@ const AddComplaint = () => {
         <BaseInput label="branch" className="flex-1">
           <BranchSelect enabled />
         </BaseInput>
-        <BaseInput label="type">
-          <MainRadioBtns values={categs} register={register('categ')} />
+        <BaseInput label="type" className="h-max">
+          <MainRadioBtns
+            values={categs}
+            register={register('categ')}
+            className="!h-max"
+          />
         </BaseInput>
 
-        <BaseInput label="category">
+        <BaseInput label="category" className="h-max">
           <MainRadioBtns
             values={subCategs?.items}
+            className="!h-max"
             register={register('subcategory_id')}
           />
         </BaseInput>

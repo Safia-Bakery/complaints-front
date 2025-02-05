@@ -51,11 +51,6 @@ const Otkchild = () => {
         onError: (e) => errorToast(e.message),
       }
     );
-    console.log({
-      producer_guilty,
-      is_returned,
-      match_standard,
-    });
   };
 
   const handleSubmit = () => {
