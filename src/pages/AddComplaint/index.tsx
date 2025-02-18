@@ -34,7 +34,13 @@ const AddComplaint = () => {
   const [files, $files] = useState<string[]>([]);
 
   const { t } = useTranslation();
-  const { register, getValues, handleSubmit, watch } = useForm();
+  const {
+    register,
+    getValues,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const branchJson = useQueryString('branch');
   const branch: BranchJsonVal = branchJson && JSON.parse(branchJson);
@@ -66,27 +72,29 @@ const AddComplaint = () => {
       comment,
     } = getValues();
 
-    mutate(
-      {
-        branch_id: branch?.id,
-        subcategory_id,
-        product_name,
-        client_name,
-        client_number: fixedString(client_number),
-        client_gender,
-        date_purchase: date_purchase?.toISOString(),
-        date_return: date_return?.toISOString(),
-        comment,
-        files,
-      },
-      {
-        onSuccess: () => {
-          navigate(`/complaints/${com_sphere}`);
-          successToast('created');
+    if (!date_purchase) errorToast('Введите дату покупки!!!');
+    else
+      mutate(
+        {
+          branch_id: branch?.id,
+          subcategory_id,
+          product_name,
+          client_name,
+          client_number: fixedString(client_number),
+          client_gender,
+          date_purchase: date_purchase?.toISOString(),
+          date_return: date_return?.toISOString(),
+          comment,
+          files,
         },
-        onError: (e) => errorToast(e.message),
-      }
-    );
+        {
+          onSuccess: () => {
+            navigate(`/complaints/${com_sphere}`);
+            successToast('created');
+          },
+          onError: (e) => errorToast(e.message),
+        }
+      );
   };
 
   if (isPending || categsLoading || countryLoading || subCategFetching)
@@ -109,7 +117,7 @@ const AddComplaint = () => {
         <BaseInput label="category" className="h-max">
           <MainRadioBtns
             values={subCategs?.items}
-            className="!h-max"
+            className="!h-max min-h-10"
             register={register('subcategory_id')}
           />
         </BaseInput>
@@ -123,8 +131,16 @@ const AddComplaint = () => {
             />
           </BaseInput>
 
-          <BaseInput label="product_name" className="flex-1">
-            <MainInput register={register('product_name')} />
+          <BaseInput
+            label="product_name"
+            className="flex-1"
+            error={errors.product_name}
+          >
+            <MainInput
+              register={register('product_name', {
+                required: t('required_field'),
+              })}
+            />
           </BaseInput>
         </div>
 
