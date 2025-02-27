@@ -29,9 +29,14 @@ const EditAddHRCategory = () => {
     reset,
   } = useForm();
 
-  const { data, isLoading } = useHrCategories({
+  const { data, isLoading, refetch } = useHrCategories({
     id: Number(category_id),
     enabled: !!category_id,
+  });
+
+  const { refetch: categoriesRefetch } = useHrCategories({
+    hrsphere_id: +HRSpheres[sphere as any],
+    enabled: false,
   });
 
   const category = data?.items?.[0];
@@ -48,6 +53,8 @@ const EditAddHRCategory = () => {
         onSuccess: () => {
           successToast(!category_id ? 'created' : 'updated');
           goBack();
+          categoriesRefetch();
+          if (category_id) refetch();
         },
         onError: (e) => errorToast(e.message),
       }
@@ -59,6 +66,7 @@ const EditAddHRCategory = () => {
       reset({
         status: category.status,
         name: category.name,
+        name_uz: category.name_uz,
       });
   }, [category]);
 
@@ -72,7 +80,14 @@ const EditAddHRCategory = () => {
         </MyButton>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
-        <BaseInputs label="name" error={errors.name}>
+        <BaseInputs label="name_table_uz" error={errors.name_uz}>
+          <MainInput
+            register={register('name_uz', {
+              required: t('required_field'),
+            })}
+          />
+        </BaseInputs>
+        <BaseInputs label="name_table_ru" error={errors.name}>
           <MainInput
             register={register('name', {
               required: t('required_field'),

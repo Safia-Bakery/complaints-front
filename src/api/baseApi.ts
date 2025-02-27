@@ -3,6 +3,7 @@ import { logoutHandler } from '@/store/reducers/auth';
 import { store } from '@/store/rootConfig';
 
 export const baseURL = 'https://api.complaint.safiabakery.uz';
+// export const baseURL = 'https://api.complaint.safiabakery.uz/docs';
 
 const baseApi: AxiosInstance = axios.create({
   baseURL,

@@ -10,6 +10,8 @@ import routePath from './routes.ts';
 import AdminRoutes from '@/layouts/admin-routes.tsx';
 
 const Login = lazy(() => import('@/pages/Login'));
+const EditAddNotification = lazy(() => import('@/pages/EditAddNotification'));
+const Notification = lazy(() => import('@/pages/Notifications'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
 const Complaints = lazy(() => import('@/pages/Complaints'));
 const AddComplaint = lazy(() => import('@/pages/AddComplaint'));
@@ -141,6 +143,21 @@ const mainRoutes = [
     element: <Products />,
     path: 'products',
     screen: Permissions.get_products,
+  },
+  {
+    element: <Notification />,
+    path: 'notifications',
+    screen: Permissions.get_notifications,
+  },
+  {
+    element: <EditAddNotification />,
+    path: 'notifications/add',
+    screen: Permissions.set_notifications,
+  },
+  {
+    element: <EditAddNotification />,
+    path: 'notifications/:id',
+    screen: Permissions.set_notifications,
   },
   {
     element: <EditProduct />,

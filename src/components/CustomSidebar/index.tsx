@@ -104,7 +104,14 @@ const routes = [
     url: '/products',
     icon: '/icons/location.svg',
     activeIcon: '/icons/location-active.svg',
-    screen: Permissions.get_categories,
+    screen: Permissions.get_products,
+  },
+  {
+    name: 'notifications',
+    url: '/notifications',
+    icon: '/icons/location.svg',
+    activeIcon: '/icons/location-active.svg',
+    screen: Permissions.get_notifications,
   },
 ];
 

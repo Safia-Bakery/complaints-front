@@ -53,6 +53,8 @@ const localization = {
       other: 'Другое',
       sending_date: 'Дата отправки',
       name_table: 'Наименование',
+      name_table_ru: 'Наименование на Русском',
+      name_table_uz: 'Наименование на Узбекском',
       cancel: 'Отменить',
       receive: 'Принять',
       to_close: 'Закрыть',
@@ -147,11 +149,16 @@ const localization = {
       products: 'Продукты',
       product: 'Продукт',
       edit_product: 'Изменить продукт',
+      notifications: 'Уведомлении',
+      text: 'Текст',
+      sent: 'Отправлено',
+      sending_time: 'Время отправки',
       is_match_standard:
         'Соответствует ли образец стандартам компании или нет?',
       upload_files: 'Загрузить файлы',
       file_upload_descr:
         'Поддержка одиночной или массовой загрузки. Категорически запрещено загружать данные компании или другие запрещенные файлы.',
+      schedule_warn_msg: 'Оповещения уже отправлен!!!',
     },
   },
   uz: {

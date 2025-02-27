@@ -300,6 +300,7 @@ export interface CountryType {
 export interface CategoriesType {
   id: number;
   name: string;
+  name_uz: string;
   status: number;
   created_at: string;
   updated_at: string;
@@ -398,6 +399,9 @@ export enum Permissions {
 
   get_products = 30,
   edit_products = 30,
+
+  get_notifications = 30,
+  set_notifications = 30,
 }
 
 export interface CountsStats {

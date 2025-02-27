@@ -13,7 +13,6 @@ import AntdTable from '@/components/AntdTable';
 import { ColumnsType } from 'antd/es/table';
 
 const Countries = () => {
-  const { sphere } = useParams();
   const { t } = useTranslation();
   const page = Number(useQueryString('page')) || 1;
   const navigate = useNavigate();

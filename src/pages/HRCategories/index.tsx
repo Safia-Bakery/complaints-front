@@ -30,7 +30,12 @@ const HRCategories = () => {
 
       {
         dataIndex: 'name',
-        title: t('name_table'),
+        title: t('name_table_ru'),
+      },
+
+      {
+        dataIndex: 'name_uz',
+        title: t('name_table_uz'),
       },
       {
         dataIndex: 'status',
