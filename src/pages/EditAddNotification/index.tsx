@@ -1,5 +1,5 @@
 import BaseInputs from '@/components/BaseInputs';
-import MainInput from '@/components/BaseInputs/MainInput';
+import MainTextArea from '@/components/BaseInputs/MainTextArea';
 import MyButton from '@/components/Button';
 import Container from '@/components/Container';
 import Loading from '@/components/Loader';
@@ -90,7 +90,7 @@ const EditAddNotification = () => {
   };
 
   useEffect(() => {
-    if (!!data) {
+    if (!!data && id) {
       $selected_date(dayjs(data.scheduled_at));
       $selected_spheres(
         data.receivers_sphere.map((item) => ({
@@ -102,7 +102,7 @@ const EditAddNotification = () => {
         text: data.text,
       });
     }
-  }, [data]);
+  }, [data, id]);
 
   if (!!id && isLoading) return <Loading />;
 
@@ -114,35 +114,35 @@ const EditAddNotification = () => {
         </MyButton>
       </div>
       <form className="p-3" onSubmit={handleSubmit(onSubmit)}>
-        <BaseInputs label="text" error={errors.text}>
-          <MainInput
-            register={register('text', {
-              required: t('required_field'),
-            })}
-          />
-        </BaseInputs>
-
-        <BaseInputs label="time" error={errors.text}>
+        <BaseInputs label="Время отправки" error={errors.text}>
           <DatePicker
             showTime
             className="w-full"
             disabledDate={disabledDate as any}
             placeholder="Дата поступления"
             format="YYYY-MM-DD HH:mm"
-            value={selected_date || dayjs()}
+            value={selected_date ?? null}
             onChange={(date) => $selected_date(date)}
           />
         </BaseInputs>
 
-        <BaseInputs label="select">
+        <BaseInputs label="Сфера пользователей">
           <Select
             mode="tags"
-            labelInValue
+            // labelInValue
             style={{ width: '100%' }}
             onSelect={handleSelect}
             onDeselect={handleDesect}
             options={sphereArr}
             value={selected_spheres}
+          />
+        </BaseInputs>
+
+        <BaseInputs label="text" error={errors.text}>
+          <MainTextArea
+            register={register('text', {
+              required: t('required_field'),
+            })}
           />
         </BaseInputs>
 
