@@ -25,8 +25,8 @@ interface ValueLabel {
 }
 
 const sphereArr = [
-  { label: 'Фабрика', value: HRSpheres.fabric },
-  { label: 'Розница', value: HRSpheres.retail },
+  { label: 'Фабрика', value: `${HRSpheres.fabric}` },
+  { label: 'Розница', value: `${HRSpheres.retail}` },
 ];
 const disabledDate = (current: dayjs.Dayjs | null) => {
   return current && current.isBefore(dayjs().startOf('day'));
@@ -38,23 +38,26 @@ const EditAddNotification = () => {
   const { t } = useTranslation();
   const [selected_date, $selected_date] = useState<dayjs.Dayjs>();
 
-  const { data, isLoading } = getNotification({
+  const {
+    data,
+    isLoading,
+    refetch: noticeRefetch,
+  } = getNotification({
     id: Number(id),
     enabled: !!id,
   });
   const { refetch } = getNotifications({ enabled: false, page: 1 });
 
   const [selected_spheres, $selected_spheres] = useState<ValueLabel[]>([]);
-  const handleSelect = (data: any) => {
-    if (!selected_spheres.find((tool) => tool.value === data.value))
+  const handleSelect = (_: any, e: ValueLabel) => {
+    if (!selected_spheres.find((tool) => tool.value === e.value))
       $selected_spheres((prev) => [
         ...prev,
-        { value: data.value, label: data.label },
+        { value: e.value, label: e.label },
       ]);
   };
-
-  const handleDesect = (id: any) => {
-    $selected_spheres((prev) => prev.filter((tool) => tool.value !== id.value));
+  const handleDesect = (id: any, e: ValueLabel) => {
+    $selected_spheres((prev) => prev.filter((tool) => tool.value !== id));
   };
 
   const { mutate, isPending } = notificationMutation();
@@ -66,10 +69,10 @@ const EditAddNotification = () => {
     formState: { errors },
     reset,
   } = useForm();
-
   const onSubmit = () => {
     const { text } = getValues();
-    if (!data?.status)
+    if (!!data?.status) warnToast(t('schedule_warn_msg'));
+    else
       mutate(
         {
           text,
@@ -82,11 +85,11 @@ const EditAddNotification = () => {
             refetch();
             successToast('notification is created');
             navigate(-1);
+            if (id) noticeRefetch();
           },
           onError: (e) => errorToast(e.message),
         }
       );
-    else warnToast(t('schedule_warn_msg'));
   };
 
   useEffect(() => {
@@ -94,7 +97,7 @@ const EditAddNotification = () => {
       $selected_date(dayjs(data.scheduled_at));
       $selected_spheres(
         data.receivers_sphere.map((item) => ({
-          value: item,
+          value: item.toString(),
           label: t(HRSpheres[item]),
         }))
       );

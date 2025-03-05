@@ -55,7 +55,7 @@ export const getNotification = ({
 }) => {
   const token = useAppSelector(tokenSelector);
   return useQuery({
-    queryKey: ['get_notification'],
+    queryKey: ['get_notification', id],
     queryFn: () =>
       baseApi
         .get(`/notification/${id}`)
