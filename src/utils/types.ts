@@ -400,8 +400,8 @@ export enum Permissions {
   get_products = 30,
   edit_products = 30,
 
-  get_notifications = 30,
-  set_notifications = 30,
+  get_notifications = 33,
+  set_notifications = 33,
 }
 
 export interface CountsStats {
