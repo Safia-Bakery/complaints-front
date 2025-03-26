@@ -11,6 +11,7 @@ import { ApexOptions } from 'apexcharts';
 import Chart from 'react-apexcharts';
 import ReactDatePicker from 'react-datepicker';
 import Loading from '@/components/Loader';
+import { Badge } from 'antd';
 
 const date = new Date();
 const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -104,6 +105,13 @@ const HRDashboard = () => {
           {t('qa')}
         </HrSelectBtn>
         <HrSelectBtn onClick={handleNavigate(`${HRDeps[HRDeps.questions]}`)}>
+          <Badge
+            showZero
+            overflowCount={99}
+            count={data?.question_count.new}
+            className="absolute top-3 right-3"
+            color="#00B333"
+          />
           {t('questions')}
         </HrSelectBtn>
         <div className="flex flex-col gap-2 flex-1">
@@ -111,6 +119,13 @@ const HRDashboard = () => {
             onClick={handleNavigate(`${HRDeps[HRDeps.hr_complaints]}`)}
             className="min-h-24"
           >
+            <Badge
+              showZero
+              overflowCount={99}
+              count={data?.complaint_count.new}
+              className="absolute top-3 right-3"
+              color="#00B333"
+            />
             {t('complaints')}
           </HrSelectBtn>
           <HrSelectBtn
@@ -120,6 +135,13 @@ const HRDashboard = () => {
           </HrSelectBtn>
         </div>
         <HrSelectBtn onClick={handleNavigate(`${HRDeps[HRDeps.suggestions]}`)}>
+          <Badge
+            showZero
+            overflowCount={99}
+            count={data?.advice_count.new}
+            className="absolute top-3 right-3"
+            color="#00B333"
+          />
           {t('suggestions')}
         </HrSelectBtn>
       </Container>
@@ -146,19 +168,42 @@ const HRDashboard = () => {
             <div className="flex w-full flex-col">
               <h2 className="font-bold text-sm mb-5">{t('req_stats')}</h2>
 
-              <div className="border flex flex-col gap-4 border-[#00000042] rounded-md py-10 px-5 max-w-80 w-full">
-                <div className="flex items-center justify-between w-full">
-                  <p>{t('questions')}</p>
-                  <p>{data?.question_count}</p>
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>{t('complaints')}</p>
-                  <p>{data?.complaint_count}</p>
-                </div>
-                <div className="flex items-center justify-between w-full">
-                  <p>{t('suggestions')}</p>
-                  <p>{data?.advice_count}</p>
-                </div>
+              <div className="border flex flex-col gap-4 border-[#00000042] rounded-md py-10 px-5 max-w-[60%] w-full">
+                <table className="font-bold text-center">
+                  <thead>
+                    <tr>
+                      <td></td>
+                      <td>Поступило</td>
+                      <td>Обработано</td>
+                      <td>Не обработано</td>
+                      <td>Отклонен</td>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td className="text-left">Вопросы</td>
+                      <td>{data?.question_count.total || 0}</td>
+                      <td>{data?.question_count.finished || 0}</td>
+                      <td>{data?.question_count.new || 0}</td>
+                      <td>{data?.question_count.rejected || 0}</td>
+                    </tr>
+                    <tr>
+                      <td className="text-left">Жалобы</td>
+                      <td>{data?.complaint_count.total || 0}</td>
+                      <td>{data?.complaint_count.finished || 0}</td>
+                      <td>{data?.complaint_count.new || 0}</td>
+                      <td>{data?.complaint_count.rejected || 0}</td>
+                    </tr>
+                    <tr>
+                      <td className="text-left">Предложения</td>
+                      <td>{data?.advice_count.total || 0}</td>
+                      <td>{data?.advice_count.finished || 0}</td>
+                      <td>{data?.advice_count.new || 0}</td>
+                      <td>{data?.advice_count.rejected || 0}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

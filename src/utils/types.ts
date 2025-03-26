@@ -433,7 +433,22 @@ export interface HRStatsTypes {
   with_categories: {
     [key: string]: number;
   };
-  complaint_count: number;
-  question_count: number;
-  advice_count: number;
+  complaint_count: {
+    new: number;
+    finished: number;
+    rejected: number;
+    total: number;
+  };
+  question_count: {
+    new: number;
+    finished: number;
+    rejected: number;
+    total: number;
+  };
+  advice_count: {
+    new: number;
+    finished: number;
+    rejected: number;
+    total: number;
+  };
 }

@@ -7,7 +7,7 @@ import useStats from '@/hooks/useStats';
 import Loading from '@/components/Loader';
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import { numberWithCommas, yearMonthDate } from '@/utils/helper';
+import { handleIdx, numberWithCommas, yearMonthDate } from '@/utils/helper';
 import incrementIcon from '/icons/increment.svg';
 import decrementIcon from '/icons/decrement.svg';
 import incrementGraph from '/icons/incrementGr.svg';
@@ -84,7 +84,9 @@ const Dashboard = () => {
         breakpoint: 480,
         options: {
           chart: {
-            width: 200,
+            width: 750,
+            height: 500,
+            className: 'w-full',
           },
           legend: {
             position: 'bottom',
@@ -357,7 +359,8 @@ const Dashboard = () => {
                 options={donutOptions}
                 series={donutSeries?.series}
                 type="donut"
-                width="550"
+                width={850}
+                height={500}
               />
             </div>
             <div className="w-full bg-white rounded-2xl p-3">
